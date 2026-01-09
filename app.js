@@ -1,7 +1,7 @@
 const express = require('express');
+const config = require('./config');
 
 const app = express();
-const PORT = 3000;
 
 app.use(express.json());
 
@@ -11,6 +11,6 @@ app.get("/", (req, res) => {
   });
 });
 
-app.listen(PORT, (req, res) => {
-  console.log(`Puerto escuchando en el ${PORT}`);
+app.listen(config.port, (req, res) => {
+  console.log(`Puerto escuchando en el ${config.port}`);
 });

@@ -219,3 +219,9 @@ $RECYCLE.BIN/
 
 postgres_data
 mysql_data
+
+.env
+.env.dev
+.env.qa
+.env.prod
+!.env.example
