@@ -8,8 +8,10 @@
   },
   "scripts": {
     "dev": "NODE_ENV=dev nodemon app.js",
+    "test": "mocha './test/**/*.test.js'",
     "start": "node app.js",
-    "lint": "eslint"
+    "lint": "eslint",
+    "build": "echo 'No build step required'"
   },
   "keywords": [],
   "author": "",
