@@ -1,0 +1,39 @@
+name: Node.js CI
+
+on:
+  push:
+    branches:
+      - releases/*
+  pull_request:
+    branches:
+      - 'releases/*'
+
+jobs:
+  build:
+    runs-on: ubuntu
+
+    strategy:
+      matrix:
+        node-version: [20.x, 22.x]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version}}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Eslint
+        run: npx eslint
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build application
+        run: npm run build
+
