@@ -1,7 +1,9 @@
 module.exports = [
   {
-    files: ["**/*.js"],      // analiza todos los JS
-    extends: ["eslint:recommended", "prettier"],
+    files: ["**/*.js"],
+    rules: {
+      "no-console": "warn"
+    },
     env: {
       node: true,
       es6: true,
@@ -9,9 +11,6 @@ module.exports = [
     },
     parserOptions: {
       ecmaVersion: 2018
-    },
-    rules: {
-      "no-console": "warn"
     }
   }
 ]
