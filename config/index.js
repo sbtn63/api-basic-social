@@ -9,7 +9,13 @@ dotenv.config({path: path.resolve(process.cwd(), envFile)});
 const config = {
   port: process.env.PORT || 3000,
   env: process.env.NODE_ENV || 'dev',
-  apiKey: process.env.API_KEY
+  apiKey: process.env.API_KEY,
+  dbUser: process.env.DB_USER,
+  dbPassword: process.env.DB_PASSWORD,
+  dbName: process.env.DB_NAME,
+  dbHost: process.env.DB_HOST,
+  dbPort: process.env.DB_PORT_HOST,
+  dbDialect: process.env.DB_DIALECT
 };
 
 // 3. Validación: Asegurar que variables críticas existan
