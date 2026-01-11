@@ -1,0 +1,21 @@
+version: '3.3'
+
+services:
+  mysql:
+    image: ${CONTAINER_MYSQL_IMAGE}
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_PORT=${DB_PORT_HOST}
+    ports:
+      - ${DB_PORT_HOST}:${CONTAINER_PORT_HOST}
+    volumes:
+      - "${MYSQL_VOLUME_HOST}:/var/lib/mysql"
+
+  phpmyadmin:
+    image: ${CONTAINER_PMA_IMAGE}
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - PMA_HOST=${CONTAINER_PMA_HOST}
+    ports:
+      - ${PMA_PORT_HOST}:${CONTAINER_PMA_PORT_HOST}
