@@ -19,7 +19,7 @@ const config = {
 };
 
 // 3. Validación: Asegurar que variables críticas existan
-const requireKeys = ['API_KEY'];
+const requireKeys = ['API_KEY', 'DB_USER', 'DB_PASSWORD', 'DB_NAME', 'DB_HOST', 'DB_DIALECT'];
 requireKeys.forEach(key => {
   if(!process.env[key]){
     throw new Error(`Error de configuración: La variable ${key} es obligatoria en ${envFile}`);
