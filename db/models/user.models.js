@@ -11,20 +11,82 @@ const UserSchema = {
   },
 
   firstName: {
-    allowNull: true,
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    field: 'first_name'
+  },
+
+  lastName: {
+    type: DataTypes.STRING,
+    field: 'last_name'
+  },
+
+  avatarUrl: {
+    type: DataTypes.STRING,
+    field: 'avatar_url'
+  },
+
+  email: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    unique: true,
+    validate: {
+      isEmail: true
+    }
+  },
+
+  passwordHash: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    field: 'password_hash'
+  },
+
+  lastConnection: {
+    type: DataTypes.DATE,
+    field: 'last_connection'
+  },
+
+  createdAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.NOW,
+    field: 'created_at'
+  },
+
+  updatedAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.NOW,
+    field: 'updated_at'
   }
 };
 
 class User extends Model {
-  static associate(models){}
+  static associate(models){
+    // Usuarios que yo sigo
+    this.belongsToMany(models.User, {
+      through: models.UserFollow,
+      as: 'following',
+      foreignKey: 'followerId',
+      otherKey: 'followedId'
+    });
+
+    // Usuarios que me siguen
+    this.belongsToMany(models.User, {
+      through: models.UserFollow,
+      as: 'followers',
+      foreignKey: 'followedId',
+      otherKey: 'followerId'
+    });
+  }
 
   static config(sequelize){
     return {
       sequelize,
       tableName: USER_TABLE,
       modelName: 'User',
-      timestamps: false
+      timestamps: true,
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
     };
   }
 }
