@@ -54,12 +54,12 @@ class UserFollow extends Model {
           }
         }
       },
-      indexes: [
+      /*indexes: [
         {
           unique: true,
           fields: ['follower_id', 'followed_id']
         }
-      ]
+      ]*/
     };
   }
 }
