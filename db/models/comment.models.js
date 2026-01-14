@@ -66,7 +66,29 @@ const CommentSchema = {
 
 class Comment extends Model {
   static associate(models){
+    // Publicacion del comentario
+    this.belongsTo(models.Post, {
+      as: 'post',
+      foreignKey: 'postId'
+    });
 
+    // Usuario del comentario
+    this.belongsTo(models.User, {
+      as: 'user',
+      foreignKey: 'userId'
+    });
+
+    // Respuestas del comentario
+    this.hasMany(models.Comment, {
+      as: 'replies',
+      foreignKey: 'parentCommentId'
+    });
+
+    // Comentario padre respuestas
+    this.belongsTo(models.Comment, {
+      as: 'parent',
+      foreignKey: 'parentCommentId'
+    });
   }
 
   static config(sequelize){

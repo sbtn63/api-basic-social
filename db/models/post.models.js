@@ -48,7 +48,17 @@ const PostSchema = {
 
 class Post extends Model {
   static associate(models){
+    // Usuario del post
+    this.belongsTo(models.User, {
+      as: 'user',
+      foreignKey: 'userId'
+    });
 
+    // Comentarios de la publicacion
+    this.hasMany(models.Comment, {
+      as: 'comments',
+      foreignKey: 'postId'
+    });
   }
 
   static config(sequelize){
