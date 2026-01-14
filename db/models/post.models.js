@@ -66,6 +66,11 @@ class Post extends Model {
           }
         }
       },
+      indexes: [
+        {
+          fields: ['user_id', 'created_at']
+        }
+      ]
     };
   }
 }
