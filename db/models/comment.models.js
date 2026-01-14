@@ -17,11 +17,6 @@ const CommentSchema = {
     type: DataTypes.TEXT
   },
 
-  imageUrl: {
-    type: DataTypes.STRING,
-    field: 'image_url'
-  },
-
   postId: {
     allowNull: false,
     type: DataTypes.INTEGER,
