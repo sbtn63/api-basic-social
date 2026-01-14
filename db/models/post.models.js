@@ -65,12 +65,7 @@ class Post extends Model {
             throw new Error('Se debe ingresar una imagen o descripción');
           }
         }
-      },
-      indexes: [
-        {
-          fields: ['user_id', 'created_at']
-        }
-      ]
+      }
     };
   }
 }

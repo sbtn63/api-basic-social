@@ -20,7 +20,7 @@ const CommentSchema = {
   postId: {
     allowNull: false,
     type: DataTypes.INTEGER,
-    field: 'user_id',
+    field: 'post_id',
     references: {
       model: POST_TABLE,
       key: 'id'
@@ -76,12 +76,7 @@ class Comment extends Model {
       modelName: 'Comment',
       timestamps: true,
       createdAt: 'created_at',
-      updatedAt: 'updated_at',
-      indexes: [
-        {
-          fields: ['post_id']
-        }
-      ]
+      updatedAt: 'updated_at'
     };
   }
 }
