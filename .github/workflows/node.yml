@@ -25,10 +25,10 @@ jobs:
         ports:
           - 3306:3306
         options: >-
-          --health-cmd="mysqladmin ping -uroot -proot"
+          --health-cmd="mysqladmin ping -uroot -proot --silent"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=5
+          --health-retries=10
 
     steps:
       - name: Checkout repository
@@ -45,11 +45,11 @@ jobs:
       - name: Copy .env.example to .env
         run: cp .env.example .env
 
-      - name: Wait for MySQL to be healthy
+      - name: Wait for MySQL to be ready
         run: |
           echo "Waiting for MySQL..."
           for i in {1..30}; do
-            if docker exec $(docker ps -qf "ancestor=mysql:5") mysqladmin ping -uroot -proot --silent; then
+            if mysqladmin ping -h 127.0.0.1 -uroot -proot --silent; then
               echo "MySQL is up!"
               break
             fi
@@ -57,7 +57,7 @@ jobs:
             sleep 1
           done
 
-      - name: Run Eslint
+      - name: Run ESLint
         run: npx eslint .
 
       - name: Run migrations
@@ -84,4 +84,3 @@ jobs:
 
       - name: Build application
         run: npm run build
-
