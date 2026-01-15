@@ -49,7 +49,7 @@ jobs:
         run: |
           echo "Waiting for MySQL..."
           for i in {1..30}; do
-            if mysqladmin ping -h 127.0.0.1 -uroot -proot --silent; then
+            if docker exec $(docker ps -qf "ancestor=mysql:5") mysqladmin ping -uroot -proot --silent; then
               echo "MySQL is up!"
               break
             fi
@@ -69,7 +69,7 @@ jobs:
           DB_HOST: 127.0.0.1
           DB_PORT: 3306
           DB_DIALECT: mysql
-        run: npm run migrations:run
+        run: npx sequelize-cli db:migrate --env example
 
       - name: Run tests
         env:
