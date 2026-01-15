@@ -1,0 +1,97 @@
+const { expect } = require("chai");
+const chai = require("chai");
+
+const { models } = require("../../libs/sequelize");
+
+describe('User Model', () => {
+  let user;
+  it('shoud get users', async () => {
+    user = await models.User.findAll();
+    expect(user).to.be.an('array');
+  });
+
+  it('should insert a new user', async () => {
+    user = await models.User.create({
+      firstName: 'Test1',
+      lastName: 'Test1',
+      avatarUrl: 'https://images/test.png',
+      email: 'test1@gmail.com',
+      passwordHash: 'jjavvhayyacceggaga'
+    });
+
+    expect(user).to.be.an('object');
+  });
+
+  it('shoud get user', async () => {
+    user = await models.User.findByPk(user.id);
+    expect(user).to.not.be.null;
+  });
+
+  it('shoud update user', async () => {
+    user.firstName = 'TestUpdate';
+    await user.save();
+    expect(user.firstName).to.equal('TestUpdate');
+  });
+
+  it('should delete user', async () => {
+    await user.destroy();
+    const deleteUser = await models.User.findByPk(user.id);
+    expect(deleteUser).to.be.null;
+  });
+});
+
+describe('Validate Followers', () => {
+  let user1;
+  let user2;
+  beforeEach(async() => {
+    await models.Comment.destroy({where: {}});
+    await models.Post.destroy({where: {}});
+    await models.UserFollow.destroy({ where: {}});
+    await models.User.destroy({where: {}});
+
+    user1 = await models.User.create({ firstName: 'A', email: 'a@test.com', passwordHash: '123'});
+    user2 = await models.User.create({ firstName: 'B', email: 'b@test.com', passwordHash: '123'});
+  });
+
+  it('should add followings', async () => {
+    const following = await user1.addFollowing(user2);
+    expect(following).to.be.an('array');
+    expect(following[0].followedId).to.equal(user2.id);
+  });
+
+  it('should add followers', async () => {
+    const following = await user1.addFollower(user2);
+    expect(following).to.be.an('array');
+    expect(following[0].followerId).to.equal(user2.id);
+  });
+
+  it('should add followers', async () => {
+    const following = await user1.addFollower(user2);
+    expect(following).to.be.an('array');
+    expect(following[0].followerId).to.equal(user2.id);
+  });
+
+  it('should unfollow a user', async () => {
+      await user1.addFollowing(user2);
+      await user1.removeFollowing(user2);
+
+      const following = await user1.getFollowing();
+      expect(following).to.be.an('array').that.is.empty;
+
+      const followers = await user2.getFollowers();
+      expect(followers).to.be.an('array').that.is.empty;
+  });
+
+  it('should validate followers', async () => {
+    try {
+     await models.UserFollow.create({
+      followerId: user1.id,
+      followedId: user1.id
+     });
+     throw new Error("Debio recibir un error!!")
+    } catch (error) {
+      expect(error).to.be.instanceOf(Error);
+      expect(error.errors[0].message).to.equal("No puedes seguirte a ti mismo");
+    }
+  });
+});

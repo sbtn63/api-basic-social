@@ -62,7 +62,7 @@ const UserSchema = {
 
 class User extends Model {
   static associate(models){
-    // Usuarios que yo sigo
+    // Usuarios que el usuario sigue
     this.belongsToMany(models.User, {
       through: models.UserFollow,
       as: 'following',
@@ -70,12 +70,18 @@ class User extends Model {
       otherKey: 'followedId'
     });
 
-    // Usuarios que me siguen
+    // Usuarios que siguen al usuario
     this.belongsToMany(models.User, {
       through: models.UserFollow,
       as: 'followers',
       foreignKey: 'followedId',
       otherKey: 'followerId'
+    });
+
+    // Publicaciones usuario
+    this.hasMany(models.Post, {
+      as: 'posts',
+      foreignKey: 'userId'
     });
   }
 
