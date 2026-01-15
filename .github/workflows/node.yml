@@ -57,13 +57,13 @@ jobs:
 
       - name: Run migrations
         env:
-          NODE_ENV: test
+          NODE_ENV: example
         run: npm run migrate --if-present
 
       - name: Run tests
         env:
-          NODE_ENV: test
-        run: npm test
+          NODE_ENV: example
+        run: npm example
 
       - name: Build application
         run: npm run build
