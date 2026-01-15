@@ -2,12 +2,13 @@ const { expect } = require("chai");
 const chai = require("chai");
 
 const { models } = require("../../libs/sequelize");
+const { deleteData } = require("../utils");
 
 describe('User Model', () => {
   let user;
   it('shoud get users', async () => {
-    user = await models.User.findAll();
-    expect(user).to.be.an('array');
+    const users = await models.User.findAll();
+    expect(users).to.be.an('array');
   });
 
   it('should insert a new user', async () => {
@@ -40,14 +41,27 @@ describe('User Model', () => {
   });
 });
 
+describe('Validate Posts', () => {
+  let user1;
+  beforeEach(async() => {
+    await deleteData(models);
+    user1 = await models.User.create({ firstName: 'A', email: 'a@test.com', passwordHash: '123'});
+    post = await models.Post.create({description: 'Test1', userId: user1.id});
+  });
+
+  it('should get posts', async () => {
+    const posts = await user1.getPosts();
+    expect(posts).to.be.an('array');
+    expect(posts[0].userId).to.equal(user1.id);
+  });
+
+});
+
 describe('Validate Followers', () => {
   let user1;
   let user2;
   beforeEach(async() => {
-    await models.Comment.destroy({where: {}});
-    await models.Post.destroy({where: {}});
-    await models.UserFollow.destroy({ where: {}});
-    await models.User.destroy({where: {}});
+    await deleteData(models);
 
     user1 = await models.User.create({ firstName: 'A', email: 'a@test.com', passwordHash: '123'});
     user2 = await models.User.create({ firstName: 'B', email: 'b@test.com', passwordHash: '123'});
