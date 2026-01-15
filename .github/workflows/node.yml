@@ -63,7 +63,7 @@ jobs:
       - name: Run tests
         env:
           NODE_ENV: example
-        run: npm example
+        run: npm test
 
       - name: Build application
         run: npm run build
