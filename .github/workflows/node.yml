@@ -26,7 +26,7 @@ jobs:
           node-version: ${{ matrix.node-version}}
 
       - name: Set up Docker Compose
-        run: docker-compose up -d mysql
+        run: docker compose -f docker-compose.yml up -d mysql
 
       - name: Wait for Mysql
         run: |
