@@ -25,7 +25,7 @@ jobs:
         ports:
           - 3306:3306
         options: >-
-          --health-cmd="mysqladmin ping --silent"
+          --health-cmd="mysqladmin ping -uroot -proot"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
@@ -45,10 +45,15 @@ jobs:
       - name: Copy .env.example to .env
         run: cp .env.example .env
 
-      - name: Wait for MySQL
+      - name: Wait for MySQL to be healthy
         run: |
           echo "Waiting for MySQL..."
-          until docker exec $(docker ps -qf "name=mysql") mysqladmin ping -uroot -proot --silent; do
+          for i in {1..30}; do
+            if docker exec $(docker ps -qf "ancestor=mysql:5") mysqladmin ping -uroot -proot --silent; then
+              echo "MySQL is up!"
+              break
+            fi
+            echo "Waiting 1s..."
             sleep 1
           done
 
@@ -58,11 +63,23 @@ jobs:
       - name: Run migrations
         env:
           NODE_ENV: example
-        run: npm run migrate --if-present
+          DB_USER: root
+          DB_PASSWORD: root
+          DB_NAME: cibbdd
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DIALECT: mysql
+        run: npm run migrations:run
 
       - name: Run tests
         env:
           NODE_ENV: example
+          DB_USER: root
+          DB_PASSWORD: root
+          DB_NAME: cibbdd
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DIALECT: mysql
         run: npm test
 
       - name: Build application
