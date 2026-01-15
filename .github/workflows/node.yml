@@ -25,6 +25,16 @@ jobs:
         with:
           node-version: ${{ matrix.node-version}}
 
+      - name: Set up Docker Compose
+        run: docker-compose up -d mysql
+
+      - name: Wait for Mysql
+        run: |
+          echo "Waiting for Mysql.."
+          until docker exec $(docker ps -qf "name=mysql") mysqladmin ping -u${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} --silent; do
+            sleep 1
+          done
+
       - name: Install dependencies
         run: npm install
 
@@ -32,6 +42,12 @@ jobs:
         run: npx eslint .
 
       - name: Run tests
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT_HOST }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
         run: npm test
 
       - name: Build application
