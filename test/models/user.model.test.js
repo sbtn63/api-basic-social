@@ -57,6 +57,20 @@ describe('Validate Posts', () => {
 
 });
 
+describe('Validate Reactions', () => {
+  let user1;
+  beforeEach(async() => {
+    await deleteData(models);
+    user1 = await models.User.create({ firstName: 'A', email: 'a@test.com', passwordHash: '123'});
+  });
+
+  it('should get posts', async () => {
+    const reactions = await user1.getReactions();
+    expect(reactions).to.be.an('array');
+  });
+
+});
+
 describe('Validate Followers', () => {
   let user1;
   let user2;

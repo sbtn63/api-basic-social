@@ -83,6 +83,12 @@ class User extends Model {
       as: 'posts',
       foreignKey: 'userId'
     });
+
+    // Reacciones usuario
+    this.hasMany(models.PostReaction, {
+      as: 'reactions',
+      foreignKey: 'userId'
+    });
   }
 
   static config(sequelize){

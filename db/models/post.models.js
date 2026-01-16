@@ -59,6 +59,19 @@ class Post extends Model {
       as: 'comments',
       foreignKey: 'postId'
     });
+
+    // Reacciones de la publicacion
+    this.belongsToMany(models.Reaction, {
+      through: models.PostReaction,
+      as: 'reactions',
+      foreignKey: 'post_id',
+      otherKey: 'reaction_id'
+    });
+
+    this.hasMany(models.PostReaction, {
+      as: 'postReactions',
+      foreignKey: 'post_id'
+    });
   }
 
   static config(sequelize){
