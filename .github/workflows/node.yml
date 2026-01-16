@@ -71,6 +71,17 @@ jobs:
           DB_DIALECT: mysql
         run: npx sequelize-cli db:migrate --env example
 
+      - name: Run seeders
+        env:
+          NODE_ENV: example
+          DB_USER: root
+          DB_PASSWORD: root
+          DB_NAME: cibbdd
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DIALECT: mysql
+        run: npx sequelize-cli db:seed:all --env example
+
       - name: Run tests
         env:
           NODE_ENV: example

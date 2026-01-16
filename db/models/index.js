@@ -3,7 +3,7 @@ const { UserFollow, UserFollowSchema } = require('./userFollows.model');
 const { Post, PostSchema } = require("./post.models");
 const { Comment, CommentSchema } = require("./comment.models");
 const { Reaction, ReactionSchema } = require("./reaction.models");
-const { PostReaction, PostReactionSchema } = require("./post.reactions.models");
+const { PostReaction, PostReactionSchema } = require("./postReactions.models");
 
 
 function setupModels(sequelize){

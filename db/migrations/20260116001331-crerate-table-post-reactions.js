@@ -1,6 +1,6 @@
 'use strict';
 
-const {POST_REACTION_TABLE, PostReactionSchema} = require("../models/post.reactions.models");
+const {POST_REACTION_TABLE, PostReactionSchema} = require("../models/postReactions.models");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

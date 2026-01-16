@@ -24,6 +24,13 @@ describe('Post Model', () => {
     expect(postComments[0].postId).to.equal(post.id);
   });
 
+  it('should get post reactions', async () => {
+    const reactionsFull = await post.getReactions();
+    const reactionsBasic = await post.getPostReactions();
+    expect(reactionsFull).to.be.an('array');
+    expect(reactionsBasic).to.be.an('array');
+  });
+
   it('should get posts', async () => {
     const posts = await models.Post.findAll();
     expect(posts).to.be.an('array');
