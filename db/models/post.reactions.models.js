@@ -58,7 +58,25 @@ const PostReactionSchema = {
 };
 
 class PostReaction extends Model {
-  static associate(models){}
+  static associate(models){
+    // Publicacion de la reaccion
+    this.belongsTo(models.Post, {
+      as: 'post',
+      foreignKey: 'postId'
+    });
+
+    // Usuario que reacciono
+    this.belongsTo(models.User, {
+      as: 'user',
+      foreignKey: 'userId'
+    });
+
+    // Tipo de reacccion
+    this.belongsTo(models.Reaction, {
+      as: 'reaction',
+      foreignKey: 'reactionId'
+    });
+  }
 
   static config(sequelize){
     return {
