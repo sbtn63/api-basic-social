@@ -4,6 +4,8 @@ const { Post, PostSchema } = require("./post.models");
 const { Comment, CommentSchema } = require("./comment.models");
 const { Reaction, ReactionSchema } = require("./reaction.models");
 const { PostReaction, PostReactionSchema } = require("./postReactions.models");
+const { TypeNotification, TypeNotificationSchema } = require("./typeNotifications.models");
+const { UserNotification, UserNotificationSchema } = require("./userNotifications.models");
 
 
 function setupModels(sequelize){
@@ -14,12 +16,15 @@ function setupModels(sequelize){
   Comment.init(CommentSchema, Comment.config(sequelize));
   Reaction.init(ReactionSchema, Reaction.config(sequelize));
   PostReaction.init(PostReactionSchema, PostReaction.config(sequelize));
+  TypeNotification.init(TypeNotificationSchema, TypeNotification.config(sequelize));
+  UserNotification.init(UserNotificationSchema, UserNotification.config(sequelize));
 
   //Asociaciones de modelos
   User.associate(sequelize.models);
   Post.associate(sequelize.models);
   Comment.associate(sequelize.models);
   PostReaction.associate(sequelize.models);
+  UserNotification.associate(sequelize.models);
 }
 
 module.exports = setupModels;

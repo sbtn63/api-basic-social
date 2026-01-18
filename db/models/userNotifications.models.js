@@ -37,7 +37,7 @@ const UserNotificationSchema = {
     onDelete: 'CASCADE'
   },
 
-  TypeNotificationId: {
+  typeNotificationId: {
     allowNull: false,
     type: DataTypes.INTEGER,
     field: 'type_notification_id',
@@ -72,7 +72,7 @@ const UserNotificationSchema = {
 
   message: {
     allowNull: false,
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
   },
 
   isRead: {
@@ -85,6 +85,7 @@ const UserNotificationSchema = {
   sendDate: {
     allowNull: false,
     type: DataTypes.DATE,
+    defaultValue: Sequelize.NOW,
     field: 'send_date'
   },
 
@@ -104,7 +105,37 @@ const UserNotificationSchema = {
 };
 
 class UserNotification extends Model {
-  static associate(models){}
+  static associate(models){
+    // User a quien va la notificacion
+    this.belongsTo(models.User, {
+      as: 'toUser',
+      foreignKey: 'toUserId'
+    });
+
+    // User que envio la notificacion
+    this.belongsTo(models.User, {
+      as: 'fromUser',
+      foreignKey: 'fromUserId'
+    });
+
+    // Type Notification enviada
+    this.belongsTo(models.TypeNotification, {
+      as: 'typeNotification',
+      foreignKey: 'typeNotificationId'
+    });
+
+    // Post que se realizo la accion
+    this.belongsTo(models.Post, {
+      as: 'post',
+      foreignKey: 'postId'
+    });
+
+     // Comentario que se realizo la accion
+    this.belongsTo(models.Comment, {
+      as: 'comment',
+      foreignKey: 'commentId'
+    });
+  }
 
   static config(sequelize){
     return {
