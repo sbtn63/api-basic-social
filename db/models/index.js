@@ -6,6 +6,7 @@ const { Reaction, ReactionSchema } = require("./reaction.models");
 const { PostReaction, PostReactionSchema } = require("./postReactions.models");
 const { TypeNotification, TypeNotificationSchema } = require("./typeNotifications.models");
 const { UserNotification, UserNotificationSchema } = require("./userNotifications.models");
+const { AuditLog, AuditLogSchema } = require('./auditLogs.models');
 
 
 function setupModels(sequelize){
@@ -18,6 +19,7 @@ function setupModels(sequelize){
   PostReaction.init(PostReactionSchema, PostReaction.config(sequelize));
   TypeNotification.init(TypeNotificationSchema, TypeNotification.config(sequelize));
   UserNotification.init(UserNotificationSchema, UserNotification.config(sequelize));
+  AuditLog.init(AuditLogSchema, AuditLog.config(sequelize));
 
   //Asociaciones de modelos
   User.associate(sequelize.models);
