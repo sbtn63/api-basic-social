@@ -89,6 +89,12 @@ class User extends Model {
       as: 'reactions',
       foreignKey: 'userId'
     });
+
+    // Notificaciones del usuario
+    this.hasMany(models.UserNotification, {
+      as: 'notifications',
+      foreignKey: 'toUserId'
+    });
   }
 
   static config(sequelize){
