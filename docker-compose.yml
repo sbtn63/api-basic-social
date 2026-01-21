@@ -19,3 +19,11 @@ services:
       - PMA_HOST=${CONTAINER_PMA_HOST}
     ports:
       - ${PMA_PORT_HOST}:${CONTAINER_PMA_PORT_HOST}
+
+  pgadmin:
+    image: ${CONTAINER_PGA_IMAGE}
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${EMAIL_PGA}
+      - PGADMIN_DEFAULT_PASSWORD=${PASSWORD_PGA}
+    ports:
+      - ${PGA_PORT_HOST}:${PGA_CONTAINER_PORT}

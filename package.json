@@ -12,13 +12,15 @@
     "start": "node app.js",
     "lint": "eslint",
     "build": "echo 'No build step required'",
+
+    "migrations:run": "sequelize-cli db:migrate --env $NODE_ENV",
+    "migrations:revert": "sequelize-cli db:migrate:undo --env $NODE_ENV",
+    "migrations:delete": "sequelize-cli db:migrate:undo:all --env $NODE_ENV",
+
     "migration:generate": "sequelize-cli migration:generate --name",
-    "migrations:run": "sequelize-cli db:migrate",
-    "migrations:revert": "sequelize-cli db:migrate:undo",
-    "migrations:delete": "sequelize-cli db:migrate:undo:all",
     "seeder:generate": "sequelize-cli seed:generate --name",
-    "seeders:all": "sequelize-cli db:seed:all",
-    "seeder:run": "sequelize-cli db:seed --seed"
+    "seeders:all": "sequelize-cli db:seed:all --env $NODE_ENV",
+    "seeder:run": "sequelize-cli db:seed --env $NODE_ENV --seed"
   },
   "keywords": [],
   "author": "",
