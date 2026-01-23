@@ -3,10 +3,10 @@ name: SonarCloud Scan
 on:
   push:
     branches:
-      - '**'       # todas las ramas
+      - 'release/qa'       # todas las ramas
   pull_request:
     branches:
-      - '**'
+      - 'release/qa'
 
 jobs:
   sonar:
