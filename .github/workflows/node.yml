@@ -18,7 +18,7 @@ jobs:
 
     services:
       mysql:
-        image: mysql:5
+        image: mysql:8
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: cibbdd
@@ -44,18 +44,6 @@ jobs:
 
       - name: Copy .env.example to .env
         run: cp .env.example .env
-
-      - name: Wait for MySQL to be ready
-        run: |
-          echo "Waiting for MySQL..."
-          for i in {1..30}; do
-            if docker exec $(docker ps -qf "ancestor=mysql:5") mysqladmin ping -uroot -proot --silent; then
-              echo "MySQL is up!"
-              break
-            fi
-            echo "Waiting 1s..."
-            sleep 1
-          done
 
       - name: Run ESLint
         run: npx eslint .

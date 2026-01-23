@@ -1,0 +1,80 @@
+name: Docker CI Express + MySQL
+
+on:
+  push:
+    branches:
+      - 'release/*'
+  pull_request:
+    branches:
+      - 'release/*'
+
+jobs:
+  docker-ci:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: cibbdd
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -uroot -proot --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - name: Build Docker image
+        run: |
+          docker build -t mi-app-node:ci .
+
+      - name: Run container (detached)
+        run: |
+          docker run -d \
+            --name app-node-ci \
+            -e ENV=example \
+            -e DB_HOST=mysql \
+            -e DB_USER=root \
+            -e DB_PASSWORD=root \
+            -e DB_NAME=cibbdd \
+            -e DB_PORT=3306 \
+            -p 3007:3007 \
+            mi-app-node:ci tail -f /dev/null
+
+      - name: Wait for MySQL to be ready
+        run: |
+          for i in {1..30}; do
+            if docker exec app-node-ci sh -c "nc -z $DB_HOST $DB_PORT"; then
+              echo "MySQL listo!"
+              break
+            fi
+            sleep 1
+          done
+
+      - name: Start Express inside container
+        run: |
+          docker exec -d app-node-ci node app.js
+
+      - name: Wait for Express to be ready
+        run: |
+          for i in {1..30}; do
+            if curl -s http://localhost:3007/; then
+              echo "Express listo!"
+              break
+            fi
+            sleep 1
+          done
+
+      - name: Cleanup
+        run: |
+          docker rm -f app-node-ci

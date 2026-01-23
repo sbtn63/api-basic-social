@@ -7,7 +7,9 @@ module.exports = {
     password: config.dbPassword,
     database: config.dbName,
     port: config.dbPort,
-    dialect: config.dbDialect
+    dialect: config.dbDialect,
+    seederStorage: 'sequelize',
+    seederStorageTableName: 'SequelizeData',
   },
   example: {
     host: config.dbHost,
@@ -15,7 +17,9 @@ module.exports = {
     password: config.dbPassword,
     database: config.dbName,
     port: config.dbPort,
-    dialect: config.dbDialect
+    dialect: config.dbDialect,
+    seederStorage: 'sequelize',
+    seederStorageTableName: 'SequelizeData',
   },
   qa: {
     host: config.dbHost,
@@ -24,6 +28,8 @@ module.exports = {
     database: config.dbName,
     port: config.dbPort,
     dialect: config.dbDialect,
+    seederStorage: 'sequelize',
+    seederStorageTableName: 'SequelizeData',
     dialectOptions: {
       ssl: {
         require: true,
