@@ -1,0 +1,72 @@
+name: Docker CI
+
+on:
+  push:
+    branches:
+      - 'release/*'
+  pull_request:
+    branches:
+      - 'release/*'
+
+jobs:
+  docker-express:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: cibbdd
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -uroot -proot --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - name: Build Docker image
+        run: |
+          docker build -t mi-app-node:ci .
+
+      - name: Run app container
+        run: |
+          docker run -d \
+            --name app-node-ci \
+            -e ENV=example \
+            -e DB_HOST=mysql \
+            -e DB_USER=root \
+            -e DB_PASSWORD=root \
+            -e DB_NAME=cibbdd \
+            -e DB_PORT=3306 \
+            -p 3007:3007 \
+            mi-app-node:ci
+
+      - name: Wait for Express to be ready
+        run: |
+          for i in {1..30}; do
+            if curl -s http://localhost:3007/health; then
+              echo "Express server is up!"
+              break
+            fi
+            echo "Waiting 1s..."
+            sleep 1
+          done
+
+      - name: Run tests against running app
+        run: |
+          docker exec app-node-ci npm test
+
+      - name: Cleanup
+        run: |
+          docker rm -f app-node-ci
+          docker rmi -f mi-app-node:ci
