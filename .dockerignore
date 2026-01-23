@@ -1,0 +1,8 @@
+mysql_data/
+node_modules
+.git
+.github
+.env
+.env.*
+Dockerfile
+docker-compose.yml
