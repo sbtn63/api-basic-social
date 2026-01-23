@@ -1,4 +1,4 @@
-name: Docker CI
+name: Docker CI Express + MySQL
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - 'release/*'
 
 jobs:
-  docker-express:
+  docker-ci:
     runs-on: ubuntu-latest
 
     services:
@@ -38,7 +38,7 @@ jobs:
         run: |
           docker build -t mi-app-node:ci .
 
-      - name: Run app container
+      - name: Run container (detached)
         run: |
           docker run -d \
             --name app-node-ci \
@@ -49,20 +49,41 @@ jobs:
             -e DB_NAME=cibbdd \
             -e DB_PORT=3306 \
             -p 3007:3007 \
-            mi-app-node:ci
+            mi-app-node:ci tail -f /dev/null
+
+      - name: Wait for MySQL to be ready
+        run: |
+          for i in {1..30}; do
+            if docker exec app-node-ci sh -c "nc -z $DB_HOST $DB_PORT"; then
+              echo "MySQL listo!"
+              break
+            fi
+            sleep 1
+          done
+
+      - name: Run migrations inside container
+        run: |
+          docker exec app-node-ci npx sequelize-cli db:migrate --env example
+
+      - name: Run seeders inside container
+        run: |
+          docker exec app-node-ci npx sequelize-cli db:seed:all --env example
+
+      - name: Start Express inside container
+        run: |
+          docker exec -d app-node-ci node app.js
 
       - name: Wait for Express to be ready
         run: |
           for i in {1..30}; do
             if curl -s http://localhost:3007/health; then
-              echo "Express server is up!"
+              echo "Express listo!"
               break
             fi
-            echo "Waiting 1s..."
             sleep 1
           done
 
-      - name: Run tests against running app
+      - name: Run tests
         run: |
           docker exec app-node-ci npm test
 
