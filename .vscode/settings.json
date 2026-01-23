@@ -1,0 +1,6 @@
+{
+    "sonarlint.connectedMode.project": {
+        "connectionId": "api-basic-social",
+        "projectKey": "api-social"
+    }
+}
