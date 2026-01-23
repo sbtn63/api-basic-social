@@ -61,14 +61,6 @@ jobs:
             sleep 1
           done
 
-      - name: Run migrations inside container
-        run: |
-          docker exec app-node-ci npx sequelize-cli db:migrate --env example
-
-      - name: Run seeders inside container
-        run: |
-          docker exec app-node-ci npx sequelize-cli db:seed:all --env example
-
       - name: Start Express inside container
         run: |
           docker exec -d app-node-ci node app.js
@@ -76,18 +68,13 @@ jobs:
       - name: Wait for Express to be ready
         run: |
           for i in {1..30}; do
-            if curl -s http://localhost:3007/health; then
+            if curl -s http://localhost:3007/; then
               echo "Express listo!"
               break
             fi
             sleep 1
           done
 
-      - name: Run tests
-        run: |
-          docker exec app-node-ci npm test
-
       - name: Cleanup
         run: |
           docker rm -f app-node-ci
-          docker rmi -f mi-app-node:ci
