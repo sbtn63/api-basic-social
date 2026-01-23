@@ -5,9 +5,9 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install --only=production
 
-COPY . .
+COPY . /app
 
-RUN chmod +x entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 
 EXPOSE $PORT
 
