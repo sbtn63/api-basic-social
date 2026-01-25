@@ -30,7 +30,7 @@ const insertUserNotification = async (
       userNotification
     );
 
-    return userNotification ? true : false;
+    return !!userNotification;
   } catch (error) {
     console.error('Insert User Notification failed, continuing process:', error);
     return false;

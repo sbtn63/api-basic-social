@@ -9,14 +9,13 @@
   "scripts": {
     "dev": "NODE_ENV=dev nodemon app.js",
     "test": "mocha './test/**/*.test.js'",
+    "coverage": "nyc mocha './test/**/*.test.js'",
     "start": "node app.js",
     "lint": "eslint",
     "build": "echo 'No build step required'",
-
     "migrations:run": "sequelize-cli db:migrate --env $NODE_ENV",
     "migrations:revert": "sequelize-cli db:migrate:undo --env $NODE_ENV",
     "migrations:delete": "sequelize-cli db:migrate:undo:all --env $NODE_ENV",
-
     "migration:generate": "sequelize-cli migration:generate --name",
     "seeder:generate": "sequelize-cli seed:generate --name",
     "seeders:all": "sequelize-cli db:seed:all --env $NODE_ENV",
@@ -44,7 +43,14 @@
     "eslint-plugin-prettier": "^5.5.4",
     "mocha": "^11.7.5",
     "nodemon": "^3.1.11",
+    "nyc": "^17.1.0",
     "prettier": "^3.7.4",
     "sequelize-cli": "^6.6.5"
+  },
+  "nyc": {
+    "reporter": ["text", "lcov"],
+    "report-dir": "./coverage",
+    "exclude": ["test/**", "node_modules/**", "mysql_data/**"],
+    "extension": [".js"]
   }
 }
