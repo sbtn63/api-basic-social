@@ -17,7 +17,7 @@ const insertAuditLog = async (
       oldData,
       newData
     })
-    return audit ? true : false;
+    return !!audit;
   } catch (error) {
     console.error('Audit log failed, continuing process:', error);
     return false;

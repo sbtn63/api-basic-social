@@ -35,8 +35,6 @@ const ReactionSchema = {
 };
 
 class Reaction extends Model {
-  static associate(models){}
-
   static config(sequelize){
     return {
       sequelize,
