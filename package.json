@@ -50,7 +50,7 @@
   "nyc": {
     "reporter": ["text", "lcov"],
     "report-dir": "./coverage",
-    "exclude": ["test/**", "node_modules/**", "mysql_data/**"],
+    "exclude": ["test/**", "node_modules/**"],
     "extension": [".js"]
   }
 }
