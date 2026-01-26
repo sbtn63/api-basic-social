@@ -46,7 +46,7 @@ describe('Validate Posts', () => {
   beforeEach(async() => {
     await deleteData(models);
     user1 = await models.User.create({ firstName: 'A', email: 'a@test.com', passwordHash: '123'});
-    post = await models.Post.create({description: 'Test1', userId: user1.id});
+    await models.Post.create({description: 'Test1', userId: user1.id});
   });
 
   it('should get posts', async () => {

@@ -7,14 +7,13 @@ const { deleteData } = require("../utils");
 describe('Post Model', () => {
   let post;
   let user;
-  let comment;
 
   beforeEach(async() => {
     await deleteData(models);
 
     user = await models.User.create({ firstName: 'A', email: 'a@test.com', passwordHash: '123'});
     post = await models.Post.create({description: 'Test1', userId: user.id});
-    comment = await models.Comment.create({content: 'Test Comment', userId: user.id, postId: post.id});
+    await models.Comment.create({content: 'Test Comment', userId: user.id, postId: post.id});
   });
 
   it('should get post comments', async () => {
@@ -60,7 +59,7 @@ describe('Post Model', () => {
 
   it('should delete post', async () => {
     await post.destroy();
-    const deletePost = await models.User.findByPk(post.id);
+    const deletePost = await models.Post.findByPk(post.id);
     expect(deletePost).to.be.null;
   });
 
