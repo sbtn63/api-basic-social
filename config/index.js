@@ -1,5 +1,5 @@
 const dotenv = require('dotenv');
-const path = require('path');
+const path = require('node:path');
 
 // 1. Determinar que archivo cargar
 const envFile = `.env.${process.env.NODE_ENV || 'dev'}`;
