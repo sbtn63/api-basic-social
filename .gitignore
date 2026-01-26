@@ -225,3 +225,5 @@ mysql_data
 .env.qa
 .env.prod
 !.env.example
+
+.scannerwork
