@@ -25,10 +25,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "express-jwt": "^8.5.1",
     "joi": "^18.0.2",
+    "jsonwebtoken": "^9.0.3",
     "mysql2": "^3.16.0",
     "pg": "^8.16.3",
     "pg-hstore": "^2.3.4",
@@ -48,9 +51,17 @@
     "sequelize-cli": "^6.6.5"
   },
   "nyc": {
-    "reporter": ["text", "lcov"],
+    "reporter": [
+      "text",
+      "lcov"
+    ],
     "report-dir": "./coverage",
-    "exclude": ["test/**", "node_modules/**"],
-    "extension": [".js"]
+    "exclude": [
+      "test/**",
+      "node_modules/**"
+    ],
+    "extension": [
+      ".js"
+    ]
   }
 }

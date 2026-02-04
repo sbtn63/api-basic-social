@@ -1,9 +1,13 @@
 const express = require('express');
 const config = require('./config');
+const responseFormat = require('./middleware/responseFormat.middleware');
+const authMiddleware = require('./middleware/auth.middleware');
 
 const app = express();
 
 app.use(express.json());
+app.use(responseFormat);
+app.use(authMiddleware);
 
 app.get("/", (req, res) => {
   return res.json({
