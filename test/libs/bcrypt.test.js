@@ -1,5 +1,7 @@
 const { expect } = require("chai");
 const chai = require("chai");
+const sinon = require("sinon");
+const bcrypt = require("bcrypt");
 
 const { genHashSaltPassword, checkPassword } = require("../../libs/bcrypt");
 
@@ -28,16 +30,24 @@ describe('Bcrypt Tests', () => {
     try {
       await checkPassword("algunPassword", "esto-no-es-un-hash-valido");
     } catch (err) {
+      expect(err).to.be.an('error');
        expect(err.message).to.include("Error al comparar contraseñas");
     }
   });
 
   it('Generation failed', async () => {
+    sinon.stub(bcrypt, 'hash').throws(new Error('boom'));
+
+    let error;
     try {
-      await genHashSaltPassword({ notA: "string" });
+      await genHashSaltPassword("password");
     } catch (err) {
-      expect(err).to.be.an('error');
-      expect(err.message).to.contain("Error al generar el hash");
+      error = err;
     }
+
+    expect(error).to.be.an('error');
+    expect(error.message).to.contain("Error al generar el hash");
+
+    bcrypt.hash.restore();
   });
 });

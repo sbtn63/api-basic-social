@@ -1,6 +1,7 @@
 const { expect } = require("chai");
 const chai = require("chai");
 
+const config = require("../../config/index");
 const generateJwt = require("../../libs/jwt");
 
 describe('JWT Tests', () => {
@@ -12,12 +13,13 @@ describe('JWT Tests', () => {
     expect(token.length).to.be.at.least(20);
   });
 
-  it('Generation failed', async () => {
-    try {
-      generateJwt(null);
-    } catch (err) {
-      expect(err).to.be.an('error');
-      expect(err.message).to.contain("Error al generar el token");
-    }
+  it('Generation failed', () => {
+    const originalKey = config.jwtKey;
+    config.jwtKey = undefined;
+
+    expect(() => generateJwt('test@email.com'))
+      .to.throw("Error al generar el token");
+
+    config.jwtKey = originalKey;
   });
 });
