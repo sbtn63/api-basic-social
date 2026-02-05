@@ -1,8 +1,10 @@
 const express = require("express");
 
+const {AUTH_ROUTES} = require("./consts");
+
 const router = express.Router();
 
-router.get("/login", async (req, res, next) => {
+router.get(AUTH_ROUTES.LOGIN, async (req, res, next) => {
   try {
     res.sendResponse(200, "Endpoint Login!!");
   } catch (error) {
@@ -10,7 +12,7 @@ router.get("/login", async (req, res, next) => {
   }
 });
 
-router.get("/register", async (req, res, next) => {
+router.get(AUTH_ROUTES.REGISTER, async (req, res, next) => {
   try {
     res.sendResponse(200, "Endpoint Register");
   } catch (error) {
