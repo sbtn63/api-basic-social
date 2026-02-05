@@ -33,11 +33,11 @@ describe('Bcrypt Tests', () => {
   });
 
   it('Generation failed', async () => {
-  try {
-    await genHashSaltPassword({ notA: "string" });
-  } catch (err) {
-    expect(err).to.be.an('error');
-    expect(err.message).to.contain("Error al generar el hash");
-  }
-});
+    try {
+      await genHashSaltPassword({ notA: "string" });
+    } catch (err) {
+      expect(err).to.be.an('error');
+      expect(err.message).to.contain("Error al generar el hash");
+    }
+  });
 });
