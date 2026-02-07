@@ -19,6 +19,7 @@ const registerUser = async (body) => {
 
   const newUser = await createUser(body);
   const token = generateJwt(newUser.id);
+  const { passwordHash, ...userData } = newUser.toJSON();
 
   await insertAuditLog(
     newUser.id,
@@ -26,7 +27,7 @@ const registerUser = async (body) => {
     TABLE_NAMES.USER_TABLE,
     newUser.id,
     null,
-    newUser.toJSON()
+    userData
   );
 
   return ResponseSuccess.success("User register successfully", {token}, 201);
