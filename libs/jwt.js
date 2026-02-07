@@ -1,10 +1,10 @@
 const jwt = require("jsonwebtoken");
 const config = require("../config/index");
 
-function generateJwt(email) {
+function generateJwt(id) {
   try {
     const token = jwt.sign(
-      { sub: email },
+      { sub: id },
       config.jwtKey,
       { algorithm: 'HS256', expiresIn: config.jwtExpires}
     );

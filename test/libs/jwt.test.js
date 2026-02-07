@@ -6,8 +6,8 @@ const generateJwt = require("../../libs/jwt");
 
 describe('JWT Tests', () => {
   it('Validation success generateJwt', async () => {
-    const email = 'test@gmail.com';
-    const token = generateJwt(email);
+    const id = 'test@gmail.com';
+    const token = generateJwt(id);
 
     expect(token).to.be.a('string');
     expect(token.length).to.be.at.least(20);
@@ -17,7 +17,7 @@ describe('JWT Tests', () => {
     const originalKey = config.jwtKey;
     config.jwtKey = undefined;
 
-    expect(() => generateJwt('test@email.com'))
+    expect(() => generateJwt(1))
       .to.throw("Error al generar el token");
 
     config.jwtKey = originalKey;

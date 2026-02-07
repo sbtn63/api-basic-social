@@ -27,7 +27,7 @@ const insertUserNotification = async (
       TABLE_NAMES.USER_NOTIFICATION_TABLE,
       userNotification.id,
       null,
-      userNotification
+      userNotification.toJSON()
     );
 
     return !!userNotification;
@@ -54,7 +54,7 @@ const readUserNotification = async (
         TABLE_NAMES.USER_NOTIFICATION_TABLE,
         userNotification.id,
         oldUserNotification,
-        userNotification
+        userNotification.toJSON()
       );
 
       return true;
