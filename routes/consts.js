@@ -4,6 +4,11 @@ const AUTH_ROUTES = Object.freeze({
   LOGIN: "/login",
 });
 
+const USER_ROUTES = Object.freeze({
+  ME: "/me",
+});
+
 module.exports = {
   AUTH_ROUTES,
+  USER_ROUTES,
 }

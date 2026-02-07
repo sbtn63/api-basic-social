@@ -6,7 +6,7 @@ class ResponseSuccess {
   }
 
   static success(message, data, status=200) {
-    return new ResponseSchema(status, message, data);
+    return new ResponseSuccess(status, message, data);
   }
 }
 
