@@ -1,6 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 const isAuth  = require('../../middleware/isAuth.middleware');
+const { MIDDLEWARE_MESSAGES } = require('../../middleware/const');
 
 describe('Middleware isAuth', () => {
   let req, res, next;
@@ -16,7 +17,7 @@ describe('Middleware isAuth', () => {
   it('401 req.auth not exists', () => {
     req.auth = null;
     isAuth(req, res, next);
-    expect(res.sendResponse.calledOnceWith(401, "No autorizado, token faltante o invalido")).to.be.true;
+    expect(res.sendResponse.calledOnceWith(401, MIDDLEWARE_MESSAGES.UNAUTHORIZED_TOKEN)).to.be.true;
     expect(next.called).to.be.false;
   });
 

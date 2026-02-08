@@ -1,4 +1,5 @@
 const ResponseError = require("../schemas/responseError.schema");
+const { MIDDLEWARE_MESSAGES } = require("./const");
 
 function validatorHandler(schema, property) {
   return (req, res, next) => {
@@ -11,7 +12,7 @@ function validatorHandler(schema, property) {
         validationErrors[item.context.key] = item.message;
       });
 
-      const appError = new ResponseError("Validation Error", 400);
+      const appError = new ResponseError(MIDDLEWARE_MESSAGES.VALIDATION_ERROR, 400);
       appError.details = validationErrors;
 
       return next(appError);

@@ -2,6 +2,7 @@ const { models } = require("../libs/sequelize");
 const { genHashSaltPassword } = require("../libs/bcrypt");
 const ResponseSuccess = require("../schemas/responseSuccess.schema");
 const ResponseError = require("../schemas/responseError.schema");
+const { SERVICE_MESSAGES } = require("./consts");
 
 const getUserByEmail = async (email) => {
   return await models.User.unscoped().findOne({
@@ -23,10 +24,10 @@ const createUser = async (data) => {
 
 const getUserProfile = async (id) => {
   const user = await models.User.findByPk(id);
-  if(!user) throw new ResponseError("User not found!!", 404);
+  if(!user) throw new ResponseError(SERVICE_MESSAGES.USER_NOT_FOUND, 404);
   delete user.createAt;
   delete user.updatedAt;
-  return ResponseSuccess.success("User profile!!", user, 200);
+  return ResponseSuccess.success(SERVICE_MESSAGES.USER_PROFILE, user, 200);
 };
 
 module.exports = {

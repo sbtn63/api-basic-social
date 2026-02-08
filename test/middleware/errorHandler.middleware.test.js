@@ -2,6 +2,7 @@ const { expect } = require("chai");
 const sinon = require("sinon");
 
 const errorHandler = require("../../middleware/errorHandler.middleware");
+const { MIDDLEWARE_MESSAGES } = require("../../middleware/const");
 
 describe("Error Handler Middleware", () => {
   let req, res, next;
@@ -40,7 +41,7 @@ describe("Error Handler Middleware", () => {
     expect(res.status.calledWith(500)).to.be.true;
     expect(res.json.firstCall.args[0]).to.deep.equal({
       status: 500,
-      message: "Error internal server",
+      message: MIDDLEWARE_MESSAGES.INTERNAL_ERROR_SERVE,
       data: null,
       path: "/test-route"
     });

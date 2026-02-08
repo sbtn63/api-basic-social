@@ -6,6 +6,7 @@ const { deleteData } = require('../utils');
 const { models } = require('../../libs/sequelize');
 const { createUser } = require("../../services/user.service");
 const generateJwt = require("../../libs/jwt");
+const { MIDDLEWARE_MESSAGES } = require('../../middleware/const');
 
 describe('GET Profile', () => {
   beforeEach(async () => {
@@ -35,6 +36,6 @@ describe('GET Profile', () => {
       .get('/api/v1/users/me')
       .expect(401);
 
-    expect(res.body.message).to.equal("No autorizado, token faltante o invalido");
+    expect(res.body.message).to.equal(MIDDLEWARE_MESSAGES.UNAUTHORIZED_TOKEN);
   });
 });

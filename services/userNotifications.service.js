@@ -1,7 +1,7 @@
 const { models } = require("../libs/sequelize");
 
 const { insertAuditLog } = require("./audit.service");
-const { ACTIONS_AUDIT, TABLE_NAMES } = require("./consts");
+const { ACTIONS_AUDIT, TABLE_NAMES, SERVICE_MESSAGES } = require("./consts");
 
 const insertUserNotification = async (
   toUserId,
@@ -32,7 +32,7 @@ const insertUserNotification = async (
 
     return !!userNotification;
   } catch (error) {
-    console.error('Insert User Notification failed, continuing process:', error);
+    console.error(SERVICE_MESSAGES.NOTIFICATION_FAILED, error);
     return false;
   }
 };

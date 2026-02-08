@@ -7,6 +7,7 @@ const { loginUser, registerUser } = require("../../services/auth.service");
 const { createUser } = require("../../services/user.service");
 const ResponseError = require("../../schemas/responseError.schema");
 const ResponseSuccess = require("../../schemas/responseSuccess.schema");
+const { SERVICE_MESSAGES } = require("../../services/consts");
 
 describe('Auth Service Test', () => {
   let body;
@@ -26,7 +27,7 @@ describe('Auth Service Test', () => {
     const response = await registerUser(body);
     expect(response.data).to.be.an('object');
     expect(response).to.be.instanceOf(ResponseSuccess);
-    expect(response.message).to.be.equal("User register successfully");
+    expect(response.message).to.be.equal(SERVICE_MESSAGES.REGISTER_USER);
     expect(response.data.token).to.be.a('string');
     expect(response.data.token.length).to.be.at.least(20);
     expect(response.status).to.be.equal(201);
@@ -39,8 +40,8 @@ describe('Auth Service Test', () => {
     } catch (error) {
       expect(error).to.be.instanceOf(ResponseError);
       expect(error.status).to.be.equal(400);
-      expect(error.message).to.be.equal('Validation Error');
-      expect(error.details.email).to.be.equal('Email already in use. Please login instead');
+      expect(error.message).to.be.equal(SERVICE_MESSAGES.VALIDATION_ERROR);
+      expect(error.details.email).to.be.equal(SERVICE_MESSAGES.EMAIL_VALIDATION_MESSAGE);
     }
   });
 
@@ -52,7 +53,7 @@ describe('Auth Service Test', () => {
 
     expect(response.data).to.be.an('object');
     expect(response).to.be.instanceOf(ResponseSuccess);
-    expect(response.message).to.be.equal("User login successfully");
+    expect(response.message).to.be.equal(SERVICE_MESSAGES.LOGIN_USER);
     expect(response.data.token).to.be.a('string');
     expect(response.data.token.length).to.be.at.least(20);
     expect(response.status).to.be.equal(200);
@@ -68,7 +69,7 @@ describe('Auth Service Test', () => {
     } catch (error) {
       expect(error).to.be.instanceOf(ResponseError);
       expect(error.status).to.be.equal(400);
-      expect(error.message).to.be.equal('Credentials Invalid!!');
+      expect(error.message).to.be.equal(SERVICE_MESSAGES.CREDENTIALS_INVALID);
     }
   });
 
@@ -82,7 +83,7 @@ describe('Auth Service Test', () => {
     } catch (error) {
       expect(error).to.be.instanceOf(ResponseError);
       expect(error.status).to.be.equal(400);
-      expect(error.message).to.be.equal('Credentials Invalid!!');
+      expect(error.message).to.be.equal(SERVICE_MESSAGES.CREDENTIALS_INVALID);
     }
   });
 });

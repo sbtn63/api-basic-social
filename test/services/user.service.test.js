@@ -5,6 +5,7 @@ const { models } = require("../../libs/sequelize");
 const { deleteData } = require("../utils");
 const { createUser, getUserByEmail, getUserProfile } = require("../../services/user.service");
 const ResponseError = require("../../schemas/responseError.schema");
+const { SERVICE_MESSAGES } = require("../../services/consts");
 
 describe('User Service Test', () => {
   let newUser;
@@ -47,7 +48,7 @@ describe('User Service Test', () => {
     const response = await getUserProfile(newUser.id);
     expect(response).to.be.an('object');
     expect(response.status).to.be.equal(200);
-    expect(response.message).to.be.equal('User profile!!');
+    expect(response.message).to.be.equal(SERVICE_MESSAGES.USER_PROFILE);
 
     expect(response.data).to.be.an('object');
     expect(response.data.id).to.be.equal(newUser.id);
@@ -61,7 +62,7 @@ describe('User Service Test', () => {
     } catch (error) {
       expect(error).to.be.instanceOf(ResponseError);
       expect(error.status).to.be.equal(404);
-      expect(error.message).to.be.equal('User not found!!');
+      expect(error.message).to.be.equal(SERVICE_MESSAGES.USER_NOT_FOUND);
     }
   });
 });

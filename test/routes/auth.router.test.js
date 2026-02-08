@@ -4,6 +4,7 @@ const { expect } = require("chai");
 const { deleteData } = require('../utils');
 const { models } = require('../../libs/sequelize');
 const { createUser } = require("../../services/user.service");
+const { SERVICE_MESSAGES } = require('../../services/consts');
 
 describe('POST Register', () => {
   beforeEach(async () => {
@@ -23,7 +24,7 @@ describe('POST Register', () => {
       .expect(201);
 
     console.log(res.body);
-    expect(res.body.message).to.be.equal('User register successfully');
+    expect(res.body.message).to.be.equal(SERVICE_MESSAGES.REGISTER_USER);
   });
 
   it('Should register a user failed', async () => {
@@ -58,7 +59,7 @@ describe('POST Login', () => {
       .expect(200);
 
     console.log(res.body);
-    expect(res.body.message).to.be.equal('User login successfully');
+    expect(res.body.message).to.be.equal(SERVICE_MESSAGES.LOGIN_USER);
   });
 
   it('Should register a user failed', async () => {
