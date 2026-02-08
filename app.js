@@ -25,3 +25,5 @@ app.use(errorHandler);
 app.listen(config.port, (req, res) => {
   console.log(`Puerto escuchando en el ${config.port}`);
 });
+
+module.exports = app;
