@@ -37,8 +37,21 @@ const TABLE_NAMES = Object.freeze({
   REACTION_TABLE
 });
 
+const SERVICE_MESSAGES = Object.freeze({
+  AUDIT_FAILED: "Audit log failed, continuing process:",
+  NOTIFICATION_FAILED: "Insert User Notification failed, continuing process:",
+  USER_NOT_FOUND: "User not found!!",
+  USER_PROFILE: "User profile!!",
+  EMAIL_VALIDATION_MESSAGE: "Email already in use. Please login instead",
+  VALIDATION_ERROR: "Validation Error",
+  REGISTER_USER: "User register successfully",
+  CREDENTIALS_INVALID: "Credentials Invalid!!",
+  LOGIN_USER: "User login successfully",
+});
+
 module.exports = {
   ACTIONS_AUDIT,
   TYPE_NOTIFICATION,
   TABLE_NAMES,
+  SERVICE_MESSAGES,
 }

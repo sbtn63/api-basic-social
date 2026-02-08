@@ -1,4 +1,5 @@
 const { models } = require("../libs/sequelize");
+const { SERVICE_MESSAGES } = require("./consts");
 
 const insertAuditLog = async (
   userId,
@@ -19,7 +20,7 @@ const insertAuditLog = async (
     })
     return !!audit;
   } catch (error) {
-    console.error('Audit log failed, continuing process:', error);
+    console.error(SERVICE_MESSAGES.AUDIT_FAILED, error);
     return false;
   }
 };
