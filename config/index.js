@@ -15,7 +15,10 @@ const config = {
   dbName: process.env.DB_NAME,
   dbHost: process.env.DB_HOST,
   dbPort: process.env.DB_PORT_HOST,
-  dbDialect: process.env.DB_DIALECT
+  dbDialect: process.env.DB_DIALECT,
+  bcryptSaltRounds: Number.parseInt(process.env.BCRYPT_SALT_ROUNDS, 10),
+  jwtKey: process.env.JWT_KEY,
+  jwtExpires: process.env.JWT_EXPIRES,
 };
 
 // 3. Validación: Asegurar que variables críticas existan

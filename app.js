@@ -1,9 +1,15 @@
 const express = require('express');
-const config = require('./config');
+
+const apiRouter = require("./server/index");
+const responseFormat = require('./middleware/responseFormat.middleware');
+const { authMiddleware } = require('./middleware/auth.middleware');
+const errorHandler = require('./middleware/errorHandler.middleware');
 
 const app = express();
 
 app.use(express.json());
+app.use(responseFormat);
+app.use(authMiddleware);
 
 app.get("/", (req, res) => {
   return res.json({
@@ -11,6 +17,8 @@ app.get("/", (req, res) => {
   });
 });
 
-app.listen(config.port, (req, res) => {
-  console.log(`Puerto escuchando en el ${config.port}`);
-});
+apiRouter(app);
+
+app.use(errorHandler);
+
+module.exports = app;

@@ -103,8 +103,10 @@ class User extends Model {
       tableName: USER_TABLE,
       modelName: 'User',
       timestamps: true,
-      createdAt: 'created_at',
-      updatedAt: 'updated_at',
+      underscored: true,
+      defaultScope: {
+        attributes: { exclude: ['passwordHash', 'createdAt', 'updatedAt'] }
+      }
     };
   }
 }
