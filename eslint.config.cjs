@@ -4,7 +4,7 @@ module.exports = [
     files: ["**/*.js"],
     languageOptions: {
       parserOptions: {
-        ecmaVersion: 2018
+        ecmaVersion: 2020
       },
       globals: {
         // Node y Jest
