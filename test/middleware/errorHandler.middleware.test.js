@@ -1,8 +1,8 @@
 const { expect } = require("chai");
 const sinon = require("sinon");
 
-const errorHandler = require("../../middleware/errorHandler.middleware");
-const { MIDDLEWARE_MESSAGES } = require("../../middleware/const");
+const errorHandler = require("../../src/middleware/errorHandler.middleware");
+const { MIDDLEWARE_MESSAGES } = require("../../src/middleware/const");
 
 describe("Error Handler Middleware", () => {
   let req, res, next;

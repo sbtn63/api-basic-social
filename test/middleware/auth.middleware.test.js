@@ -1,6 +1,6 @@
 const { expect } = require("chai");
 
-const { authMiddleware, getTokenFromHeaderOrQuery } = require("../../middleware/auth.middleware");
+const { authMiddleware, getTokenFromHeaderOrQuery } = require("../../src/middleware/auth.middleware");
 
 describe('authMiddleware', () => {
   it('should extract token from header', () => {

@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
-const responseFormat = require('../../middleware/responseFormat.middleware');
+const responseFormat = require('../../src/middleware/responseFormat.middleware');
 
 describe('Middleware responseFormat', () => {
   let req, res, next;

@@ -1,13 +1,13 @@
 const { expect } = require("chai");
 const chai = require("chai");
 
-const { models } = require("../../libs/sequelize");
+const { models } = require("../../src/libs/sequelize");
 const { deleteData } = require("../utils");
-const { loginUser, registerUser } = require("../../services/auth.service");
-const { createUser } = require("../../services/user.service");
-const ResponseError = require("../../schemas/responseError.schema");
-const ResponseSuccess = require("../../schemas/responseSuccess.schema");
-const { SERVICE_MESSAGES } = require("../../services/consts");
+const { loginUser, registerUser } = require("../../src/services/auth.service");
+const { createUser } = require("../../src/services/user.service");
+const ResponseError = require("../../src/schemas/responseError.schema");
+const ResponseSuccess = require("../../src/schemas/responseSuccess.schema");
+const { SERVICE_MESSAGES } = require("../../src/services/consts");
 
 describe('Auth Service Test', () => {
   let body;

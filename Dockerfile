@@ -5,8 +5,10 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install --only=production
 
-COPY . /app
+COPY src ./src
 
+COPY .sequelizerc ./
+COPY entrypoint.sh ./
 RUN chmod +x /app/entrypoint.sh
 
 EXPOSE $PORT

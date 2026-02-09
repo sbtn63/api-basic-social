@@ -2,8 +2,8 @@ const { expect } = require("chai");
 const sinon = require("sinon");
 const Joi = require("joi");
 
-const validatorHandler = require("../../middleware/validatorHandler.middleware");
-const ResponseError = require("../../schemas/responseError.schema");
+const validatorHandler = require("../../src/middleware/validatorHandler.middleware");
+const ResponseError = require("../../src/schemas/responseError.schema");
 
 describe("Validator Handle middleware", () => {
   let req, res, next;
