@@ -1,11 +1,11 @@
 const { expect } = require("chai");
 const chai = require("chai");
 
-const { models } = require("../../libs/sequelize");
+const { models } = require("../../src/libs/sequelize");
 const { deleteData } = require("../utils");
-const { createUser, getUserByEmail, getUserProfile } = require("../../services/user.service");
-const ResponseError = require("../../schemas/responseError.schema");
-const { SERVICE_MESSAGES } = require("../../services/consts");
+const { createUser, getUserByEmail, getUserProfile } = require("../../src/services/user.service");
+const ResponseError = require("../../src/schemas/responseError.schema");
+const { SERVICE_MESSAGES } = require("../../src/services/consts");
 
 describe('User Service Test', () => {
   let newUser;

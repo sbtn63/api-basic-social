@@ -3,7 +3,7 @@ const chai = require("chai");
 const sinon = require("sinon");
 const bcrypt = require("bcrypt");
 
-const { genHashSaltPassword, checkPassword } = require("../../libs/bcrypt");
+const { genHashSaltPassword, checkPassword } = require("../../src/libs/bcrypt");
 
 describe('Bcrypt Tests', () => {
   it('Validation success genHashSaltPassword and CheckPassword', async () => {

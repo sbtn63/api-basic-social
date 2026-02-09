@@ -7,10 +7,10 @@
     "test": "test"
   },
   "scripts": {
-    "dev": "NODE_ENV=dev nodemon server.js",
+    "dev": "NODE_ENV=dev nodemon src/server.js",
     "test": "mocha './test/**/*.test.js'",
     "coverage": "nyc mocha './test/**/*.test.js'",
-    "start": "node server.js",
+    "start": "node src/server.js",
     "lint": "eslint",
     "build": "echo 'No build step required'",
     "migrations:run": "sequelize-cli db:migrate --env $NODE_ENV",

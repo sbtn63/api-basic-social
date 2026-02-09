@@ -1,12 +1,12 @@
 const sinon = require('sinon');
 const request = require('supertest');
 const { expect } = require("chai");
-const app = require('../../app');
+const app = require('../../src/app');
 const { deleteData } = require('../utils');
-const { models } = require('../../libs/sequelize');
-const { createUser } = require("../../services/user.service");
-const generateJwt = require("../../libs/jwt");
-const { MIDDLEWARE_MESSAGES } = require('../../middleware/const');
+const { models } = require('../../src/libs/sequelize');
+const { createUser } = require("../../src/services/user.service");
+const generateJwt = require("../../src/libs/jwt");
+const { MIDDLEWARE_MESSAGES } = require('../../src/middleware/const');
 
 describe('GET Profile', () => {
   beforeEach(async () => {
