@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
-const isAuth  = require('../../middleware/isAuth.middleware');
-const { MIDDLEWARE_MESSAGES } = require('../../middleware/const');
+const isAuth  = require('../../src/middleware/isAuth.middleware');
+const { MIDDLEWARE_MESSAGES } = require('../../src/middleware/const');
 
 describe('Middleware isAuth', () => {
   let req, res, next;

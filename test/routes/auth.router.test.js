@@ -1,10 +1,10 @@
 const request = require('supertest');
-const app = require('../../app');
+const app = require('../../src/app');
 const { expect } = require("chai");
 const { deleteData } = require('../utils');
-const { models } = require('../../libs/sequelize');
-const { createUser } = require("../../services/user.service");
-const { SERVICE_MESSAGES } = require('../../services/consts');
+const { models } = require('../../src/libs/sequelize');
+const { createUser } = require("../../src/services/user.service");
+const { SERVICE_MESSAGES } = require('../../src/services/consts');
 
 describe('POST Register', () => {
   beforeEach(async () => {

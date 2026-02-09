@@ -1,10 +1,10 @@
 const { expect } = require("chai");
 const chai = require("chai");
 
-const { models } = require("../../libs/sequelize");
+const { models } = require("../../src/libs/sequelize");
 const { deleteData } = require("../utils");
-const { TABLE_NAMES, TYPE_NOTIFICATION } = require("../../services/consts");
-const { insertUserNotification, readUserNotification, deleteUserNotification } = require("../../services/userNotifications.service");
+const { TABLE_NAMES, TYPE_NOTIFICATION } = require("../../src/services/consts");
+const { insertUserNotification, readUserNotification, deleteUserNotification } = require("../../src/services/userNotifications.service");
 
 describe('Notifications User Service', () => {
   let user;

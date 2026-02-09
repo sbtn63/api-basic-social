@@ -1,8 +1,8 @@
 const { expect } = require("chai");
 const chai = require("chai");
 
-const config = require("../../config/index");
-const generateJwt = require("../../libs/jwt");
+const config = require("../../src/config/index");
+const generateJwt = require("../../src/libs/jwt");
 
 describe('JWT Tests', () => {
   it('Validation success generateJwt', async () => {

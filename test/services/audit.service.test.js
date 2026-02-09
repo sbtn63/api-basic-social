@@ -1,10 +1,10 @@
 const { expect } = require("chai");
 const chai = require("chai");
 
-const { models } = require("../../libs/sequelize");
+const { models } = require("../../src/libs/sequelize");
 const { deleteData } = require("../utils");
-const { ACTIONS_AUDIT } = require("../../services/consts");
-const { insertAuditLog } = require("../../services/audit.service");
+const { ACTIONS_AUDIT } = require("../../src/services/consts");
+const { insertAuditLog } = require("../../src/services/audit.service");
 
 describe('Audit Service', () => {
   let user;
