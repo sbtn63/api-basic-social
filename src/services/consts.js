@@ -47,6 +47,12 @@ const SERVICE_MESSAGES = Object.freeze({
   REGISTER_USER: "User register successfully",
   CREDENTIALS_INVALID: "Credentials Invalid!!",
   LOGIN_USER: "User login successfully",
+  FOLLOWER_NOT_FOUND: "Follower not found!!",
+  FOLLOWED_NOT_FOUND: "Followed not found!!",
+  FOLLOWING_CONFLICT: "The user can or can follow themselves",
+  FOLLOWED_EXISTS: "user already followed!!",
+  NEW_FOLLOWED_NOTIFICATION_MESAGGE: "A new user has followed you!!",
+  NEW_FOLLOWED: "Followed success!!",
 });
 
 module.exports = {
