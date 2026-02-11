@@ -6,6 +6,39 @@ const { insertUserNotification } = require("./userNotifications.service");
 const ResponseError = require("../schemas/responseError.schema");
 const ResponseSuccess = require("../schemas/responseSuccess.schema");
 
+const addFollowing = async (followerId, followedId) => {
+  const { follower, followed } = await _getActors(followerId, followedId, SERVICE_MESSAGES.FOLLOWING_CONFLICT);
+
+  const alreadyFollowing = await follower.hasFollowing(followed);
+  if (alreadyFollowing) {
+    return ResponseSuccess.success(SERVICE_MESSAGES.FOLLOWED_EXISTS, 200, {"followed": true});
+  }
+
+  const following = await createFollow(follower, followed);
+
+  await insertAuditLog(follower.id, ACTIONS_AUDIT.INSERT, TABLE_NAMES.USER_FOLLOW_TABLE, followed.id, null, following.toJSON());
+
+  await insertUserNotification(followed, follower, TYPE_NOTIFICATION.NEW_FOLLOWED, null, null, SERVICE_MESSAGES.NEW_FOLLOWED_NOTIFICATION_MESAGGE);
+
+  return ResponseSuccess.success(SERVICE_MESSAGES.NEW_FOLLOWED, 201,{"followed": true});
+};
+
+const removeFollowing = async (followerId, followedId) => {
+  const { follower, followed } = await _getActors(followerId, followedId, SERVICE_MESSAGES.UNFOLLOW_CONFLICT);
+
+  const followRecord = await getFollow(follower, followed);
+  if (!followRecord) {
+    return ResponseSuccess.success(SERVICE_MESSAGES.UNFOLLOW_NOT_FOUND, 200, {"followed": false});
+  }
+
+  const deletedData = followRecord.toJSON();
+  await followRecord.destroy();
+
+  await insertAuditLog(follower.id, ACTIONS_AUDIT.DELETE, TABLE_NAMES.USER_FOLLOW_TABLE, followed.id, deletedData, null);
+
+  return ResponseSuccess.success(SERVICE_MESSAGES.UNFOLLOW_SUCCESS, 200,{"followed": false});
+};
+
 const createFollow = async (follower, followed) => {
   const following = await models.UserFollows.create({
     followedId : followed.id,
@@ -29,43 +62,13 @@ const ensureNotSelfFollowing = (followerId, followedId, message) => {
   }
 };
 
-const addFollowing = async (followerId, followedId) => {
-  ensureNotSelfFollowing(followerId, followedId, SERVICE_MESSAGES.FOLLOWING_CONFLICT);
+const _getActors = async (followerId, followedId, conflictMessage) => {
+  ensureNotSelfFollowing(followerId, followedId, conflictMessage);
 
   const follower = await getUserById(followerId, SERVICE_MESSAGES.FOLLOWER_NOT_FOUND);
   const followed = await getUserById(followedId, SERVICE_MESSAGES.FOLLOWED_NOT_FOUND);
 
-  const alreadyFollowing = await follower.hasFollowing(followed);
-  if (alreadyFollowing) {
-    return ResponseSuccess.success(SERVICE_MESSAGES.FOLLOWED_EXISTS, 200, {"followed": true});
-  }
-
-  const following = await createFollow(follower, followed);
-
-  await insertAuditLog(follower.id, ACTIONS_AUDIT.INSERT, TABLE_NAMES.USER_FOLLOW_TABLE, followed.id, null, following.toJSON());
-
-  await insertUserNotification(followed, follower, TYPE_NOTIFICATION.NEW_FOLLOWED, null, null, SERVICE_MESSAGES.NEW_FOLLOWED_NOTIFICATION_MESAGGE);
-
-  return ResponseSuccess.success(SERVICE_MESSAGES.NEW_FOLLOWED, 201,{"followed": true});
-};
-
-const removeFollowing = async (followerId, followedId) => {
-  ensureNotSelfFollowing(followerId, followedId, SERVICE_MESSAGES.UNFOLLOW_CONFLICT);
-
-  const follower = await getUserById(followerId, SERVICE_MESSAGES.FOLLOWER_NOT_FOUND);
-  const followed = await getUserById(followedId, SERVICE_MESSAGES.FOLLOWED_NOT_FOUND);
-
-  const followRecord = await getFollow(follower, followed);
-  if (!followRecord) {
-    return ResponseSuccess.success(SERVICE_MESSAGES.UNFOLLOW_NOT_FOUND, 200, {"followed": false});
-  }
-
-  const deletedData = followRecord.toJSON();
-  await followRecord.destroy();
-
-  await insertAuditLog(follower.id, ACTIONS_AUDIT.DELETE, TABLE_NAMES.USER_FOLLOW_TABLE, followed.id, deletedData, null);
-
-  return ResponseSuccess.success(SERVICE_MESSAGES.UNFOLLOW_SUCCESS, 200,{"followed": false});
+  return { follower, followed };
 };
 
 module.exports = {
