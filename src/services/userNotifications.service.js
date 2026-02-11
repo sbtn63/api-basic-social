@@ -3,14 +3,14 @@ const { models } = require("../libs/sequelize");
 const { insertAuditLog } = require("./audit.service");
 const { ACTIONS_AUDIT, TABLE_NAMES, SERVICE_MESSAGES } = require("./consts");
 
-const insertUserNotification = async (
+const insertUserNotification = async ({
   toUserId,
   fromUserId,
   typeNotificationId,
-  postId,
-  commentId,
+  postId = null,
+  commentId = null,
   message
-) => {
+}) => {
   try {
     const userNotification = await models.UserNotification.create({
       toUserId,
@@ -21,14 +21,13 @@ const insertUserNotification = async (
       message
     });
 
-    await insertAuditLog(
-      userNotification.fromUserId,
-      ACTIONS_AUDIT.INSERT,
-      TABLE_NAMES.USER_NOTIFICATION_TABLE,
-      userNotification.id,
-      null,
-      userNotification.toJSON()
-    );
+    await insertAuditLog({
+      userId: userNotification.fromUserId,
+      action: ACTIONS_AUDIT.INSERT,
+      tableName: TABLE_NAMES.USER_NOTIFICATION_TABLE,
+      recordId: userNotification.id,
+      newData: userNotification.toJSON()
+    });
 
     return !!userNotification;
   } catch (error) {
@@ -48,14 +47,14 @@ const readUserNotification = async (
       userNotification.isRead = true;
       await userNotification.save();
 
-      await insertAuditLog(
-        userNotification.toUserId,
-        ACTIONS_AUDIT.UPDATE,
-        TABLE_NAMES.USER_NOTIFICATION_TABLE,
-        userNotification.id,
-        oldUserNotification,
-        userNotification.toJSON()
-      );
+      await insertAuditLog({
+        userId: userNotification.toUserId,
+        action: ACTIONS_AUDIT.UPDATE,
+        tableName: TABLE_NAMES.USER_NOTIFICATION_TABLE,
+        recordId: userNotification.id,
+        oldData: oldUserNotification,
+        newData: userNotification.toJSON()
+      });
 
       return true;
     }
@@ -78,14 +77,13 @@ const deleteUserNotification = async (
       const oldUserNotification = userNotification.toJSON();
       await userNotification.destroy();
 
-      await insertAuditLog(
-        oldUserNotification.toUserId,
-        ACTIONS_AUDIT.DELETE,
-        TABLE_NAMES.USER_NOTIFICATION_TABLE,
-        oldUserNotification.id,
-        oldUserNotification,
-        null
-      );
+      await insertAuditLog({
+        userId: oldUserNotification.toUserId,
+        action: ACTIONS_AUDIT.DELETE,
+        tableName: TABLE_NAMES.USER_NOTIFICATION_TABLE,
+        recordId: oldUserNotification.id,
+        oldData: oldUserNotification
+      });
 
       return true;
     }

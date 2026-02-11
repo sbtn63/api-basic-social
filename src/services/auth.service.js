@@ -21,14 +21,13 @@ const registerUser = async (body) => {
   const token = generateJwt(newUser.id);
   const { passwordHash, ...userData } = newUser.toJSON();
 
-  await insertAuditLog(
-    newUser.id,
-    ACTIONS_AUDIT.INSERT,
-    TABLE_NAMES.USER_TABLE,
-    newUser.id,
-    null,
-    userData
-  );
+  await insertAuditLog({
+    userId: newUser.id,
+    action: ACTIONS_AUDIT.INSERT,
+    tableName: TABLE_NAMES.USER_TABLE,
+    recordId: newUser.id,
+    newData: userData
+  });
 
   return ResponseSuccess.success(SERVICE_MESSAGES.REGISTER_USER, {token}, 201);
 };

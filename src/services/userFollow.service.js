@@ -16,9 +16,20 @@ const addFollowing = async (followerId, followedId) => {
 
   const following = await createFollow(follower, followed);
 
-  await insertAuditLog(follower.id, ACTIONS_AUDIT.INSERT, TABLE_NAMES.USER_FOLLOW_TABLE, followed.id, null, following.toJSON());
+  await insertAuditLog({
+    userId: follower.id,
+    action: ACTIONS_AUDIT.INSERT,
+    tableName: TABLE_NAMES.USER_FOLLOW_TABLE,
+    recordId: followed.id,
+    newData: following.toJSON()
+  });
 
-  await insertUserNotification(followed, follower, TYPE_NOTIFICATION.NEW_FOLLOWED, null, null, SERVICE_MESSAGES.NEW_FOLLOWED_NOTIFICATION_MESAGGE);
+  await insertUserNotification({
+    toUserId: followed.id,
+    fromUserId: follower.id,
+    typeNotificationId: TYPE_NOTIFICATION.NEW_FOLLOWED,
+    message: SERVICE_MESSAGES.NEW_FOLLOWED_NOTIFICATION_MESAGGE
+  });
 
   return ResponseSuccess.success(SERVICE_MESSAGES.NEW_FOLLOWED, 201,{"followed": true});
 };
@@ -34,7 +45,13 @@ const removeFollowing = async (followerId, followedId) => {
   const deletedData = followRecord.toJSON();
   await followRecord.destroy();
 
-  await insertAuditLog(follower.id, ACTIONS_AUDIT.DELETE, TABLE_NAMES.USER_FOLLOW_TABLE, followed.id, deletedData, null);
+  await insertAuditLog({
+    userId: follower.id,
+    action: ACTIONS_AUDIT.DELETE,
+    tableName: TABLE_NAMES.USER_FOLLOW_TABLE,
+    recordId: followed.id,
+    oldData: deletedData
+  });
 
   return ResponseSuccess.success(SERVICE_MESSAGES.UNFOLLOW_SUCCESS, 200,{"followed": false});
 };
