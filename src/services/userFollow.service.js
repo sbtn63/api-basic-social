@@ -1,5 +1,5 @@
 const { models } = require("../libs/sequelize");
-const { SERVICE_MESSAGES, TYPE_NOTIFICATION } = require("./consts");
+const { SERVICE_MESSAGES, TYPE_NOTIFICATION, ACTIONS_AUDIT, TABLE_NAMES } = require("./consts");
 const { getUserById } = require("./user.service");
 const { insertAuditLog } = require("./audit.service");
 const { insertUserNotification } = require("./userNotifications.service");
@@ -11,7 +11,7 @@ const addFollowing = async (followerId, followedId) => {
 
   const alreadyFollowing = await follower.hasFollowing(followed);
   if (alreadyFollowing) {
-    return ResponseSuccess.success(SERVICE_MESSAGES.FOLLOWED_EXISTS, 200, {"followed": true});
+    return ResponseSuccess.success(SERVICE_MESSAGES.FOLLOWED_EXISTS, {"followed": true}, 200);
   }
 
   const following = await createFollow(follower, followed);
@@ -31,7 +31,7 @@ const addFollowing = async (followerId, followedId) => {
     message: SERVICE_MESSAGES.NEW_FOLLOWED_NOTIFICATION_MESAGGE
   });
 
-  return ResponseSuccess.success(SERVICE_MESSAGES.NEW_FOLLOWED, 201,{"followed": true});
+  return ResponseSuccess.success(SERVICE_MESSAGES.NEW_FOLLOWED, {"followed": true}, 201);
 };
 
 const removeFollowing = async (followerId, followedId) => {
@@ -39,7 +39,7 @@ const removeFollowing = async (followerId, followedId) => {
 
   const followRecord = await getFollow(follower, followed);
   if (!followRecord) {
-    return ResponseSuccess.success(SERVICE_MESSAGES.UNFOLLOW_NOT_FOUND, 200, {"followed": false});
+    return ResponseSuccess.success(SERVICE_MESSAGES.UNFOLLOW_NOT_FOUND, {"followed": false}, 200);
   }
 
   const deletedData = followRecord.toJSON();
@@ -53,11 +53,11 @@ const removeFollowing = async (followerId, followedId) => {
     oldData: deletedData
   });
 
-  return ResponseSuccess.success(SERVICE_MESSAGES.UNFOLLOW_SUCCESS, 200,{"followed": false});
+  return ResponseSuccess.success(SERVICE_MESSAGES.UNFOLLOW_SUCCESS, {"followed": false}, 200);
 };
 
 const createFollow = async (follower, followed) => {
-  const following = await models.UserFollows.create({
+  const following = await models.UserFollow.create({
     followedId : followed.id,
     followerId: follower.id
   });
@@ -66,7 +66,7 @@ const createFollow = async (follower, followed) => {
 }
 
 const getFollow = async (follower, followed) => {
-  const follow = await models.UserFollows.findOne({where: {
+  const follow = await models.UserFollow.findOne({where: {
     followedId: followed.id,
     followerId: follower.id
   }});
@@ -74,7 +74,7 @@ const getFollow = async (follower, followed) => {
 };
 
 const ensureNotSelfFollowing = (followerId, followedId, message) => {
-  if (followerId === followedId) {
+  if (Number(followerId) === Number(followedId)) {
     throw new ResponseError(message, 409);
   }
 };

@@ -31,7 +31,7 @@ const getUserProfile = async (id) => {
 };
 
 const getUserById = async (id, message) => {
-  const user = await models.User.findByPk(requestUserId);
+  const user = await models.User.findByPk(id);
   if(!user) {
     throw new ResponseError(message, 404);
   }
