@@ -1,14 +1,14 @@
 const { models } = require("../libs/sequelize");
 const { SERVICE_MESSAGES } = require("./consts");
 
-const insertAuditLog = async (
+const insertAuditLog = async ({
   userId,
   action,
   tableName,
   recordId,
-  oldData,
-  newData
-) => {
+  oldData = null,
+  newData = null
+}) => {
   try {
     const audit = await models.AuditLog.create({
       userId,
