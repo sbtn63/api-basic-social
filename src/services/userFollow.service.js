@@ -7,7 +7,7 @@ const ResponseError = require("../schemas/responseError.schema");
 const ResponseSuccess = require("../schemas/responseSuccess.schema");
 
 const addFollowing = async (followerId, followedId) => {
-  const { follower, followed } = await _getActors(followerId, followedId, SERVICE_MESSAGES.FOLLOWING_CONFLICT);
+  const { follower, followed } = await getActors(followerId, followedId, SERVICE_MESSAGES.FOLLOWING_CONFLICT);
 
   const alreadyFollowing = await follower.hasFollowing(followed);
   if (alreadyFollowing) {
@@ -35,7 +35,7 @@ const addFollowing = async (followerId, followedId) => {
 };
 
 const removeFollowing = async (followerId, followedId) => {
-  const { follower, followed } = await _getActors(followerId, followedId, SERVICE_MESSAGES.UNFOLLOW_CONFLICT);
+  const { follower, followed } = await getActors(followerId, followedId, SERVICE_MESSAGES.UNFOLLOW_CONFLICT);
 
   const followRecord = await getFollow(follower, followed);
   if (!followRecord) {
@@ -79,7 +79,7 @@ const ensureNotSelfFollowing = (followerId, followedId, message) => {
   }
 };
 
-const _getActors = async (followerId, followedId, conflictMessage) => {
+const getActors = async (followerId, followedId, conflictMessage) => {
   ensureNotSelfFollowing(followerId, followedId, conflictMessage);
 
   const follower = await getUserById(followerId, SERVICE_MESSAGES.FOLLOWER_NOT_FOUND);
@@ -91,4 +91,8 @@ const _getActors = async (followerId, followedId, conflictMessage) => {
 module.exports = {
   addFollowing,
   removeFollowing,
+  createFollow,
+  ensureNotSelfFollowing,
+  getFollow,
+  getActors,
 }
