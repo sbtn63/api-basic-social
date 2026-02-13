@@ -30,8 +30,17 @@ const getUserProfile = async (id) => {
   return ResponseSuccess.success(SERVICE_MESSAGES.USER_PROFILE, user, 200);
 };
 
+const getUserById = async (id, message) => {
+  const user = await models.User.findByPk(id);
+  if(!user) {
+    throw new ResponseError(message, 404);
+  }
+  return user;
+};
+
 module.exports = {
   getUserByEmail,
   createUser,
   getUserProfile,
+  getUserById,
 };

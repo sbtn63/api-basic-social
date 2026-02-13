@@ -3,7 +3,7 @@ const chai = require("chai");
 
 const { models } = require("../../src/libs/sequelize");
 const { deleteData } = require("../utils");
-const { createUser, getUserByEmail, getUserProfile } = require("../../src/services/user.service");
+const { createUser, getUserByEmail, getUserProfile, getUserById } = require("../../src/services/user.service");
 const ResponseError = require("../../src/schemas/responseError.schema");
 const { SERVICE_MESSAGES } = require("../../src/services/consts");
 
@@ -58,6 +58,22 @@ describe('User Service Test', () => {
   it('Should throw error when user does not exist', async () => {
     try {
       await getUserProfile(9999);
+      throw new Error('Should not reach here');
+    } catch (error) {
+      expect(error).to.be.instanceOf(ResponseError);
+      expect(error.status).to.be.equal(404);
+      expect(error.message).to.be.equal(SERVICE_MESSAGES.USER_NOT_FOUND);
+    }
+  });
+
+  it('Should get a user with id', async () => {
+    const user = await getUserById(newUser.id, SERVICE_MESSAGES.USER_NOT_FOUND);
+    expect(user).to.be.an('object');
+  });
+
+  it('Should get a not  user with id', async () => {
+    try {
+      await getUserById(99999, SERVICE_MESSAGES.USER_NOT_FOUND);
       throw new Error('Should not reach here');
     } catch (error) {
       expect(error).to.be.instanceOf(ResponseError);

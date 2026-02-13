@@ -17,28 +17,19 @@ describe('Notifications User Service', () => {
   });
 
   it('Validation INSERT user notification', async () => {
-    const userNotification = await insertUserNotification(
-      user.id,
-      user.id,
-      TYPE_NOTIFICATION.NEW_POST,
-      post.id,
-      null,
-      "Post insert success"
-    );
+    const userNotification = await insertUserNotification({
+      toUserId: user.id,
+      fromUserId: user.id,
+      typeNotificationId: TYPE_NOTIFICATION.NEW_POST,
+      postId: post.id,
+      message: "Post insert success"
+    });
 
     expect(userNotification).to.equal(true);
   });
 
   it('Validation Insert user failed', async () => {
-    const userNotification = await insertUserNotification(
-      null,
-      user.id,
-      TYPE_NOTIFICATION.NEW_POST,
-      post.id,
-      null,
-      "Post insert success"
-    );
-
+    const userNotification = await insertUserNotification({});
     expect(userNotification).to.equal(false);
   });
 

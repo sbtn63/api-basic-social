@@ -6,6 +6,8 @@ const AUTH_ROUTES = Object.freeze({
 
 const USER_ROUTES = Object.freeze({
   ME: "/me",
+  FOLLOW: "/:id/follow",
+  UNFOLLOW: "/:id/unfollow"
 });
 
 module.exports = {
