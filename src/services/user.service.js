@@ -1,8 +1,11 @@
 const { models } = require("../libs/sequelize");
+const { Op } = require("sequelize");
 const { genHashSaltPassword } = require("../libs/bcrypt");
 const ResponseSuccess = require("../schemas/responseSuccess.schema");
 const ResponseError = require("../schemas/responseError.schema");
 const { SERVICE_MESSAGES } = require("./consts");
+const { use } = require("react");
+const { date } = require("joi");
 
 const getUserByEmail = async (email) => {
   return await models.User.unscoped().findOne({
@@ -25,9 +28,13 @@ const createUser = async (data) => {
 const getUserProfile = async (id) => {
   const user = await models.User.findByPk(id);
   if(!user) throw new ResponseError(SERVICE_MESSAGES.USER_NOT_FOUND, 404);
-  delete user.createAt;
-  delete user.updatedAt;
-  return ResponseSuccess.success(SERVICE_MESSAGES.USER_PROFILE, user, 200);
+  const userResponse = {
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    avatarUrl: user.avatarUrl
+  };
+  return ResponseSuccess.success(SERVICE_MESSAGES.USER_PROFILE, userResponse, 200);
 };
 
 const getUserById = async (id, message) => {
@@ -38,9 +45,19 @@ const getUserById = async (id, message) => {
   return user;
 };
 
+const getUserByFullName = async(fullname) => {
+  const users = await models.User.searchByFullName(fullname);
+  if(!users || users.length === 0) {
+    throw new ResponseError(SERVICE_MESSAGES.USERS_SEARCH_NOT_FOUND, 404);
+  }
+
+  return ResponseSuccess.success(SERVICE_MESSAGES.USERS_SEARCH, users, 200);
+};
+
 module.exports = {
   getUserByEmail,
   createUser,
   getUserProfile,
   getUserById,
+
 };

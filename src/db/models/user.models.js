@@ -97,6 +97,21 @@ class User extends Model {
     });
   }
 
+  static searchByFullName(fullname) {
+    const searchClean = `%${fullname.toLowerCase().replaceAll(/\s+/g, '')}%`;
+    return this.findAll({
+      where: Sequelize.where(
+        Sequelize.fn('LOWER',
+          Sequelize.fn('CONCAT',
+            Sequelize.col('first_name'),
+            Sequelize.col('last_name')
+          )
+        ),
+        { [Sequelize.Op.like]: searchClean }
+      )
+    });
+  }
+
   static config(sequelize){
     return {
       sequelize,
@@ -105,7 +120,9 @@ class User extends Model {
       timestamps: true,
       underscored: true,
       defaultScope: {
-        attributes: { exclude: ['passwordHash', 'createdAt', 'updatedAt'] }
+        attributes: { exclude: [
+          'passwordHash', 'createdAt', 'updatedAt', 'email', 'lastConnection'
+        ] }
       }
     };
   }

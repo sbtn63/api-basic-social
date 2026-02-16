@@ -56,6 +56,8 @@ const SERVICE_MESSAGES = Object.freeze({
   FOLLOWED_EXISTS: "user already followed!!",
   NEW_FOLLOWED_NOTIFICATION_MESAGGE: "A new user has followed you!!",
   NEW_FOLLOWED: "Followed success!!",
+  USERS_SEARCH: "Users get success!!",
+  USERS_SEARCH_NOT_FOUND: "No match users"
 });
 
 module.exports = {
