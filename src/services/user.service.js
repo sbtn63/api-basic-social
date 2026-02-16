@@ -23,14 +23,7 @@ const createUser = async (data) => {
 };
 
 const getUserProfile = async (id) => {
-  const user = await models.User.findByPk(id);
-  if(!user) throw new ResponseError(SERVICE_MESSAGES.USER_NOT_FOUND, 404);
-  const userResponse = {
-    id: user.id,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    avatarUrl: user.avatarUrl
-  };
+  const user = await getUserById(id, SERVICE_MESSAGES.USER_NOT_FOUND);
   return ResponseSuccess.success(SERVICE_MESSAGES.USER_PROFILE, userResponse, 200);
 };
 
@@ -56,5 +49,5 @@ module.exports = {
   createUser,
   getUserProfile,
   getUserById,
-
+  getUserByFullName
 };

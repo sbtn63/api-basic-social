@@ -6,6 +6,11 @@ const schemaGetUser = Joi.object({
   id: id.required()
 });
 
+const schemaGetUserFullName = Joi.object({
+  fullname: Joi.string().min(3).required()
+});
+
 module.exports = {
-  schemaGetUser
+  schemaGetUser,
+  schemaGetUserFullName,
 };
