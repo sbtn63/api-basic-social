@@ -121,7 +121,7 @@ class User extends Model {
       underscored: true,
       defaultScope: {
         attributes: { exclude: [
-          'passwordHash', 'createdAt', 'updatedAt', 'email', 'lastConnection'
+          'passwordHash', 'createdAt', 'updatedAt'
         ] }
       }
     };

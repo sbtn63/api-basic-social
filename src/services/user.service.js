@@ -1,11 +1,8 @@
 const { models } = require("../libs/sequelize");
-const { Op } = require("sequelize");
 const { genHashSaltPassword } = require("../libs/bcrypt");
 const ResponseSuccess = require("../schemas/responseSuccess.schema");
 const ResponseError = require("../schemas/responseError.schema");
 const { SERVICE_MESSAGES } = require("./consts");
-const { use } = require("react");
-const { date } = require("joi");
 
 const getUserByEmail = async (email) => {
   return await models.User.unscoped().findOne({
