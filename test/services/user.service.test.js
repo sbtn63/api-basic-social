@@ -3,7 +3,7 @@ const chai = require("chai");
 
 const { models } = require("../../src/libs/sequelize");
 const { deleteData } = require("../utils");
-const { createUser, getUserByEmail, getUserProfile, getUserById } = require("../../src/services/user.service");
+const { createUser, getUserByEmail, getUserProfile, getUserById, getUserByFullName } = require("../../src/services/user.service");
 const ResponseError = require("../../src/schemas/responseError.schema");
 const { SERVICE_MESSAGES } = require("../../src/services/consts");
 
@@ -12,7 +12,7 @@ describe('User Service Test', () => {
 
   beforeEach(async() => {
     await deleteData(models);
-    newUser = await models.User.create({ firstName: 'A', email: 'a@test.com', passwordHash: '123'});
+    newUser = await models.User.create({ firstName: 'A', lastName: 'B', email: 'a@test.com', passwordHash: '123'});
   });
 
   it('Should create a user with hashed password', async () => {
@@ -79,6 +79,22 @@ describe('User Service Test', () => {
       expect(error).to.be.instanceOf(ResponseError);
       expect(error.status).to.be.equal(404);
       expect(error.message).to.be.equal(SERVICE_MESSAGES.USER_NOT_FOUND);
+    }
+  });
+
+  it('Should get users for fullname', async () => {
+    const response = await getUserByFullName('a b');
+    expect(response.data).to.be.an('array');
+  });
+
+  it('Should get users not found', async () => {
+    try {
+      await getUserByFullName("s");
+      throw new Error('Should not reach here');
+    } catch (error) {
+      expect(error).to.be.instanceOf(ResponseError);
+      expect(error.status).to.be.equal(404);
+      expect(error.message).to.be.equal(SERVICE_MESSAGES.USERS_SEARCH_NOT_FOUND);
     }
   });
 });

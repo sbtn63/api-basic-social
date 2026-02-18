@@ -24,7 +24,7 @@ const createUser = async (data) => {
 
 const getUserProfile = async (id) => {
   const user = await getUserById(id, SERVICE_MESSAGES.USER_NOT_FOUND);
-  return ResponseSuccess.success(SERVICE_MESSAGES.USER_PROFILE, userResponse, 200);
+  return ResponseSuccess.success(SERVICE_MESSAGES.USER_PROFILE, user, 200);
 };
 
 const getUserById = async (id, message) => {
