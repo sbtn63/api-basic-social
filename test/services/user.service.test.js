@@ -12,7 +12,7 @@ describe('User Service Test', () => {
 
   beforeEach(async() => {
     await deleteData(models);
-    newUser = await models.User.create({ firstName: 'A', email: 'a@test.com', passwordHash: '123'});
+    newUser = await models.User.create({ firstName: 'A', lastName: 'B', email: 'a@test.com', passwordHash: '123'});
   });
 
   it('Should create a user with hashed password', async () => {
