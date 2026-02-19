@@ -23,10 +23,7 @@ const createUser = async (data) => {
 };
 
 const getUserProfile = async (id) => {
-  const user = await models.User.findByPk(id);
-  if(!user) throw new ResponseError(SERVICE_MESSAGES.USER_NOT_FOUND, 404);
-  delete user.createAt;
-  delete user.updatedAt;
+  const user = await getUserById(id, SERVICE_MESSAGES.USER_NOT_FOUND);
   return ResponseSuccess.success(SERVICE_MESSAGES.USER_PROFILE, user, 200);
 };
 
@@ -37,6 +34,9 @@ const getUserById = async (id, message) => {
   }
   return user;
 };
+
+
+
 
 module.exports = {
   getUserByEmail,

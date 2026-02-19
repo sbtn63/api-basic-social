@@ -2,10 +2,11 @@ const express = require("express");
 
 const {USER_ROUTES} = require("./consts");
 const isAuth = require("../middleware/isAuth.middleware");
-const { getUserProfile } = require("../services/user.service");
+const { getUserProfile} = require("../services/user.service");
+const { getUserByFullName } = require("../services/userProfile.service");
 const { addFollowing, removeFollowing } = require("../services/userFollow.service");
 const validatorHandler = require("../middleware/validatorHandler.middleware");
-const { schemaGetUser } = require("../schemas/user.schema");
+const { schemaGetUser, schemaGetUserFullName } = require("../schemas/user.schema");
 
 
 const router = express.Router();
@@ -19,6 +20,21 @@ router.get(
   try {
     const id = req.auth.sub;
     const result = await getUserProfile(id);
+    return res.sendResponse(result.status, result.message, result.data);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get(
+  USER_ROUTES.USERS_FILTER,
+  isAuth,
+  validatorHandler(schemaGetUserFullName, 'query'),
+  async (req, res, next) =>
+{
+  try {
+    const { fullname, limit, offset }= req.query;
+    const result = await getUserByFullName(fullname, {limit, offset});
     return res.sendResponse(result.status, result.message, result.data);
   } catch (error) {
     next(error);
