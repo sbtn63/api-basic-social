@@ -35,19 +35,12 @@ const getUserById = async (id, message) => {
   return user;
 };
 
-const getUserByFullName = async(fullname) => {
-  const users = await models.User.searchByFullName(fullname);
-  if(!users || users.length === 0) {
-    throw new ResponseError(SERVICE_MESSAGES.USERS_SEARCH_NOT_FOUND, 404);
-  }
 
-  return ResponseSuccess.success(SERVICE_MESSAGES.USERS_SEARCH, users, 200);
-};
+
 
 module.exports = {
   getUserByEmail,
   createUser,
   getUserProfile,
   getUserById,
-  getUserByFullName
 };
