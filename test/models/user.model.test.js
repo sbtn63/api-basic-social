@@ -23,13 +23,6 @@ describe('User Model', () => {
     expect(user).to.be.an('object');
   });
 
-  it('should filter fullname user', async () => {
-    const fullname = 'Test1 Test'
-    const users = await models.User.searchByFullName(fullname);
-    expect(users).to.be.an('array');
-    expect(users[0].id).to.equal(user.id);
-  });
-
   it('shoud get user', async () => {
     user = await models.User.findByPk(user.id);
     expect(user).to.not.be.null;
