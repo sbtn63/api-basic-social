@@ -27,15 +27,17 @@ const findUsersByFullNameByInfluence = async (fullname, pagination = {}) => {
 
   return await models.User.findAll({
     attributes: selectAttributes,
+    include: FOLLOWERS_AGGREGATE_INCLUDE(),
     where: Sequelize.where(
       Sequelize.fn('LOWER',
         Sequelize.fn('CONCAT',
-          Sequelize.col('first_name'),
-          Sequelize.col('last_name')
+          Sequelize.col('User.first_name'),
+          Sequelize.col('User.last_name')
         )
       ),
       { [Op.like]: searchPattern }
     ),
+    group: ['User.id', 'User.first_name', 'User.last_name', 'User.avatar_url'],
     order: [[Sequelize.literal('followersCount'), 'DESC']],
     limit: limit,
     offset: offset,
@@ -43,29 +45,11 @@ const findUsersByFullNameByInfluence = async (fullname, pagination = {}) => {
   });
 };
 
-const getFollowingCountLiteral = () => {
-  return [
-    Sequelize.literal(`(
-      SELECT COUNT(*)
-      FROM user_follows AS uf
-      WHERE uf.follower_id = User.id
-    )`),
-    'followingCount'
-  ];
-};
-
 const getFollowersCountLiteral = () => [
-  Sequelize.literal(`(
-    SELECT COUNT(*)
-    FROM user_follows AS uf
-    WHERE uf.followed_id = User.id
-  )`),
-  'followersCount'
+  Sequelize.fn('COUNT', Sequelize.col('followers.id')), 'followersCount'
 ];
 
 
 module.exports = {
-  findUsersByFullNameByInfluence,
-  getFollowersCountLiteral,
-  getFollowingCountLiteral
+  findUsersByFullNameByInfluence
 };
