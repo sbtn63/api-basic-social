@@ -1,4 +1,3 @@
-const { models } = require("../libs/sequelize");
 const generateJwt = require("../libs/jwt");
 const { insertAuditLog } = require("./audit.service");
 const { ACTIONS_AUDIT, TABLE_NAMES, SERVICE_MESSAGES } = require("./consts");
