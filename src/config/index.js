@@ -19,6 +19,8 @@ const config = {
   bcryptSaltRounds: Number.parseInt(process.env.BCRYPT_SALT_ROUNDS, 10),
   jwtKey: process.env.JWT_KEY,
   jwtExpires: process.env.JWT_EXPIRES,
+  loginLimitWindowMs: Number.parseInt(process.env.LOGIN_LIMIT_WINDOW_MS, 900000),
+  loginLimitMax: Number.parseInt(process.env.LOGIN_LIMIT_MAX, 5)
 };
 
 // 3. Validación: Asegurar que variables críticas existan
