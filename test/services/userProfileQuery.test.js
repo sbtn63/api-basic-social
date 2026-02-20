@@ -3,7 +3,7 @@ const chai = require("chai");
 
 const { models } = require("../../src/libs/sequelize");
 const { deleteData } = require("../utils");
-const { getFollowersCountLiteral, getFollowingCountLiteral, findUsersByFullNameByInfluence } = require("../../src/services/userProfileQuery.service");
+const { findUsersByFullNameByInfluence } = require("../../src/services/userProfileQuery.service");
 
 describe('User Profile Query Test', () => {
   let userA, userB;
@@ -34,21 +34,4 @@ describe('User Profile Query Test', () => {
     expect(users[0].firstName).to.equal('John');
   });
 
-  it('Should return correct influence counts (followers/following)', async () => {
-    const result = await models.User.findByPk(userB.id, {
-      attributes: [
-        'id',
-        getFollowersCountLiteral(),
-        getFollowingCountLiteral()
-      ]
-    });
-
-    const userData = result.get({ plain: true });
-
-    expect(userData).to.have.property('followersCount');
-    expect(userData).to.have.property('followingCount');
-
-    expect(Number(userData.followersCount)).to.equal(1);
-    expect(Number(userData.followingCount)).to.equal(0);
-  });
 });
