@@ -23,7 +23,6 @@ describe('POST Register', () => {
       })
       .expect(201);
 
-    console.log(res.body);
     expect(res.body.message).to.be.equal(SERVICE_MESSAGES.REGISTER_USER);
   });
 
