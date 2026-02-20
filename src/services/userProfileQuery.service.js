@@ -38,7 +38,7 @@ const findUsersByFullNameByInfluence = async (fullname, pagination = {}) => {
       { [Op.like]: searchPattern }
     ),
     group: ['User.id', 'User.first_name', 'User.last_name', 'User.avatar_url'],
-    order: [[Sequelize.literal('followersCount'), 'DESC']],
+    order: [[Sequelize.col('followersCount'), 'DESC']],
     limit: limit,
     offset: offset,
     subQuery: false
