@@ -1,5 +1,4 @@
 const { expect } = require("chai");
-const chai = require("chai");
 const sinon = require("sinon");
 const bcrypt = require("bcrypt");
 

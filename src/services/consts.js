@@ -65,4 +65,4 @@ module.exports = {
   TYPE_NOTIFICATION,
   TABLE_NAMES,
   SERVICE_MESSAGES,
-}
+};

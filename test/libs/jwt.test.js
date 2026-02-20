@@ -1,5 +1,4 @@
 const { expect } = require("chai");
-const chai = require("chai");
 
 const config = require("../../src/config/index");
 const generateJwt = require("../../src/libs/jwt");
