@@ -4,11 +4,13 @@ const {AUTH_ROUTES} = require("./consts");
 const { registerUser, loginUser } = require("../services/auth.service");
 const validatorHandler = require("../middleware/validatorHandler.middleware");
 const { loginSchema, registerSchema } = require("../schemas/authSchema.schema");
+const { loginLimiter } = require("../middleware/rateLimiterHandler.middleware");
 
 const router = express.Router();
 
 router.post(
   AUTH_ROUTES.LOGIN,
+  loginLimiter,
   validatorHandler(loginSchema, 'body'),
   async (req, res, next) =>
 {

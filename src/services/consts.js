@@ -1,4 +1,3 @@
-const { object } = require("joi");
 const { COMMENT_TABLE } = require("../db/models/comment.models");
 const { POST_TABLE } = require("../db/models/post.models");
 const { POST_REACTION_TABLE } = require("../db/models/postReactions.models");
@@ -65,4 +64,4 @@ module.exports = {
   TYPE_NOTIFICATION,
   TABLE_NAMES,
   SERVICE_MESSAGES,
-}
+};
