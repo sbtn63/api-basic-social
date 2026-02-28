@@ -56,7 +56,12 @@ const SERVICE_MESSAGES = Object.freeze({
   NEW_FOLLOWED_NOTIFICATION_MESAGGE: "A new user has followed you!!",
   NEW_FOLLOWED: "Followed success!!",
   USERS_SEARCH: "Users get success!!",
-  USERS_SEARCH_NOT_FOUND: "No match users"
+  USERS_SEARCH_NOT_FOUND: "No match users",
+  POST_CREATE: "New Post Create Successfully!!",
+  NEW_POST_NOTIFICATION_MESSAGE: "Post add successfully!!",
+  POST_NOT_FOUND: "Post not found!!",
+  POST_UPDATE: "Post Updated!!",
+  POST_DELETE: "Post Delete Successfully!!"
 });
 
 module.exports = {
