@@ -24,7 +24,8 @@ const createPost = async (data, userId) => {
     newData: newPost.toJSON()
   });
 
-  return ResponseSuccess.success(SERVICE_MESSAGES.POST_CREATE, newPost, 201);
+  const { created_at, updated_at, ...cleanData } = newPost.toJSON();
+  return ResponseSuccess.success(SERVICE_MESSAGES.POST_CREATE, cleanData, 201);
 };
 
 const updatePost = async (data, userId, postId) => {
@@ -60,7 +61,12 @@ const deletePost = async(postId, userId) => {
 };
 
 const savePost = async (data, userId, id = null) => {
-  const postData = {...data, userId};
+  const postData = {
+    description: data.description ?? null,
+    imageUrl: data.imageUrl ?? null,
+    userId
+  };
+
   if(id){
     await models.Post.update(postData, { where: {id} });
     return await models.Post.findByPk(id);
