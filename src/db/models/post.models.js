@@ -82,6 +82,12 @@ class Post extends Model {
       timestamps: true,
       createdAt: 'created_at',
       updatedAt: 'updated_at',
+      underscored: true,
+      defaultScope: {
+        attributes: { exclude: [
+          'created_at', 'updatedAt'
+        ] }
+      },
       validate: {
         notContent() {
           if(!this.description && !this.imageUrl){
