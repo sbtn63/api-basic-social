@@ -3,7 +3,6 @@ const { expect } = require("chai");
 const { models } = require("../../src/libs/sequelize");
 const { deleteData } = require("../utils");
 const { createPost, savePost, updatePost, deletePost, getPostUser} = require("../../src/services/post.service");
-const { createUser } = require("../../src/services/user.service");
 const ResponseError = require("../../src/schemas/responseError.schema");
 const ResponseSuccess = require("../../src/schemas/responseSuccess.schema");
 const { SERVICE_MESSAGES } = require("../../src/services/consts");

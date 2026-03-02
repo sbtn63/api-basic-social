@@ -31,6 +31,14 @@ describe('Actions posts', () => {
     expect(res.body.message).to.equal(SERVICE_MESSAGES.POST_CREATE);
   });
 
+  it('Should return 401 when no token is provided', async () => {
+    const res = await request(app)
+      .post('/api/v1/posts')
+      .expect(401);
+
+    expect(res.body.message).to.equal(MIDDLEWARE_MESSAGES.UNAUTHORIZED_TOKEN);
+  });
+
   it('Should post failed validate schema', async () => {
     const token = generateJwt(newUser.id);
 
