@@ -109,3 +109,13 @@ const getReactionAndPostContext = async (reactionId, postId) => {
   const post = await getPost(postId);
   return { reaction, post };
 };
+
+module.exports = {
+  toggleReaction,
+  processReactionAction,
+  updateReactionId,
+  removePostReaction,
+  findOrCreatePostReaction,
+  getReactionAndPostContext,
+  getReactionById
+};
