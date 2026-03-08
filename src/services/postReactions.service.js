@@ -22,7 +22,7 @@ const toggleReaction = async (postId, userId, data) => {
 };
 
 const processReactionAction = async (postReactionInstance, reactionContext, actionType) => {
-  let responseData = postReactionInstance;
+  let responseData = getResponsePostReaction(postReactionInstance);
   let statusCode = 200;
   let message = SERVICE_MESSAGES.NEW_POST_REACTION;
 
@@ -47,11 +47,11 @@ const processReactionAction = async (postReactionInstance, reactionContext, acti
     case 'UPDATE':
       message = SERVICE_MESSAGES.SET_POST_REACTION;
       auditData.action = ACTIONS_AUDIT.UPDATE;
-      auditData.oldData = postReactionInstance.toJSON();
+      auditData.oldData = getResponsePostReaction(postReactionInstance);
 
       responseData = await updateReactionId(postReactionInstance, reactionContext.reaction.id);
 
-      auditData.newData = responseData.toJSON();
+      auditData.newData = responseData;
       notificationData.message = SERVICE_MESSAGES.SET_POST_REACTION_NOTIFICATION_MESSAGE;
 
       insertUserNotification(notificationData);
@@ -71,7 +71,7 @@ const processReactionAction = async (postReactionInstance, reactionContext, acti
     case 'CREATE':
     default:
       statusCode = 201;
-      auditData.newData = postReactionInstance.toJSON();
+      auditData.newData = responseData;
 
       insertUserNotification(notificationData);
       insertAuditLog(auditData);
@@ -82,25 +82,31 @@ const processReactionAction = async (postReactionInstance, reactionContext, acti
 
 const updateReactionId = async (postReactionInstance, newReactionId) => {
   postReactionInstance.reactionId = newReactionId;
-  return await postReactionInstance.save();
+  const updatePostReactionInstance = await postReactionInstance.save();
+  return getResponsePostReaction(updatePostReactionInstance);
 };
 
 const removePostReaction = async (postReactionInstance) => {
-  const deletedDataSnapshot = postReactionInstance.toJSON();
+  const deletedDataSnapshot = getResponsePostReaction(postReactionInstance);
   await postReactionInstance.destroy();
   return deletedDataSnapshot;
 };
 
 const findOrCreatePostReaction = async (postId, userId, reactionId) => {
   return await models.PostReaction.findOrCreate({
-    where: { userId, postId },
-    defaults: { reactionId }
+    where: {
+      userId: Number(userId),
+      postId : Number(postId)
+    },
+    defaults: {
+      reactionId : Number(reactionId)
+    }
   });
 };
 
 const getReactionById = async (id) => {
   const reaction = await models.Reaction.findByPk(id);
-  if (!reaction) throw new ResponseError(404, SERVICE_MESSAGES.REACTION_NOT_EXISTS);
+  if (!reaction) throw new ResponseError(SERVICE_MESSAGES.REACTION_NOT_EXISTS, 400);
   return reaction;
 };
 
@@ -108,6 +114,16 @@ const getReactionAndPostContext = async (reactionId, postId) => {
   const reaction = await getReactionById(reactionId);
   const post = await getPost(postId);
   return { reaction, post };
+};
+
+const getResponsePostReaction = (postReaction) => {
+  return {
+    postId: postReaction.postId,
+    userId: postReaction.userId,
+    reactionId: postReaction.reactionId,
+    createdAt: postReaction.createdAt,
+    updatedAt: postReaction.updatedAt
+  };
 };
 
 module.exports = {
