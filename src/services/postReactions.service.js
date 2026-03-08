@@ -54,8 +54,8 @@ const processReactionAction = async (postReactionInstance, reactionContext, acti
       auditData.newData = responseData;
       notificationData.message = SERVICE_MESSAGES.SET_POST_REACTION_NOTIFICATION_MESSAGE;
 
-      insertUserNotification(notificationData);
-      insertAuditLog(auditData);
+      await insertUserNotification(notificationData);
+      await insertAuditLog(auditData);
       break;
 
     case 'DELETE':
@@ -65,7 +65,7 @@ const processReactionAction = async (postReactionInstance, reactionContext, acti
       responseData = await removePostReaction(postReactionInstance);
 
       auditData.oldData = responseData;
-      insertAuditLog(auditData);
+      await insertAuditLog(auditData);
       break;
 
     case 'CREATE':
@@ -73,8 +73,8 @@ const processReactionAction = async (postReactionInstance, reactionContext, acti
       statusCode = 201;
       auditData.newData = responseData;
 
-      insertUserNotification(notificationData);
-      insertAuditLog(auditData);
+      await insertUserNotification(notificationData);
+      await insertAuditLog(auditData);
   }
 
   return ResponseSuccess.success(message, responseData, statusCode);
