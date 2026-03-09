@@ -54,8 +54,8 @@ const processReactionAction = async (postReactionInstance, reactionContext, acti
       auditData.newData = responseData;
       notificationData.message = SERVICE_MESSAGES.SET_POST_REACTION_NOTIFICATION_MESSAGE;
 
-      await insertUserNotification(notificationData);
-      await insertAuditLog(auditData);
+      insertUserNotification(notificationData);
+      insertAuditLog(auditData);
       break;
 
     case 'DELETE':
@@ -65,7 +65,7 @@ const processReactionAction = async (postReactionInstance, reactionContext, acti
       responseData = await removePostReaction(postReactionInstance);
 
       auditData.oldData = responseData;
-      await insertAuditLog(auditData);
+      insertAuditLog(auditData);
       break;
 
     case 'CREATE':
@@ -106,7 +106,7 @@ const findOrCreatePostReaction = async (postId, userId, reactionId) => {
 
 const getReactionById = async (id) => {
   const reaction = await models.Reaction.findByPk(id);
-  if (!reaction) throw new ResponseError(SERVICE_MESSAGES.REACTION_NOT_EXISTS, 400);
+  if (!reaction) throw new ResponseError(SERVICE_MESSAGES.REACTION_NOT_EXISTS, 404);
   return reaction;
 };
 
