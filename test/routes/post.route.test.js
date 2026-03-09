@@ -6,7 +6,6 @@ const { models } = require('../../src/libs/sequelize');
 const generateJwt = require("../../src/libs/jwt");
 const { MIDDLEWARE_MESSAGES } = require('../../src/middleware/const');
 const { SERVICE_MESSAGES } = require('../../src/services/consts');
-const { reactionPost } = require('../../src/schemas/post.schema');
 
 describe('Actions posts', () => {
   let newUser;
