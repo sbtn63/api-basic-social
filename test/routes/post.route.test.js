@@ -111,4 +111,84 @@ describe('Actions posts', () => {
       .expect(400);
     expect(res.body.data).to.be.an('object');
   });
+
+  it('Should create reaction', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .post(`/api/v1/posts/${newPost.id}/reactions`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        reactionId: 1
+      })
+      .expect(201);
+
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.NEW_POST_REACTION);
+  });
+
+  it('Should invalid body reaction', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .post(`/api/v1/posts/${newPost.id}/reactions`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({})
+      .expect(400);
+
+    expect(res.body.data).to.be.an('object');
+  });
+
+  it('Should reaction not found', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .post(`/api/v1/posts/${newPost.id}/reactions`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        reactionId: 9
+      })
+      .expect(404);
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.REACTION_NOT_EXISTS);
+  });
+
+  it('Should post not found', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .post(`/api/v1/posts/99999/reactions`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        reactionId: 1
+      })
+      .expect(404);
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.POST_NOT_FOUND);
+  });
+
+  it('Should post reaction updated', async () => {
+    const token = generateJwt(newUser.id);
+    await models.PostReaction.create({userId: newUser.id, postId: newPost.id, reactionId: 1});
+
+    const res = await request(app)
+      .post(`/api/v1/posts/${newPost.id}/reactions`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        reactionId: 2
+      })
+      .expect(200);
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.SET_POST_REACTION);
+  });
+
+  it('Should post reaction delete', async () => {
+    const token = generateJwt(newUser.id);
+    await models.PostReaction.create({userId: newUser.id, postId: newPost.id, reactionId: 1});
+
+    const res = await request(app)
+      .post(`/api/v1/posts/${newPost.id}/reactions`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        reactionId: 1
+      })
+      .expect(200);
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.DELETE_POST_REACTION);
+  });
 });

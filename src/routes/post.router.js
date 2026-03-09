@@ -4,7 +4,8 @@ const {POST_ROUTES} = require("./consts");
 const isAuth = require("../middleware/isAuth.middleware");
 const { createPost, updatePost, deletePost } = require("../services/post.service");
 const validatorHandler = require("../middleware/validatorHandler.middleware");
-const { getPostSchema, savePostSchema } = require("../schemas/post.schema");
+const { getPostSchema, savePostSchema, reactionPost } = require("../schemas/post.schema");
+const { toggleReaction } = require("../services/postReactions.service");
 
 
 const router = express.Router();
@@ -51,6 +52,23 @@ router.delete(
     const id = req.params.id;
     const userId = req.auth.sub;
     const result = await deletePost(id, userId);
+    return res.sendResponse(result.status, result.message, result.data);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post(
+  POST_ROUTES.REACTION,
+  isAuth,
+  validatorHandler(reactionPost, 'body'),
+  validatorHandler(getPostSchema, 'params'),
+  async (req, res, next) =>
+{
+  try{
+    const id = req.params.id;
+    const userId = req.auth.sub;
+    const result = await toggleReaction(id, userId, req.body);
     return res.sendResponse(result.status, result.message, result.data);
   } catch (error) {
     next(error);

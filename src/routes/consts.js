@@ -14,7 +14,8 @@ const USER_ROUTES = Object.freeze({
 const POST_ROUTES = Object.freeze({
   CREATE: "/",
   UPDATE: "/:id",
-  DELETE: "/:id"
+  DELETE: "/:id",
+  REACTION: "/:id/reactions"
 });
 
 module.exports = {

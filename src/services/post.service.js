@@ -69,7 +69,7 @@ const savePost = async (data, userId, id = null) => {
 
   if(id){
     await models.Post.update(postData, { where: {id} });
-    return await models.Post.findByPk(id);
+    return await getPost(id);
   }
   return await models.Post.create(postData);
 };
@@ -80,17 +80,27 @@ const getPostUser = async(postId, userId) => {
     userId
   }});
 
-  if(!post){
-    throw new ResponseError(SERVICE_MESSAGES.POST_NOT_FOUND, 404);
-  }
+  validatePost(post);
   return post;
 };
 
+const getPost = async(id) => {
+  const post = await models.Post.findByPk(id);
+  validatePost(post);
+  return post;
+};
+
+const validatePost = (post) => {
+  if(!post){
+    throw new ResponseError(SERVICE_MESSAGES.POST_NOT_FOUND, 404);
+  }
+};
 
 module.exports = {
   createPost,
   updatePost,
   deletePost,
   savePost,
-  getPostUser
+  getPostUser,
+  getPost
 };

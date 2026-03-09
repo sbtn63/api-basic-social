@@ -61,7 +61,13 @@ const SERVICE_MESSAGES = Object.freeze({
   NEW_POST_NOTIFICATION_MESSAGE: "Post add successfully!!",
   POST_NOT_FOUND: "Post not found!!",
   POST_UPDATE: "Post Updated!!",
-  POST_DELETE: "Post Delete Successfully!!"
+  POST_DELETE: "Post Delete Successfully!!",
+  REACTION_NOT_EXISTS: "Reaction not found!!",
+  NEW_POST_REACTION: "New Post Reaction!!",
+  SET_POST_REACTION: "Set Post Reaction!!",
+  DELETE_POST_REACTION: "Delete Post Reaction!!",
+  NEW_POST_REACTION_NOTIFICATION_MESSAGE: "Post Reaction add successfully!!",
+  SET_POST_REACTION_NOTIFICATION_MESSAGE: "Post Reaction set successfully!!",
 });
 
 module.exports = {
