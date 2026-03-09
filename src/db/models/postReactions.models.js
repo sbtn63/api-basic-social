@@ -84,8 +84,6 @@ class PostReaction extends Model {
       tableName: POST_REACTION_TABLE,
       modelName: 'PostReaction',
       timestamps: true,
-      createdAt: 'created_at',
-      updatedAt: 'updated_at',
     };
   }
 }

@@ -2,7 +2,7 @@ const { expect } = require("chai");
 
 const { models } = require("../../src/libs/sequelize");
 const { deleteData } = require("../utils");
-const { createPost, savePost, updatePost, deletePost, getPostUser} = require("../../src/services/post.service");
+const { createPost, savePost, updatePost, deletePost, getPostUser, getPost} = require("../../src/services/post.service");
 const ResponseError = require("../../src/schemas/responseError.schema");
 const ResponseSuccess = require("../../src/schemas/responseSuccess.schema");
 const { SERVICE_MESSAGES } = require("../../src/services/consts");
@@ -81,6 +81,23 @@ describe('Post Service Test', () => {
   it('Should throw error when get user a post', async () => {
     try {
       await getPostUser(9999, 9999);
+      throw new Error('Should not reach here');
+    } catch (error) {
+      expect(error).to.be.instanceOf(ResponseError);
+      expect(error.status).to.be.equal(404);
+      expect(error.message).to.be.equal(SERVICE_MESSAGES.POST_NOT_FOUND);
+    }
+  });
+
+  it('Should get a post success', async () => {
+    const postUser = await getPost(post.id);
+    expect(postUser).to.be.an('object');
+    expect(postUser.userId).to.be.equal(user.id);
+  });
+
+  it('Should throw error when get a post', async () => {
+    try {
+      await getPost(9999);
       throw new Error('Should not reach here');
     } catch (error) {
       expect(error).to.be.instanceOf(ResponseError);
