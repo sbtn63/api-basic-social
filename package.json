@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "NODE_ENV=dev nodemon src/server.js",
     "test": "mocha './test/**/*.test.js'",
-    "coverage": "nyc mocha './test/**/*.test.js'",
+    "coverage": "nyc --reporter=lcov --reporter=text mocha './test/**/*.test.js'",
     "start": "node src/server.js",
     "lint": "eslint",
     "build": "echo 'No build step required'",
