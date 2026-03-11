@@ -83,6 +83,11 @@ jobs:
           DB_DIALECT: mysql
         run: npm run coverage
 
+      - name: Verify coverage
+        run: |
+          echo "Coverage directory:"
+          ls -R coverage || echo "No coverage folder"
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
@@ -92,11 +97,12 @@ jobs:
           args: >
             -Dsonar.projectKey=api-basic-social
             -Dsonar.organization=sbtn63
-            -Dsonar.sources=src/
+            -Dsonar.sources=src
             -Dsonar.tests=test
             -Dsonar.test.inclusions=test/**/*.test.js
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
-            -Dsonar.exclusions=**/node_modules/**,**/test/**,**/db/migrations/**,**/db/seeders/**,**/db/config/**
+            -Dsonar.sourceEncoding=UTF-8
+            -Dsonar.projectBaseDir=.
             
       - name: Build application
         run: npm run build
