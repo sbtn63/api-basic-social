@@ -25,4 +25,5 @@ Hacer solicitudes a la API utilizando herramientas como Postman o curl.
 ## Detalles Técnicos
 - Lenguaje de programación: JavaScript (Node.js).
 - Framework: Express.
-- Base de datos: MongoDB.
+- Base de datos Local: MySQL.
+- Base de datos Deploy: PostgreSQL
