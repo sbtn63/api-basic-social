@@ -95,7 +95,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.projectKey=api-basic-social
+            -Dsonar.projectKey=sbtn63_api-basic-social
             -Dsonar.organization=sbtn63
             -Dsonar.sources=src
             -Dsonar.tests=test
@@ -103,6 +103,7 @@ jobs:
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
             -Dsonar.sourceEncoding=UTF-8
             -Dsonar.projectBaseDir=.
+            -Dsonar.exclusions=**/node_modules/**,**/test/**,**/db/migrations/**,**/db/seeders/**,**/db/config/**
             
       - name: Build application
         run: npm run build
