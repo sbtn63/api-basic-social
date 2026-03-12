@@ -1,12 +1,6 @@
 const { models } = require("../libs/sequelize");
 const { Sequelize, Op } = require('sequelize');
-
-const USER_PUBLIC_PROFILE_COLUMNS = [
-  'id',
-  'firstName',
-  'lastName',
-  'avatarUrl'
-];
+const { USER_PUBLIC_PROFILE_COLUMNS } = require("./consts");
 
 const FOLLOWERS_AGGREGATE_INCLUDE = () => ({
   model: models.User,

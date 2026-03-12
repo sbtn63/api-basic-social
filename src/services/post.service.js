@@ -1,9 +1,10 @@
 const { models } = require("../libs/sequelize");
 const { insertAuditLog } = require("./audit.service");
 const { insertUserNotification } = require("./userNotifications.service");
-const { ACTIONS_AUDIT, TABLE_NAMES, SERVICE_MESSAGES, TYPE_NOTIFICATION } = require("./consts");
+const { ACTIONS_AUDIT, TABLE_NAMES, SERVICE_MESSAGES, TYPE_NOTIFICATION, REACTION_PUBLIC_COLUMNS } = require("./consts");
 const ResponseSuccess = require("../schemas/responseSuccess.schema");
 const ResponseError = require("../schemas/responseError.schema");
+const { findAllRecentReactionsPost } = require("./postReactionQuery.service");
 
 const createPost = async (data, userId) => {
   const newPost = await savePost(data, userId);
@@ -60,6 +61,12 @@ const deletePost = async(postId, userId) => {
   return ResponseSuccess.success(SERVICE_MESSAGES.POST_DELETE, deleteData, 200);
 };
 
+const getPostReactions = async(id, pagination) => {
+  const post = await getPost(id);
+  const infoReactionsPost = await findAllRecentReactionsPost(post.id, pagination);
+  return ResponseSuccess.success(SERVICE_MESSAGES.REACTIONS_POST_LIST, infoReactionsPost, 200);
+};
+
 const savePost = async (data, userId, id = null) => {
   const postData = {
     description: data.description ?? null,
@@ -102,5 +109,6 @@ module.exports = {
   deletePost,
   savePost,
   getPostUser,
-  getPost
+  getPost,
+  getPostReactions
 };

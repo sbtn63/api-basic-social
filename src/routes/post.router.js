@@ -2,9 +2,9 @@ const express = require("express");
 
 const {POST_ROUTES} = require("./consts");
 const isAuth = require("../middleware/isAuth.middleware");
-const { createPost, updatePost, deletePost } = require("../services/post.service");
+const { createPost, updatePost, deletePost, getPostReactions } = require("../services/post.service");
 const validatorHandler = require("../middleware/validatorHandler.middleware");
-const { getPostSchema, savePostSchema, reactionPost } = require("../schemas/post.schema");
+const { getPostSchema, savePostSchema, reactionPostSchema, paginationPostSchema } = require("../schemas/post.schema");
 const { toggleReaction } = require("../services/postReactions.service");
 
 
@@ -61,7 +61,7 @@ router.delete(
 router.post(
   POST_ROUTES.REACTION,
   isAuth,
-  validatorHandler(reactionPost, 'body'),
+  validatorHandler(reactionPostSchema, 'body'),
   validatorHandler(getPostSchema, 'params'),
   async (req, res, next) =>
 {
@@ -69,6 +69,23 @@ router.post(
     const id = req.params.id;
     const userId = req.auth.sub;
     const result = await toggleReaction(id, userId, req.body);
+    return res.sendResponse(result.status, result.message, result.data);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get(
+  POST_ROUTES.REACTION,
+  isAuth,
+  validatorHandler(getPostSchema, 'params'),
+  validatorHandler(paginationPostSchema, 'query'),
+  async (req, res, next) =>
+{
+  try{
+    const id = req.params.id;
+    const { limit, offset } = req.query;
+    const result = await getPostReactions(id, {limit, offset});
     return res.sendResponse(result.status, result.message, result.data);
   } catch (error) {
     next(error);
