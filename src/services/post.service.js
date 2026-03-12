@@ -1,7 +1,7 @@
 const { models } = require("../libs/sequelize");
 const { insertAuditLog } = require("./audit.service");
 const { insertUserNotification } = require("./userNotifications.service");
-const { ACTIONS_AUDIT, TABLE_NAMES, SERVICE_MESSAGES, TYPE_NOTIFICATION, REACTION_PUBLIC_COLUMNS } = require("./consts");
+const { ACTIONS_AUDIT, TABLE_NAMES, SERVICE_MESSAGES, TYPE_NOTIFICATION } = require("./consts");
 const ResponseSuccess = require("../schemas/responseSuccess.schema");
 const ResponseError = require("../schemas/responseError.schema");
 const { findAllRecentReactionsPost } = require("./postReactionQuery.service");
