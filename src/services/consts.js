@@ -68,11 +68,28 @@ const SERVICE_MESSAGES = Object.freeze({
   DELETE_POST_REACTION: "Delete Post Reaction!!",
   NEW_POST_REACTION_NOTIFICATION_MESSAGE: "Post Reaction add successfully!!",
   SET_POST_REACTION_NOTIFICATION_MESSAGE: "Post Reaction set successfully!!",
+  REACTIONS_POST_LIST: "Post Reactions success!!",
 });
+
+const USER_PUBLIC_PROFILE_COLUMNS = [
+  'id',
+  'firstName',
+  'lastName',
+  'avatarUrl'
+];
+
+const REACTION_PUBLIC_COLUMNS = [
+  'id',
+  'name',
+  'description',
+  'imageUrl'
+];
 
 module.exports = {
   ACTIONS_AUDIT,
   TYPE_NOTIFICATION,
   TABLE_NAMES,
   SERVICE_MESSAGES,
+  USER_PUBLIC_PROFILE_COLUMNS,
+  REACTION_PUBLIC_COLUMNS
 };

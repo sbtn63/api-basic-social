@@ -2,7 +2,7 @@ const { models } = require("../libs/sequelize");
 const { genHashSaltPassword } = require("../libs/bcrypt");
 const ResponseSuccess = require("../schemas/responseSuccess.schema");
 const ResponseError = require("../schemas/responseError.schema");
-const { SERVICE_MESSAGES } = require("./consts");
+const { SERVICE_MESSAGES, USER_PUBLIC_PROFILE_COLUMNS } = require("./consts");
 
 const getUserByEmail = async (email) => {
   return await models.User.unscoped().findOne({
@@ -35,12 +35,16 @@ const getUserById = async (id, message) => {
   return user;
 };
 
-
-
+const userInclude = () => ({
+  model: models.User,
+  as: 'user',
+  attributes: USER_PUBLIC_PROFILE_COLUMNS
+});
 
 module.exports = {
   getUserByEmail,
   createUser,
   getUserProfile,
   getUserById,
+  userInclude
 };
