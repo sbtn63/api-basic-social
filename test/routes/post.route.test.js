@@ -191,4 +191,26 @@ describe('Actions posts', () => {
       .expect(200);
     expect(res.body.message).to.equal(SERVICE_MESSAGES.DELETE_POST_REACTION);
   });
+
+  it('Should post reaction get', async () => {
+    const token = generateJwt(newUser.id);
+    await models.PostReaction.create({userId: newUser.id, postId: newPost.id, reactionId: 1});
+
+    const res = await request(app)
+      .get(`/api/v1/posts/${newPost.id}/reactions`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200);
+    console.log(res);
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.REACTIONS_POST_LIST);
+  });
+
+  it('Should  reactions a post not found', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .get(`/api/v1/posts/99999/reactions`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(404);
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.POST_NOT_FOUND);
+  });
 });
