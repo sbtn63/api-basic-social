@@ -38,6 +38,9 @@
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.7"
   },
+  "overrides": {
+    "lodash": "4.17.23"
+  },
   "devDependencies": {
     "chai": "^6.2.2",
     "chai-as-promised": "^8.0.2",
