@@ -1,6 +1,5 @@
 const Joi = require("joi");
 
-const id = Joi.number().integer().positive();
 const content = Joi.string().min(1).max(1000).required();
 const postId = Joi.number().integer().positive();
 const parentId = Joi.number().integer().positive();
