@@ -4,7 +4,9 @@ const {POST_ROUTES} = require("./consts");
 const isAuth = require("../middleware/isAuth.middleware");
 const { createPost, updatePost, deletePost, getPostReactions } = require("../services/post.service");
 const validatorHandler = require("../middleware/validatorHandler.middleware");
-const { getPostSchema, savePostSchema, reactionPostSchema, paginationPostSchema } = require("../schemas/post.schema");
+const { savePostSchema, reactionPostSchema } = require("../schemas/post.schema");
+const { paginationSchema, itemIdSchema } = require("../schemas/common.schema");
+const { getCommentsByPost } = require("../services/comment.service");
 const { toggleReaction } = require("../services/postReactions.service");
 
 
@@ -29,7 +31,7 @@ router.put(
   POST_ROUTES.UPDATE,
   isAuth,
   validatorHandler(savePostSchema, 'body'),
-  validatorHandler(getPostSchema, 'params'),
+  validatorHandler(itemIdSchema, 'params'),
   async (req, res, next) =>
 {
   try {
@@ -45,7 +47,7 @@ router.put(
 router.delete(
   POST_ROUTES.DELETE,
   isAuth,
-  validatorHandler(getPostSchema, 'params'),
+  validatorHandler(itemIdSchema, 'params'),
   async (req, res, next) =>
 {
   try{
@@ -62,7 +64,7 @@ router.post(
   POST_ROUTES.REACTION,
   isAuth,
   validatorHandler(reactionPostSchema, 'body'),
-  validatorHandler(getPostSchema, 'params'),
+  validatorHandler(itemIdSchema, 'params'),
   async (req, res, next) =>
 {
   try{
@@ -78,14 +80,31 @@ router.post(
 router.get(
   POST_ROUTES.REACTION,
   isAuth,
-  validatorHandler(getPostSchema, 'params'),
-  validatorHandler(paginationPostSchema, 'query'),
+  validatorHandler(itemIdSchema, 'params'),
+  validatorHandler(paginationSchema, 'query'),
   async (req, res, next) =>
 {
   try{
     const id = req.params.id;
     const { limit, offset } = req.query;
     const result = await getPostReactions(id, {limit, offset});
+    return res.sendResponse(result.status, result.message, result.data);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get(
+  POST_ROUTES.GET_COMMENTS,
+  isAuth,
+  validatorHandler(itemIdSchema, 'params'),
+  validatorHandler(paginationSchema, 'query'),
+  async (req, res, next) =>
+{
+  try{
+    const id = req.params.id;
+    const { limit, offset } = req.query;
+    const result = await getCommentsByPost(id, {limit, offset});
     return res.sendResponse(result.status, result.message, result.data);
   } catch (error) {
     next(error);

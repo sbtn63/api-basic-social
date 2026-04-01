@@ -15,11 +15,20 @@ const POST_ROUTES = Object.freeze({
   CREATE: "/",
   UPDATE: "/:id",
   DELETE: "/:id",
-  REACTION: "/:id/reactions"
+  REACTION: "/:id/reactions",
+  GET_COMMENTS: "/:id/comments",
+});
+
+const COMMENT_ROUTES = Object.freeze({
+  CREATE: "/",
+  UPDATE: "/:id",
+  DELETE: "/:id",
+  REPLIES: "/:id/replies",
 });
 
 module.exports = {
   AUTH_ROUTES,
   USER_ROUTES,
-  POST_ROUTES
+  POST_ROUTES,
+  COMMENT_ROUTES
 }
