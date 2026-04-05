@@ -99,5 +99,7 @@ module.exports = {
   updateComment,
   deleteComment,
   getCommentReplies,
-  getCommentsByPost
+  getCommentsByPost,
+  getCommentUser,
+  getNotificationMetadata
 };
