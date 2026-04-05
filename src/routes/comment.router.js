@@ -3,7 +3,7 @@ const express = require("express");
 const {COMMENT_ROUTES} = require("./consts");
 const isAuth = require("../middleware/isAuth.middleware");
 const validatorHandler = require("../middleware/validatorHandler.middleware");
-const { saveComment, updateComment, deleteComment, getCommentReplies } = require("../services/comment.service");
+const { createComment, updateComment, deleteComment, getCommentReplies } = require("../services/comment.service");
 const { saveCommentSchema, updateCommentSchema } = require("../schemas/comment.schema");
 const { paginationSchema, itemIdSchema } = require("../schemas/common.schema");
 
@@ -18,10 +18,11 @@ router.post(
 {
   try {
     const userId = req.auth.sub;
-    const result = await saveComment(req.body, userId);
+    const result = await createComment(req.body, userId);
     return res.sendResponse(result.status, result.message, result.data);
   } catch (error) {
     next(error);
+    console.log(error);
   }
 });
 

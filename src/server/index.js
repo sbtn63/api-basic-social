@@ -11,7 +11,7 @@ function apiRouter(app) {
   router.use('/auth', authRouters);
   router.use('/users', userRouters);
   router.use('/posts', postRouters);
-  router.use('/comment/', commentRouters);
+  router.use('/comments/', commentRouters);
 }
 
 module.exports = apiRouter;

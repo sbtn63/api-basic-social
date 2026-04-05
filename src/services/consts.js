@@ -69,6 +69,10 @@ const SERVICE_MESSAGES = Object.freeze({
   NEW_POST_REACTION_NOTIFICATION_MESSAGE: "Post Reaction add successfully!!",
   SET_POST_REACTION_NOTIFICATION_MESSAGE: "Post Reaction set successfully!!",
   REACTIONS_POST_LIST: "Post Reactions success!!",
+  COMMENT_NOT_FOUND: "Comment not found!!",
+  SAVE_COMMENT_SUCCESS: "Save comment add successfully!!",
+  NEW_POST_COMMENT_NOTIFICATION_MESSAGE: "Post comment add!!",
+  RESPONSE_POST_COMMENT_NOTIFICATION_MESSAGE: "Post comment reponse add!!",
 });
 
 const USER_PUBLIC_PROFILE_COLUMNS = [
