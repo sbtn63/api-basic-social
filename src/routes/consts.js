@@ -17,12 +17,12 @@ const POST_ROUTES = Object.freeze({
   DELETE: "/:id",
   REACTION: "/:id/reactions",
   GET_COMMENTS: "/:id/comments",
+  CREATE_COMMENT: "/:id/comments",
+  UPDATE_COMMENT: "/:id/comments/:commentId",
+  DELETE_COMMENT: "/:id/comments/:commentId"
 });
 
 const COMMENT_ROUTES = Object.freeze({
-  CREATE: "/",
-  UPDATE: "/:id",
-  DELETE: "/:id",
   REPLIES: "/:id/replies",
 });
 

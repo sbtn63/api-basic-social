@@ -4,6 +4,7 @@ const id = Joi.number().integer().positive();
 const description = Joi.string().min(1).max(1000).empty('');
 const imageUrl = Joi.string().uri().empty('');
 const reactionId = Joi.number().integer().positive();
+const commentId = Joi.number().integer().positive();
 
 const savePostSchema = Joi.object({
   description,
@@ -14,7 +15,13 @@ const reactionPostSchema = Joi.object({
   reactionId: reactionId.required()
 });
 
+const commentPostSchema = Joi.object({
+  id: id.required(),
+  commentId: commentId.required()
+});
+
 module.exports = {
   savePostSchema,
-  reactionPostSchema
+  reactionPostSchema,
+  commentPostSchema
 };

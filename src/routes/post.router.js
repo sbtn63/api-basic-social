@@ -3,10 +3,11 @@ const express = require("express");
 const {POST_ROUTES} = require("./consts");
 const isAuth = require("../middleware/isAuth.middleware");
 const { createPost, updatePost, deletePost, getPostReactions } = require("../services/post.service");
+const { createComment, updateComment, deleteComment, getCommentsByPost } = require("../services/postComment.service");
 const validatorHandler = require("../middleware/validatorHandler.middleware");
-const { savePostSchema, reactionPostSchema } = require("../schemas/post.schema");
+const { savePostSchema, reactionPostSchema, commentPostSchema } = require("../schemas/post.schema");
+const { saveCommentSchema, updateCommentSchema } = require("../schemas/comment.schema");
 const { paginationSchema, itemIdSchema } = require("../schemas/common.schema");
-const { getCommentsByPost } = require("../services/comment.service");
 const { toggleReaction } = require("../services/postReactions.service");
 
 
@@ -88,6 +89,56 @@ router.get(
     const id = req.params.id;
     const { limit, offset } = req.query;
     const result = await getPostReactions(id, {limit, offset});
+    return res.sendResponse(result.status, result.message, result.data);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post(
+  POST_ROUTES.CREATE_COMMENT,
+  isAuth,
+  validatorHandler(itemIdSchema, 'params'),
+  validatorHandler(saveCommentSchema, 'body'),
+  async (req, res, next) =>
+{
+  try {
+    const userId = req.auth.sub;
+    const id = req.params.id;
+    const result = await createComment(req.body, userId, id);
+    return res.sendResponse(result.status, result.message, result.data);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put(
+  POST_ROUTES.UPDATE_COMMENT,
+  isAuth,
+  validatorHandler(updateCommentSchema, 'body'),
+  validatorHandler(commentPostSchema, 'params'),
+  async (req, res, next) =>
+{
+  try {
+    const userId = req.auth.sub;
+    const { id, commentId} = req.params;
+    const result = await updateComment(req.body, userId, {id, commentId});
+    return res.sendResponse(result.status, result.message, result.data);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete(
+  POST_ROUTES.DELETE_COMMENT,
+  isAuth,
+  validatorHandler(commentPostSchema, 'params'),
+  async (req, res, next) =>
+{
+  try{
+    const {id, commentId } = req.params;
+    const userId = req.auth.sub;
+    const result = await deleteComment({id, commentId}, userId);
     return res.sendResponse(result.status, result.message, result.data);
   } catch (error) {
     next(error);
