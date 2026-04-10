@@ -76,7 +76,8 @@ const SERVICE_MESSAGES = Object.freeze({
   UPDATE_COMMENT_SUCCESS: "Comment update successfully!!",
   DELETE_COMMENT_SUCCESS: "Comment delete successfully!!",
   COMMENT_NOT_POST_USER: "Comment not found or access denied",
-  PARENTCOMMENT_NOT_FOUND: "The referenced parent comment does not exist."
+  PARENTCOMMENT_NOT_FOUND: "The referenced parent comment does not exist.",
+  PARENTCOMMENT_SUCCESS: "List parents commnents successfully!!"
 });
 
 const USER_PUBLIC_PROFILE_COLUMNS = [
@@ -93,11 +94,20 @@ const REACTION_PUBLIC_COLUMNS = [
   'imageUrl'
 ];
 
+const COMMENT_PUBLIC_COLUMNS = [
+  'id',
+  'content',
+  'parentCommentId',
+  'postId',
+  'createdAt'
+];
+
 module.exports = {
   ACTIONS_AUDIT,
   TYPE_NOTIFICATION,
   TABLE_NAMES,
   SERVICE_MESSAGES,
   USER_PUBLIC_PROFILE_COLUMNS,
-  REACTION_PUBLIC_COLUMNS
+  REACTION_PUBLIC_COLUMNS,
+  COMMENT_PUBLIC_COLUMNS
 };

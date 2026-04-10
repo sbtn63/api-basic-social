@@ -3,7 +3,7 @@ const express = require("express");
 const {POST_ROUTES} = require("./consts");
 const isAuth = require("../middleware/isAuth.middleware");
 const { createPost, updatePost, deletePost, getPostReactions } = require("../services/post.service");
-const { createComment, updateComment, deleteComment, getCommentsByPost } = require("../services/postComment.service");
+const { createComment, updateComment, deleteComment, getParentCommentsByPost } = require("../services/postComment.service");
 const validatorHandler = require("../middleware/validatorHandler.middleware");
 const { savePostSchema, reactionPostSchema, commentPostSchema } = require("../schemas/post.schema");
 const { saveCommentSchema, updateCommentSchema } = require("../schemas/comment.schema");
@@ -155,7 +155,7 @@ router.get(
   try{
     const id = req.params.id;
     const { limit, offset } = req.query;
-    const result = await getCommentsByPost(id, {limit, offset});
+    const result = await getParentCommentsByPost(id, {limit, offset});
     return res.sendResponse(result.status, result.message, result.data);
   } catch (error) {
     next(error);

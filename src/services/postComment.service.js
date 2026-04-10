@@ -4,6 +4,7 @@ const { saveComment, getCommentUser, getParentComment } = require("./comment.ser
 const { ACTIONS_AUDIT, TABLE_NAMES, SERVICE_MESSAGES, TYPE_NOTIFICATION } = require("./consts");
 const ResponseSuccess = require("../schemas/responseSuccess.schema");
 const { getPost } = require("./post.service");
+const { findAllRecentParentCommnetsByPost } = require("./postCommentQuery.service");
 
 const createComment = async (data, userId, postId) => {
   const targetEntity = data.parentCommentId
@@ -76,8 +77,14 @@ const deleteComment = async (params, userId) => {
   );
 };
 
-const getCommentsByPost = async (postId, pagination) => {
-
+const getParentCommentsByPost = async (postId, pagination) => {
+  const post = await getPost(postId);
+  const parentCommentsByPost = await findAllRecentParentCommnetsByPost(post.id, pagination);
+  return ResponseSuccess.success(
+    SERVICE_MESSAGES.PARENTCOMMENT_SUCCESS,
+    parentCommentsByPost,
+    200
+  );
 };
 
 const getNotificationMetadata = (isResponse) => {
@@ -95,5 +102,5 @@ module.exports = {
   createComment,
   updateComment,
   deleteComment,
-  getCommentsByPost
+  getParentCommentsByPost
 };
