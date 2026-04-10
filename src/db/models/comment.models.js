@@ -101,7 +101,7 @@ class Comment extends Model {
       updatedAt: 'updated_at',
       defaultScope: {
         attributes: { exclude: [
-          'created_at', 'updatedAt'
+          'created_at', 'updated_at', 'updatedAt'
         ] }
       },
     };

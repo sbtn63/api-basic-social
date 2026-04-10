@@ -73,6 +73,10 @@ const SERVICE_MESSAGES = Object.freeze({
   SAVE_COMMENT_SUCCESS: "Save comment add successfully!!",
   NEW_POST_COMMENT_NOTIFICATION_MESSAGE: "Post comment add!!",
   RESPONSE_POST_COMMENT_NOTIFICATION_MESSAGE: "Post comment reponse add!!",
+  UPDATE_COMMENT_SUCCESS: "Comment update successfully!!",
+  DELETE_COMMENT_SUCCESS: "Comment delete successfully!!",
+  COMMENT_NOT_POST_USER: "Comment not found or access denied",
+  PARENTCOMMENT_NOT_FOUND: "The referenced parent comment does not exist."
 });
 
 const USER_PUBLIC_PROFILE_COLUMNS = [

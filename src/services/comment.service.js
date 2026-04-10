@@ -15,6 +15,7 @@ const saveComment = async (data, id = null) => {
     );
     return getComment(id);
   }
+  data.parentCommentId ??= null;
   return await models.Comment.create(data);
 };
 
@@ -24,9 +25,12 @@ const findCommentBy = async (whereClause, message = SERVICE_MESSAGES.COMMENT_NOT
   return comment;
 };
 
-const getCommentUser = (id, postId, userId) => findCommentBy({ id, postId, userId });
-
-const getParentComment = (id, postId) => findCommentBy({ id, postId });
+const getCommentUser = (id, postId, userId) => {
+  return findCommentBy({ id, postId, userId }, SERVICE_MESSAGES.COMMENT_NOT_POST_USER);
+};
+const getParentComment = (id, postId) => {
+  return findCommentBy({ id, postId }, SERVICE_MESSAGES.PARENTCOMMENT_NOT_FOUND);
+};
 
 const getComment = (id) => findCommentBy({ id });
 
