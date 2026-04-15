@@ -1,5 +1,5 @@
 const { models } = require("../libs/sequelize");
-const { Sequelize, Op } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const { COMMENT_PUBLIC_COLUMNS } = require("./consts");
 const { userInclude } = require("./user.service");
 
