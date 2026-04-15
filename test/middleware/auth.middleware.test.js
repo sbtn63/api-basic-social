@@ -22,7 +22,6 @@ describe('authMiddleware', () => {
       }
     };
 
-    console.log(req);
     const token = getTokenFromHeaderOrQuery(req);
     expect(token).to.equal('my-token');
   });

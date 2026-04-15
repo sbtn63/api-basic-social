@@ -55,7 +55,6 @@ describe('Comment Service Test', () => {
     const updateComment = await saveComment(data, comment.id);
     expect(updateComment).to.be.an('object');
     expect(updateComment.userId).to.equal(user.id);
-    expect(updateComment)
     expect(updateComment.parentCommentId).to.be.null;
   });
 

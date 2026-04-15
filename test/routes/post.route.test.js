@@ -206,7 +206,6 @@ describe('Actions posts', () => {
       .get(`/api/v1/posts/${newPost.id}/reactions`)
       .set('Authorization', `Bearer ${token}`)
       .expect(200);
-    console.log(res);
     expect(res.body.message).to.equal(SERVICE_MESSAGES.REACTIONS_POST_LIST);
   });
 
