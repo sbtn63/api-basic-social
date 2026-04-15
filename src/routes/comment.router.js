@@ -19,7 +19,7 @@ router.get(
   try{
     const id = req.params.id;
     const { limit, offset } = req.query;
-    const result = await getCommentReplies(id, userId, {limit, offset});
+    const result = await getCommentReplies(id, {limit, offset});
     return res.sendResponse(result.status, result.message, result.data);
   } catch (error) {
     next(error);

@@ -77,7 +77,8 @@ const SERVICE_MESSAGES = Object.freeze({
   DELETE_COMMENT_SUCCESS: "Comment delete successfully!!",
   COMMENT_NOT_POST_USER: "Comment not found or access denied",
   PARENTCOMMENT_NOT_FOUND: "The referenced parent comment does not exist.",
-  PARENTCOMMENT_SUCCESS: "List parents commnents successfully!!"
+  PARENTCOMMENT_SUCCESS: "List parents commnents successfully!!",
+  REPLIESCOMMENT_SUCCESS: "List replies commnents successfully!!"
 });
 
 const USER_PUBLIC_PROFILE_COLUMNS = [
