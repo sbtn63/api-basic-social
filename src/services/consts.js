@@ -69,6 +69,16 @@ const SERVICE_MESSAGES = Object.freeze({
   NEW_POST_REACTION_NOTIFICATION_MESSAGE: "Post Reaction add successfully!!",
   SET_POST_REACTION_NOTIFICATION_MESSAGE: "Post Reaction set successfully!!",
   REACTIONS_POST_LIST: "Post Reactions success!!",
+  COMMENT_NOT_FOUND: "Comment not found!!",
+  SAVE_COMMENT_SUCCESS: "Save comment add successfully!!",
+  NEW_POST_COMMENT_NOTIFICATION_MESSAGE: "Post comment add!!",
+  RESPONSE_POST_COMMENT_NOTIFICATION_MESSAGE: "Post comment reponse add!!",
+  UPDATE_COMMENT_SUCCESS: "Comment update successfully!!",
+  DELETE_COMMENT_SUCCESS: "Comment delete successfully!!",
+  COMMENT_NOT_POST_USER: "Comment not found or access denied",
+  PARENTCOMMENT_NOT_FOUND: "The referenced parent comment does not exist.",
+  PARENTCOMMENT_SUCCESS: "List parents commnents successfully!!",
+  REPLIESCOMMENT_SUCCESS: "List replies commnents successfully!!"
 });
 
 const USER_PUBLIC_PROFILE_COLUMNS = [
@@ -85,11 +95,20 @@ const REACTION_PUBLIC_COLUMNS = [
   'imageUrl'
 ];
 
+const COMMENT_PUBLIC_COLUMNS = [
+  'id',
+  'content',
+  'parentCommentId',
+  'postId',
+  'createdAt'
+];
+
 module.exports = {
   ACTIONS_AUDIT,
   TYPE_NOTIFICATION,
   TABLE_NAMES,
   SERVICE_MESSAGES,
   USER_PUBLIC_PROFILE_COLUMNS,
-  REACTION_PUBLIC_COLUMNS
+  REACTION_PUBLIC_COLUMNS,
+  COMMENT_PUBLIC_COLUMNS
 };
