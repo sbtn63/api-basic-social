@@ -98,7 +98,12 @@ class Comment extends Model {
       modelName: 'Comment',
       timestamps: true,
       createdAt: 'created_at',
-      updatedAt: 'updated_at'
+      updatedAt: 'updated_at',
+      defaultScope: {
+        attributes: { exclude: [
+          'created_at', 'updated_at', 'updatedAt'
+        ] }
+      },
     };
   }
 }

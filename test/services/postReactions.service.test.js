@@ -80,7 +80,6 @@ describe('Post Reactions Service Test', () => {
   it('Should throw error when getReaction', async () => {
     try {
       const reaction = await getReactionById(11);
-      console.log(reaction);
       throw new Error('Should not reach here');
     } catch (error) {
       expect(error).to.be.instanceOf(ResponseError);

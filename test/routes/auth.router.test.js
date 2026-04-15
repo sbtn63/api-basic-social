@@ -57,7 +57,6 @@ describe('POST Login', () => {
       })
       .expect(200);
 
-    console.log(res.body);
     expect(res.body.message).to.be.equal(SERVICE_MESSAGES.LOGIN_USER);
   });
 
