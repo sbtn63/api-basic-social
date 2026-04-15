@@ -4,7 +4,7 @@ const { saveComment, getCommentUser, getParentComment } = require("./comment.ser
 const { ACTIONS_AUDIT, TABLE_NAMES, SERVICE_MESSAGES, TYPE_NOTIFICATION } = require("./consts");
 const ResponseSuccess = require("../schemas/responseSuccess.schema");
 const { getPost } = require("./post.service");
-const { findAllRecentCommnets } = require("./postCommentQuery.service");
+const { findAllRecentComments } = require("./postCommentQuery.service");
 
 const createComment = async (data, userId, postId) => {
   const targetEntity = data.parentCommentId
@@ -80,7 +80,7 @@ const deleteComment = async (params, userId) => {
 const getParentCommentsByPost = async (postId, pagination) => {
   const post = await getPost(postId);
   const condition = {postId: post.id, parentCommentId: null};
-  const parentCommentsByPost = await findAllRecentCommnets(condition, pagination);
+  const parentCommentsByPost = await findAllRecentComments(condition, pagination);
   return ResponseSuccess.success(
     SERVICE_MESSAGES.PARENTCOMMENT_SUCCESS,
     parentCommentsByPost,

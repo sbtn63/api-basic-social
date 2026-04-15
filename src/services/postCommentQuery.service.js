@@ -3,7 +3,7 @@ const { Sequelize, Op } = require('sequelize');
 const { COMMENT_PUBLIC_COLUMNS } = require("./consts");
 const { userInclude } = require("./user.service");
 
-const findAllRecentCommnets = async(condition, pagination = {}) => {
+const findAllRecentComments = async(condition, pagination = {}) => {
   const limit = Number(pagination.limit) || 10;
   const offset = Number(pagination.offset) || 0;
 
@@ -35,5 +35,5 @@ const getRepliesCountLiteral = () => [
 ];
 
 module.exports = {
-  findAllRecentCommnets
+  findAllRecentComments
 };

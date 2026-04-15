@@ -1,13 +1,13 @@
 const { models } = require("../libs/sequelize");
 const { SERVICE_MESSAGES } = require("./consts");
 const ResponseError = require("../schemas/responseError.schema");
-const { findAllRecentCommnets } = require("./postCommentQuery.service");
+const { findAllRecentComments } = require("./postCommentQuery.service");
 const ResponseSuccess = require("../schemas/responseSuccess.schema");
 
 
 const getCommentReplies = async (commentId, pagination) => {
   const comment = await getComment(commentId);
-  const replies = await findAllRecentCommnets({parentCommentId: comment.id}, pagination);
+  const replies = await findAllRecentComments({parentCommentId: comment.id}, pagination);
   return ResponseSuccess.success(SERVICE_MESSAGES.REPLIESCOMMENT_SUCCESS, replies, 200);
 };
 

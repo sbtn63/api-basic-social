@@ -10,10 +10,16 @@ const { SERVICE_MESSAGES } = require('../../src/services/consts');
 describe('Actions posts', () => {
   let newUser;
   let newPost;
+  let newComment;
   beforeEach(async () => {
     await deleteData(models);
     newUser = await models.User.create({ firstName: 'A', email: 'a@test.com', passwordHash: '123'});
     newPost = await models.Post.create({ description: "Post Test", imageUrl: "http://test.com", userId: newUser.id});
+    newComment = await models.Comment.create({
+      content: 'Test New Comment',
+      postId: newPost.id,
+      userId: newUser.id
+    });
   });
 
   it('Should create post', async () => {
@@ -211,6 +217,169 @@ describe('Actions posts', () => {
       .get(`/api/v1/posts/99999/reactions`)
       .set('Authorization', `Bearer ${token}`)
       .expect(404);
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.POST_NOT_FOUND);
+  });
+
+  it('Should create comment', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .post(`/api/v1/posts/${newPost.id}/comments`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        content: 'Test comment'
+      })
+      .expect(201);
+
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.SAVE_COMMENT_SUCCESS);
+  });
+
+  it('Should create comment fail', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .post(`/api/v1/posts/199999/comments`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        content: 'Test comment'
+      })
+      .expect(404);
+
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.POST_NOT_FOUND);
+  });
+
+  it('Should create comment replie', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .post(`/api/v1/posts/${newPost.id}/comments`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        content: 'Test comment',
+        parentCommentId: newComment.id
+      })
+      .expect(201);
+
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.SAVE_COMMENT_SUCCESS);
+  });
+
+  it('Should create comment replie fail', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .post(`/api/v1/posts/${newPost.id}/comments`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        content: 'Test comment',
+        parentCommentId: 124565
+      })
+      .expect(404);
+
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.PARENTCOMMENT_NOT_FOUND);
+  });
+
+  it('Should invalid body comment', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .post(`/api/v1/posts/${newPost.id}/comments`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({})
+    .expect(400);
+
+    expect(res.body.data).to.be.an('object');
+  });
+
+  it('Should return 401 when no token create comment', async () => {
+    const res = await request(app)
+      .post(`/api/v1/posts/${newPost.id}/comments`)
+      .expect(401);
+
+    expect(res.body.message).to.equal(MIDDLEWARE_MESSAGES.UNAUTHORIZED_TOKEN);
+  });
+
+  it('Should update comment', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .put(`/api/v1/posts/${newPost.id}/comments/${newComment.id}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        content: 'Test Update'
+      })
+      .expect(200);
+
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.UPDATE_COMMENT_SUCCESS);
+  });
+
+  it('Should update comment invalid update', async () => {
+    const token = generateJwt(1211233221);
+
+    const res = await request(app)
+      .put(`/api/v1/posts/${newPost.id}/comments/${newComment.id}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        content: 'Test Update'
+      })
+      .expect(403);
+
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.COMMENT_NOT_POST_USER);
+  });
+
+  it('Should invalid body update comment', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .put(`/api/v1/posts/${newPost.id}/comments/${newComment.id}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({})
+    .expect(400);
+
+    expect(res.body.data).to.be.an('object');
+  });
+
+  it('Should delete comment', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .delete(`/api/v1/posts/${newPost.id}/comments/${newComment.id}`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200);
+
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.DELETE_COMMENT_SUCCESS);
+  });
+
+  it('Should update comment invalid delete', async () => {
+    const token = generateJwt(1211233221);
+
+    const res = await request(app)
+      .delete(`/api/v1/posts/${newPost.id}/comments/${newComment.id}`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(403);
+
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.COMMENT_NOT_POST_USER);
+  });
+
+  it('Should get comments', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .get(`/api/v1/posts/${newPost.id}/comments?offset=0&limit=10`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200);
+
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.PARENTCOMMENT_SUCCESS);
+    expect(res.body.data.length).to.equal(1);
+  });
+
+  it('Should get comments not post', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .get(`/api/v1/posts/111001/comments?offset=0&limit=10`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(404);
+
     expect(res.body.message).to.equal(SERVICE_MESSAGES.POST_NOT_FOUND);
   });
 });
