@@ -3,7 +3,9 @@
   "extends": [
     "config:recommended"
   ],
-  "baseBranches": ["release/dev"],
+  "baseBranchPatterns": [
+    "release/dev"
+  ],
   "timezone": "America/Bogota",
   "dependencyDashboard": true,
   "packageRules": [
