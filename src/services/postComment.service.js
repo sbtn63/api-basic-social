@@ -18,8 +18,8 @@ const createComment = async (data, userId, postId) => {
     toUserId: targetEntity.userId,
     fromUserId: userId,
     typeNotificationId: type,
-    postId: data.postId,
-    commentId: data.parentCommentId,
+    postId: postId,
+    commentId: comment.id,
     message: message
   });
 
