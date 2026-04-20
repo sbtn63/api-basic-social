@@ -1,11 +1,11 @@
-const { COMMENT_TABLE } = require("../db/models/comment.models");
-const { POST_TABLE } = require("../db/models/post.models");
-const { POST_REACTION_TABLE } = require("../db/models/postReactions.models");
-const { REACTION_TABLE } = require("../db/models/reaction.models");
-const { TYPE_NOTIFICATION_TABLE } = require("../db/models/typeNotifications.models");
-const { USER_TABLE } = require("../db/models/user.models");
-const { USER_FOLLOW_TABLE } = require("../db/models/userFollows.model");
-const { USER_NOTIFICATION_TABLE } = require("../db/models/userNotifications.models");
+import { COMMENT_TABLE } from '../db/models/comment.models.js';
+import { POST_TABLE } from '../db/models/post.models.js';
+import { POST_REACTION_TABLE } from '../db/models/postReactions.models.js';
+import { REACTION_TABLE } from '../db/models/reaction.models.js';
+import { TYPE_NOTIFICATION_TABLE } from '../db/models/typeNotifications.models.js';
+import { USER_TABLE } from '../db/models/user.models.js';
+import { USER_FOLLOW_TABLE } from '../db/models/userFollows.model.js';
+import { USER_NOTIFICATION_TABLE } from '../db/models/userNotifications.models.js';
 
 const ACTIONS_AUDIT = Object.freeze({
   INSERT: "INSERT",
@@ -103,7 +103,7 @@ const COMMENT_PUBLIC_COLUMNS = [
   'createdAt'
 ];
 
-module.exports = {
+export {
   ACTIONS_AUDIT,
   TYPE_NOTIFICATION,
   TABLE_NAMES,

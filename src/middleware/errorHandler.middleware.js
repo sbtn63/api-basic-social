@@ -1,4 +1,4 @@
-const { MIDDLEWARE_MESSAGES } = require("./const");
+import { MIDDLEWARE_MESSAGES } from './const.js';
 
 const errorHandler = (err, req, res, next) => {
   const status = err.status || 500;
@@ -12,4 +12,4 @@ const errorHandler = (err, req, res, next) => {
   });
 };
 
-module.exports = errorHandler;
+export default errorHandler;

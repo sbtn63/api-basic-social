@@ -1,9 +1,9 @@
-const { Model, DataTypes, Sequelize } = require("sequelize");
+import { Model, DataTypes, Sequelize } from 'sequelize';
 
-const { USER_TABLE } = require("./user.models");
-const { POST_TABLE } = require("./post.models");
-const { COMMENT_TABLE } = require("./comment.models");
-const { TYPE_NOTIFICATION_TABLE } = require("./typeNotifications.models");
+import { USER_TABLE } from './user.models.js';
+import { POST_TABLE } from './post.models.js';
+import { COMMENT_TABLE } from './comment.models.js';
+import { TYPE_NOTIFICATION_TABLE } from './typeNotifications.models.js';
 
 const USER_NOTIFICATION_TABLE = 'user_notifications';
 
@@ -149,7 +149,7 @@ class UserNotification extends Model {
   }
 }
 
-module.exports = {
+export {
   USER_NOTIFICATION_TABLE,
   UserNotificationSchema,
   UserNotification

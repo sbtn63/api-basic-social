@@ -1,8 +1,8 @@
-const { models } = require("../libs/sequelize");
-const { genHashSaltPassword } = require("../libs/bcrypt");
-const ResponseSuccess = require("../schemas/responseSuccess.schema");
-const ResponseError = require("../schemas/responseError.schema");
-const { SERVICE_MESSAGES, USER_PUBLIC_PROFILE_COLUMNS } = require("./consts");
+import { models } from '../libs/sequelize.js';
+import { genHashSaltPassword } from '../libs/bcrypt.js';
+import ResponseSuccess from '../schemas/responseSuccess.schema.js';
+import ResponseError from '../schemas/responseError.schema.js';
+import { SERVICE_MESSAGES, USER_PUBLIC_PROFILE_COLUMNS } from './consts.js';
 
 const getUserByEmail = async (email) => {
   return await models.User.unscoped().findOne({
@@ -41,7 +41,7 @@ const userInclude = () => ({
   attributes: USER_PUBLIC_PROFILE_COLUMNS
 });
 
-module.exports = {
+export {
   getUserByEmail,
   createUser,
   getUserProfile,

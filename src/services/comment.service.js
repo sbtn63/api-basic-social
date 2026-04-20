@@ -1,8 +1,8 @@
-const { models } = require("../libs/sequelize");
-const { SERVICE_MESSAGES } = require("./consts");
-const ResponseError = require("../schemas/responseError.schema");
-const { findAllRecentComments } = require("./postCommentQuery.service");
-const ResponseSuccess = require("../schemas/responseSuccess.schema");
+import { models } from '../libs/sequelize.js';
+import { SERVICE_MESSAGES } from './consts.js';
+import ResponseError from '../schemas/responseError.schema.js';
+import { findAllRecentComments } from './postCommentQuery.service.js';
+import ResponseSuccess from '../schemas/responseSuccess.schema.js';
 
 
 const getCommentReplies = async (commentId, pagination) => {
@@ -49,7 +49,7 @@ const validateComment = (comment, message, status) => {
   }
 };
 
-module.exports = {
+export {
   saveComment,
   getCommentReplies,
   getCommentUser,

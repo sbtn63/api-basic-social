@@ -1,4 +1,4 @@
-const Joi = require("joi");
+import Joi from 'joi';
 
 const id = Joi.number().integer().positive();
 const description = Joi.string().min(1).max(1000).empty('');
@@ -20,7 +20,7 @@ const commentPostSchema = Joi.object({
   commentId: commentId.required()
 });
 
-module.exports = {
+export {
   savePostSchema,
   reactionPostSchema,
   commentPostSchema

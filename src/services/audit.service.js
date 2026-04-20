@@ -1,5 +1,5 @@
-const { models } = require("../libs/sequelize");
-const { SERVICE_MESSAGES } = require("./consts");
+import { models } from '../libs/sequelize.js';
+import { SERVICE_MESSAGES } from './consts.js';
 
 const insertAuditLog = async ({
   userId,
@@ -25,6 +25,6 @@ const insertAuditLog = async ({
   }
 };
 
-module.exports = {
+export {
   insertAuditLog
 };

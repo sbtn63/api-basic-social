@@ -1,6 +1,6 @@
-const { expect } = require("chai");
+import { expect } from 'chai';
 
-const { authMiddleware, getTokenFromHeaderOrQuery } = require("../../src/middleware/auth.middleware");
+import { authMiddleware, getTokenFromHeaderOrQuery } from '../../src/middleware/auth.middleware.js';
 
 describe('authMiddleware', () => {
   it('should extract token from header', () => {

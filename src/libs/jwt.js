@@ -1,5 +1,5 @@
-const jwt = require("jsonwebtoken");
-const config = require("../config/index");
+import jwt from 'jsonwebtoken';
+import config from '../config/index.cjs';
 
 function generateJwt(id) {
   try {
@@ -11,8 +11,8 @@ function generateJwt(id) {
 
     return token;
   } catch (err) {
-    throw new Error(`Error al generar el token: ${err.message}`);
+    throw new Error(`Error al generar el token: ${err.message}`, { cause: err });
   }
 }
 
-module.exports = generateJwt;
+export default generateJwt;

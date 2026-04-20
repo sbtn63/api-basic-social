@@ -1,4 +1,4 @@
-const Joi = require("joi");
+import Joi from 'joi';
 
 const firstName = Joi.string().min(3);
 const lastName = Joi.string().min(3);
@@ -24,7 +24,7 @@ const registerSchema = Joi.object({
     })
 });
 
-module.exports = {
+export {
   loginSchema,
   registerSchema,
 };

@@ -1,7 +1,7 @@
-const { expect } = require('chai');
-const sinon = require('sinon');
-const isAuth  = require('../../src/middleware/isAuth.middleware');
-const { MIDDLEWARE_MESSAGES } = require('../../src/middleware/const');
+import { expect } from 'chai';
+import sinon from 'sinon';
+import isAuth from '../../src/middleware/isAuth.middleware.js';
+import { MIDDLEWARE_MESSAGES } from '../../src/middleware/const.js';
 
 describe('Middleware isAuth', () => {
   let req, res, next;

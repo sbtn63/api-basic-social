@@ -1,11 +1,11 @@
-const { expect } = require("chai");
+import { expect } from 'chai';
 
-const { models } = require("../../src/libs/sequelize");
-const { deleteData } = require("../utils");
-const { saveComment, getCommentReplies, getCommentUser, getParentComment } = require("../../src/services/comment.service");
-const ResponseError = require("../../src/schemas/responseError.schema");
-const ResponseSuccess = require("../../src/schemas/responseSuccess.schema");
-const { SERVICE_MESSAGES } = require("../../src/services/consts");
+import { models } from '../../src/libs/sequelize.js';
+import { deleteData } from '../utils.js';
+import { saveComment, getCommentReplies, getCommentUser, getParentComment } from '../../src/services/comment.service.js';
+import ResponseError from '../../src/schemas/responseError.schema.js';
+import ResponseSuccess from '../../src/schemas/responseSuccess.schema.js';
+import { SERVICE_MESSAGES } from '../../src/services/consts.js';
 
 describe('Comment Service Test', () => {
   let user;

@@ -1,9 +1,9 @@
-const express = require("express");
+import express from 'express';
 
-const authRouters = require("../routes/auth.router");
-const userRouters = require("../routes/user.router");
-const postRouters = require("../routes/post.router");
-const commentRouters = require("../routes/comment.router");
+import authRouters from '../routes/auth.router.js';
+import userRouters from '../routes/user.router.js';
+import postRouters from '../routes/post.router.js';
+import commentRouters from '../routes/comment.router.js';
 
 function apiRouter(app) {
   const router = express.Router();
@@ -14,4 +14,4 @@ function apiRouter(app) {
   router.use('/comments/', commentRouters);
 }
 
-module.exports = apiRouter;
+export default apiRouter;

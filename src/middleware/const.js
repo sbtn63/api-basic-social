@@ -6,6 +6,6 @@ const MIDDLEWARE_MESSAGES = Object.freeze({
   TOO_MANY_REQUESTS: "Maximum Attempts Error"
 });
 
-module.exports = {
+export {
   MIDDLEWARE_MESSAGES,
-}
+};

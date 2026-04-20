@@ -1,14 +1,13 @@
 'use strict';
 
-const {POST_TABLE} = require('../models/post.models');
+import { POST_TABLE } from '../models/post.models.js';
 
 /** @type {import('sequelize-cli').Migration} */
-module.exports = {
-  async up (queryInterface, Sequelize) {
+export async function up (queryInterface) {
     await queryInterface.addIndex(POST_TABLE, ['user_id', 'created_at']);
-  },
-
-  async down (queryInterface) {
-
-  }
 };
+
+export async function down () {
+
+};
+

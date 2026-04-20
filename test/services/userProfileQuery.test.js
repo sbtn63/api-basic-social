@@ -1,8 +1,8 @@
-const { expect } = require("chai");
+import { expect } from 'chai';
 
-const { models } = require("../../src/libs/sequelize");
-const { deleteData } = require("../utils");
-const { findUsersByFullNameByInfluence } = require("../../src/services/userProfileQuery.service");
+import { models } from '../../src/libs/sequelize.js';
+import { deleteData } from '../utils.js';
+import { findUsersByFullNameByInfluence } from '../../src/services/userProfileQuery.service.js';
 
 describe('User Profile Query Test', () => {
   let userA, userB;

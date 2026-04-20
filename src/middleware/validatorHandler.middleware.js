@@ -1,5 +1,5 @@
-const ResponseError = require("../schemas/responseError.schema");
-const { MIDDLEWARE_MESSAGES } = require("./const");
+import ResponseError from '../schemas/responseError.schema.js';
+import { MIDDLEWARE_MESSAGES } from './const.js';
 
 function validatorHandler(schema, property) {
   return (req, res, next) => {
@@ -22,4 +22,4 @@ function validatorHandler(schema, property) {
   };
 }
 
-module.exports = validatorHandler;
+export default validatorHandler;

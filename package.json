@@ -6,20 +6,22 @@
   "directories": {
     "test": "test"
   },
+  "type": "module",
   "scripts": {
     "dev": "NODE_ENV=dev nodemon src/server.js",
     "test": "mocha './test/**/*.test.js'",
-    "coverage": "nyc --reporter=lcov --reporter=text mocha './test/**/*.test.js'",
+    "coverage": "c8 --reporter=lcov --reporter=text mocha './test/**/*.test.js'",
     "start": "node src/server.js",
     "lint": "eslint",
     "build": "echo 'No build step required'",
-    "migrations:run": "sequelize-cli db:migrate --env $NODE_ENV",
-    "migrations:revert": "sequelize-cli db:migrate:undo --env $NODE_ENV",
-    "migrations:delete": "sequelize-cli db:migrate:undo:all --env $NODE_ENV",
+    "migrations:run": "sequelize-cli db:migrate --env ${NODE_ENV:-dev}",
+    "migrations:revert": "sequelize-cli db:migrate:undo --env ${NODE_ENV:-dev}",
+    "migrations:delete": "sequelize-cli db:migrate:undo:all --env ${NODE_ENV:-dev}",
     "migration:generate": "sequelize-cli migration:generate --name",
     "seeder:generate": "sequelize-cli seed:generate --name",
-    "seeders:all": "sequelize-cli db:seed:all --env $NODE_ENV",
-    "seeder:run": "sequelize-cli db:seed --env $NODE_ENV --seed"
+    "seeders:all": "sequelize-cli db:seed:all --env ${NODE_ENV:-dev}",
+    "seeders:revert": "sequelize-cli db:seed:undo:all --env ${NODE_ENV:-dev}",
+    "seeder:run": "sequelize-cli db:seed --env ${NODE_ENV:-dev} --seed"
   },
   "keywords": [],
   "author": "",
@@ -39,32 +41,32 @@
     "sequelize": "^6.37.7"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "c8": "^11.0.0",
     "chai": "^6.2.2",
     "chai-as-promised": "^8.0.2",
     "chai-http": "^5.1.2",
     "eslint": "^10.0.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^17.5.0",
     "mocha": "^11.7.5",
     "nodemon": "^3.1.11",
-    "nyc": "^18.0.0",
     "prettier": "^3.7.4",
-    "sequelize-cli": "^6.6.5",
+    "sequelize-cli": "^6.2.0",
     "sinon": "^21.0.1",
     "supertest": "^7.2.2"
   },
-  "nyc": {
+  "c8": {
     "reporter": [
       "text",
       "lcov"
     ],
-    "report-dir": "./coverage",
+    "reports-dir": "./coverage",
     "exclude": [
       "test/**",
       "node_modules/**"
     ],
-    "extension": [
-      ".js"
-    ]
+    "all": true
   }
 }

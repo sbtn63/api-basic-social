@@ -1,13 +1,13 @@
-const request = require('supertest');
-const { expect } = require("chai");
-const app = require('../../src/app');
-const { deleteData } = require('../utils');
-const { models } = require('../../src/libs/sequelize');
-const { createUser } = require("../../src/services/user.service");
-const { createFollow } = require("../../src/services/userFollow.service");
-const generateJwt = require("../../src/libs/jwt");
-const { MIDDLEWARE_MESSAGES } = require('../../src/middleware/const');
-const { SERVICE_MESSAGES } = require('../../src/services/consts');
+import request from 'supertest';
+import { expect } from 'chai';
+import app from '../../src/app.js';
+import { deleteData } from '../utils.js';
+import { models } from '../../src/libs/sequelize.js';
+import { createUser } from '../../src/services/user.service.js';
+import { createFollow } from '../../src/services/userFollow.service.js';
+import generateJwt from '../../src/libs/jwt.js';
+import { MIDDLEWARE_MESSAGES } from '../../src/middleware/const.js';
+import { SERVICE_MESSAGES } from '../../src/services/consts.js';
 
 describe('GET Profile', () => {
   beforeEach(async () => {
