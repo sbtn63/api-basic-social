@@ -1,7 +1,7 @@
-const { expect } = require("chai");
+import { expect } from 'chai';
 
-const { models } = require("../../src/libs/sequelize");
-const { deleteData } = require("../utils");
+import { models } from '../../src/libs/sequelize.js';
+import { deleteData } from '../utils.js';
 
 describe('User Model', () => {
   let user;

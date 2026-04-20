@@ -1,6 +1,6 @@
-const { Model, DataTypes, Sequelize } = require("sequelize");
+import { Model, DataTypes, Sequelize } from 'sequelize';
 
-const { USER_TABLE } = require("./user.models");
+import { USER_TABLE } from './user.models.js';
 
 const AUDIT_LOG_TABLE = "audit_logs";
 
@@ -73,7 +73,7 @@ class AuditLog extends Model {
   }
 }
 
-module.exports = {
+export {
   AUDIT_LOG_TABLE,
   AuditLogSchema,
   AuditLog

@@ -1,9 +1,9 @@
-const express = require('express');
+import express from 'express';
 
-const apiRouter = require("./server/index");
-const responseFormat = require('./middleware/responseFormat.middleware');
-const { authMiddleware } = require('./middleware/auth.middleware');
-const errorHandler = require('./middleware/errorHandler.middleware');
+import apiRouter from './server/index.js';
+import responseFormat from './middleware/responseFormat.middleware.js';
+import { authMiddleware } from './middleware/auth.middleware.js';
+import errorHandler from './middleware/errorHandler.middleware.js';
 
 const app = express();
 
@@ -23,4 +23,4 @@ apiRouter(app);
 
 app.use(errorHandler);
 
-module.exports = app;
+export default app;

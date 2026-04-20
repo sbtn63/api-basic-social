@@ -1,8 +1,8 @@
-const { expect } = require("chai");
+import { expect } from 'chai';
 
-const { models } = require("../../src/libs/sequelize");
-const { deleteData } = require("../utils");
-const { findAllRecentReactionsPost } = require("../../src/services/postReactionQuery.service");
+import { models } from '../../src/libs/sequelize.js';
+import { deleteData } from '../utils.js';
+import { findAllRecentReactionsPost } from '../../src/services/postReactionQuery.service.js';
 
 describe('PostReaction Query Test', () => {
   let user;

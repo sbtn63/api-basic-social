@@ -1,14 +1,13 @@
 'use strict';
 
-const {UserFollowSchema, USER_FOLLOW_TABLE} = require("../models/userFollows.model");
+import { UserFollowSchema, USER_FOLLOW_TABLE } from '../models/userFollows.model.js';
 
 /** @type {import('sequelize-cli').Migration} */
-module.exports = {
-  async up (queryInterface) {
+export async function up (queryInterface) {
     await queryInterface.createTable(USER_FOLLOW_TABLE, UserFollowSchema);
-  },
-
-  async down (queryInterface) {
-    await queryInterface.dropTable(USER_FOLLOW_TABLE);
-  }
 };
+
+export async function down (queryInterface) {
+    await queryInterface.dropTable(USER_FOLLOW_TABLE);
+};
+

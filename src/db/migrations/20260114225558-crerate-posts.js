@@ -1,14 +1,13 @@
 'use strict';
 
-const {PostSchema, POST_TABLE} = require('../models/post.models');
+import { PostSchema, POST_TABLE } from '../models/post.models.js';
 
 /** @type {import('sequelize-cli').Migration} */
-module.exports = {
-  async up (queryInterface) {
+export async function up (queryInterface) {
     await queryInterface.createTable(POST_TABLE, PostSchema);
-  },
-
-  async down (queryInterface) {
-    await queryInterface.dropTable(POST_TABLE);
-  }
 };
+
+export async function down (queryInterface) {
+    await queryInterface.dropTable(POST_TABLE);
+};
+

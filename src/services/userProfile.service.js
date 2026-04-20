@@ -1,7 +1,7 @@
-const { findUsersByFullNameByInfluence } = require("./userProfileQuery.service");
-const ResponseSuccess = require("../schemas/responseSuccess.schema");
-const ResponseError = require("../schemas/responseError.schema");
-const { SERVICE_MESSAGES } = require("./consts");
+import { findUsersByFullNameByInfluence } from './userProfileQuery.service.js';
+import ResponseSuccess from '../schemas/responseSuccess.schema.js';
+import ResponseError from '../schemas/responseError.schema.js';
+import { SERVICE_MESSAGES } from './consts.js';
 
 const getUserByFullName = async(fullname, pagination) => {
   const users = await findUsersByFullNameByInfluence(fullname, pagination);
@@ -12,6 +12,6 @@ const getUserByFullName = async(fullname, pagination) => {
   return ResponseSuccess.success(SERVICE_MESSAGES.USERS_SEARCH, users, 200);
 };
 
-module.exports = {
+export {
   getUserByFullName
 };

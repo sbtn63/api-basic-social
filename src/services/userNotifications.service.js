@@ -1,7 +1,7 @@
-const { models } = require("../libs/sequelize");
+import { models } from '../libs/sequelize.js';
 
-const { insertAuditLog } = require("./audit.service");
-const { ACTIONS_AUDIT, TABLE_NAMES, SERVICE_MESSAGES } = require("./consts");
+import { insertAuditLog } from './audit.service.js';
+import { ACTIONS_AUDIT, TABLE_NAMES, SERVICE_MESSAGES } from './consts.js';
 
 const insertUserNotification = async ({
   toUserId,
@@ -97,7 +97,7 @@ const deleteUserNotification = async (
 };
 
 
-module.exports = {
+export {
   insertUserNotification,
   readUserNotification,
   deleteUserNotification

@@ -1,10 +1,10 @@
-const { expect } = require("chai");
+import { expect } from 'chai';
 
-const { models } = require("../../src/libs/sequelize");
-const { deleteData } = require("../utils");
-const { addFollowing, removeFollowing, createFollow, getActors, getFollow, ensureNotSelfFollowing } = require("../../src/services/userFollow.service");
-const ResponseError = require("../../src/schemas/responseError.schema");
-const { SERVICE_MESSAGES } = require("../../src/services/consts");
+import { models } from '../../src/libs/sequelize.js';
+import { deleteData } from '../utils.js';
+import { addFollowing, removeFollowing, createFollow, getActors, getFollow, ensureNotSelfFollowing } from '../../src/services/userFollow.service.js';
+import ResponseError from '../../src/schemas/responseError.schema.js';
+import { SERVICE_MESSAGES } from '../../src/services/consts.js';
 
 describe('User Follow Test', () => {
   let newFollower;

@@ -1,10 +1,10 @@
-const { models } = require("../libs/sequelize");
-const { insertAuditLog } = require("./audit.service");
-const { getPost } = require("./post.service");
-const { insertUserNotification } = require("./userNotifications.service");
-const { ACTIONS_AUDIT, TABLE_NAMES, SERVICE_MESSAGES, TYPE_NOTIFICATION } = require("./consts");
-const ResponseSuccess = require("../schemas/responseSuccess.schema");
-const ResponseError = require("../schemas/responseError.schema");
+import { models } from '../libs/sequelize.js';
+import { insertAuditLog } from './audit.service.js';
+import { getPost } from './post.service.js';
+import { insertUserNotification } from './userNotifications.service.js';
+import { ACTIONS_AUDIT, TABLE_NAMES, SERVICE_MESSAGES, TYPE_NOTIFICATION } from './consts.js';
+import ResponseSuccess from '../schemas/responseSuccess.schema.js';
+import ResponseError from '../schemas/responseError.schema.js';
 
 const toggleReaction = async (postId, userId, data) => {
   const reactionContext = await getReactionAndPostContext(data.reactionId, postId);
@@ -126,7 +126,7 @@ const getResponsePostReaction = (postReaction) => {
   };
 };
 
-module.exports = {
+export {
   toggleReaction,
   processReactionAction,
   updateReactionId,

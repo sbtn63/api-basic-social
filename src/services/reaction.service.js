@@ -1,5 +1,5 @@
-const { models } = require("../libs/sequelize");
-const { REACTION_PUBLIC_COLUMNS } = require("./consts");
+import { models } from '../libs/sequelize.js';
+import { REACTION_PUBLIC_COLUMNS } from './consts.js';
 
 const reactionInclude = () => ({
   model: models.Reaction,
@@ -7,6 +7,6 @@ const reactionInclude = () => ({
   attributes: REACTION_PUBLIC_COLUMNS
 });
 
-module.exports = {
+export {
   reactionInclude
 };

@@ -11,4 +11,4 @@ const responseFormat = (req, res, next) => {
   next();
 };
 
-module.exports = responseFormat;
+export default responseFormat;

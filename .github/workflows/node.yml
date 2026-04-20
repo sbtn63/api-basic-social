@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20.x]
+        node-version: [24.x]
 
     services:
       mysql:
@@ -104,6 +104,6 @@ jobs:
             -Dsonar.sourceEncoding=UTF-8
             -Dsonar.projectBaseDir=.
             -Dsonar.exclusions=**/node_modules/**,**/test/**,**/db/migrations/**,**/db/seeders/**,**/db/config/**
-            
+
       - name: Build application
         run: npm run build

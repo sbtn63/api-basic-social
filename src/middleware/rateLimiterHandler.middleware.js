@@ -1,6 +1,6 @@
-const rateLimit = require("express-rate-limit");
-const {MIDDLEWARE_MESSAGES} = require("./const");
-const config = require("../config/index");
+import rateLimit from 'express-rate-limit';
+import { MIDDLEWARE_MESSAGES } from './const.js';
+import config from '../config/index.cjs';
 
 const loginLimiter = rateLimit({
   windowMs: config.loginLimitWindowMs || 900000,
@@ -16,4 +16,4 @@ const loginLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-module.exports = { loginLimiter };
+export { loginLimiter };

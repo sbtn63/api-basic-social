@@ -1,10 +1,10 @@
-const { models } = require("../libs/sequelize");
-const { SERVICE_MESSAGES, TYPE_NOTIFICATION, ACTIONS_AUDIT, TABLE_NAMES } = require("./consts");
-const { getUserById } = require("./user.service");
-const { insertAuditLog } = require("./audit.service");
-const { insertUserNotification } = require("./userNotifications.service");
-const ResponseError = require("../schemas/responseError.schema");
-const ResponseSuccess = require("../schemas/responseSuccess.schema");
+import { models } from '../libs/sequelize.js';
+import { SERVICE_MESSAGES, TYPE_NOTIFICATION, ACTIONS_AUDIT, TABLE_NAMES } from './consts.js';
+import { getUserById } from './user.service.js';
+import { insertAuditLog } from './audit.service.js';
+import { insertUserNotification } from './userNotifications.service.js';
+import ResponseError from '../schemas/responseError.schema.js';
+import ResponseSuccess from '../schemas/responseSuccess.schema.js';
 
 const addFollowing = async (followerId, followedId) => {
   const { follower, followed } = await getActors(followerId, followedId, SERVICE_MESSAGES.FOLLOWING_CONFLICT);
@@ -88,11 +88,11 @@ const getActors = async (followerId, followedId, conflictMessage) => {
   return { follower, followed };
 };
 
-module.exports = {
+export {
   addFollowing,
   removeFollowing,
   createFollow,
   ensureNotSelfFollowing,
   getFollow,
   getActors,
-}
+};

@@ -1,4 +1,4 @@
-const { expect } = require('chai');
+import { expect } from 'chai';
 
 describe('Dummy test', () => {
   it('always passes', () => {

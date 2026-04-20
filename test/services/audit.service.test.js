@@ -1,9 +1,9 @@
-const { expect } = require("chai");
+import { expect } from 'chai';
 
-const { models } = require("../../src/libs/sequelize");
-const { deleteData } = require("../utils");
-const { ACTIONS_AUDIT } = require("../../src/services/consts");
-const { insertAuditLog } = require("../../src/services/audit.service");
+import { models } from '../../src/libs/sequelize.js';
+import { deleteData } from '../utils.js';
+import { ACTIONS_AUDIT } from '../../src/services/consts.js';
+import { insertAuditLog } from '../../src/services/audit.service.js';
 
 describe('Audit Service', () => {
   let user;

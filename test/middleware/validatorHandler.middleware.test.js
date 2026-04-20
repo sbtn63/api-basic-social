@@ -1,9 +1,9 @@
-const { expect } = require("chai");
-const sinon = require("sinon");
-const Joi = require("joi");
+import { expect } from 'chai';
+import sinon from 'sinon';
+import Joi from 'joi';
 
-const validatorHandler = require("../../src/middleware/validatorHandler.middleware");
-const ResponseError = require("../../src/schemas/responseError.schema");
+import validatorHandler from '../../src/middleware/validatorHandler.middleware.js';
+import ResponseError from '../../src/schemas/responseError.schema.js';
 
 describe("Validator Handle middleware", () => {
   let req, res, next;

@@ -1,7 +1,7 @@
-const { models } = require("../libs/sequelize");
-const { Sequelize } = require('sequelize');
-const { COMMENT_PUBLIC_COLUMNS } = require("./consts");
-const { userInclude } = require("./user.service");
+import { models } from '../libs/sequelize.js';
+import { Sequelize } from 'sequelize';
+import { COMMENT_PUBLIC_COLUMNS } from './consts.js';
+import { userInclude } from './user.service.js';
 
 const findAllRecentComments = async(condition, pagination = {}) => {
   const limit = Number(pagination.limit) || 10;
@@ -34,6 +34,6 @@ const getRepliesCountLiteral = () => [
   Sequelize.fn('COUNT', Sequelize.col('replies.id')), 'repliesCount'
 ];
 
-module.exports = {
+export {
   findAllRecentComments
 };

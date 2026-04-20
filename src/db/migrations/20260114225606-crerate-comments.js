@@ -1,14 +1,13 @@
 'use strict';
 
-const { CommentSchema, COMMENT_TABLE } = require("../models/comment.models");
+import { CommentSchema, COMMENT_TABLE } from '../models/comment.models.js';
 
 /** @type {import('sequelize-cli').Migration} */
-module.exports = {
-  async up (queryInterface) {
+export async function up (queryInterface) {
     await queryInterface.createTable(COMMENT_TABLE, CommentSchema);
-  },
-
-  async down (queryInterface) {
-    await queryInterface.dropTable(COMMENT_TABLE);
-  }
 };
+
+export async function down (queryInterface) {
+    await queryInterface.dropTable(COMMENT_TABLE);
+};
+

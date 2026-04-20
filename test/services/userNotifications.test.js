@@ -1,9 +1,9 @@
-const { expect } = require("chai");
+import { expect } from 'chai';
 
-const { models } = require("../../src/libs/sequelize");
-const { deleteData } = require("../utils");
-const { TYPE_NOTIFICATION } = require("../../src/services/consts");
-const { insertUserNotification, readUserNotification, deleteUserNotification } = require("../../src/services/userNotifications.service");
+import { models } from '../../src/libs/sequelize.js';
+import { deleteData } from '../utils.js';
+import { TYPE_NOTIFICATION } from '../../src/services/consts.js';
+import { insertUserNotification, readUserNotification, deleteUserNotification } from '../../src/services/userNotifications.service.js';
 
 describe('Notifications User Service', () => {
   let user;

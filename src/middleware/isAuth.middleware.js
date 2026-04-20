@@ -1,4 +1,4 @@
-const { MIDDLEWARE_MESSAGES } = require("./const");
+import { MIDDLEWARE_MESSAGES } from './const.js';
 
 const isAuth = (req, res, next) => {
   if(!req.auth) {
@@ -7,4 +7,4 @@ const isAuth = (req, res, next) => {
   next();
 };
 
-module.exports = isAuth;
+export default isAuth;

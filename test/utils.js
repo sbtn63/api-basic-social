@@ -8,6 +8,6 @@ const deleteData = async (models) => {
   await models.User.destroy({where: {}});
 };
 
-module.exports = {
+export {
   deleteData
 };

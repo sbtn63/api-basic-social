@@ -10,4 +10,4 @@ class ResponseSuccess {
   }
 }
 
-module.exports = ResponseSuccess;
+export default ResponseSuccess;
