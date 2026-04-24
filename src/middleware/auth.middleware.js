@@ -1,5 +1,5 @@
-const { expressjwt } = require("express-jwt");
-const config = require("../config/index");
+import { expressjwt } from 'express-jwt';
+import config from '../config/index.cjs';
 
 function getTokenFromHeaderOrQuery(req) {
   if (req.headers.authorization?.split(" ")[0] === "Bearer") {
@@ -18,7 +18,7 @@ const authMiddleware = expressjwt({
   getToken: getTokenFromHeaderOrQuery,
 });
 
-module.exports = {
+export {
   authMiddleware,
   getTokenFromHeaderOrQuery,
 };

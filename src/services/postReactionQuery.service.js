@@ -1,6 +1,6 @@
-const { models } = require("../libs/sequelize");
-const { reactionInclude } = require("./reaction.service");
-const { userInclude } = require("./user.service");
+import { models } from '../libs/sequelize.js';
+import { reactionInclude } from './reaction.service.js';
+import { userInclude } from './user.service.js';
 
 const findAllRecentReactionsPost = async(postId, pagination = {}) => {
   const limit = Number(pagination.limit) || 10;
@@ -19,6 +19,6 @@ const findAllRecentReactionsPost = async(postId, pagination = {}) => {
   });
 };
 
-module.exports = {
+export {
   findAllRecentReactionsPost
 };

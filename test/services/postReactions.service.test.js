@@ -1,20 +1,18 @@
-const { expect } = require("chai");
+import { expect } from 'chai';
 
-const { models } = require("../../src/libs/sequelize");
-const { deleteData } = require("../utils");
-const { toggleReaction, processReactionAction, updateReactionId, findOrCreatePostReaction, getReactionAndPostContext, getReactionById } = require("../../src/services/postReactions.service");
-const ResponseError = require("../../src/schemas/responseError.schema");
-const ResponseSuccess = require("../../src/schemas/responseSuccess.schema");
-const { SERVICE_MESSAGES } = require("../../src/services/consts");
+import { models } from '../../src/libs/sequelize.js';
+import { deleteData } from '../utils.js';
+import { toggleReaction, processReactionAction, updateReactionId, findOrCreatePostReaction, getReactionAndPostContext, getReactionById } from '../../src/services/postReactions.service.js';
+import ResponseError from '../../src/schemas/responseError.schema.js';
+import ResponseSuccess from '../../src/schemas/responseSuccess.schema.js';
+import { SERVICE_MESSAGES } from '../../src/services/consts.js';
 
 describe('Post Reactions Service Test', () => {
   let user;
   let post;
   let body;
-  let reaction;
   beforeEach(async() => {
     await deleteData(models);
-    reaction = await models.Reaction.findByPk(1);
     body = { reactionId: 1};
     user = await models.User.create({ firstName: 'John', lastName: 'Doe', email: 'john@test.com', passwordHash: '123' });
     post = await models.Post.create({

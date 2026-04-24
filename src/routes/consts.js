@@ -26,9 +26,9 @@ const COMMENT_ROUTES = Object.freeze({
   REPLIES: "/:id/replies",
 });
 
-module.exports = {
+export {
   AUTH_ROUTES,
   USER_ROUTES,
   POST_ROUTES,
   COMMENT_ROUTES
-}
+};

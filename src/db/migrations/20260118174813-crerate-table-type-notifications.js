@@ -1,14 +1,13 @@
 'use strict';
 
-const {TYPE_NOTIFICATION_TABLE, TypeNotificationSchema} = require("../models/typeNotifications.models");
+import { TYPE_NOTIFICATION_TABLE, TypeNotificationSchema } from '../models/typeNotifications.models.js';
 
 /** @type {import('sequelize-cli').Migration} */
-module.exports = {
-  async up (queryInterface) {
+export async function up (queryInterface) {
     await queryInterface.createTable(TYPE_NOTIFICATION_TABLE, TypeNotificationSchema);
-  },
-
-  async down (queryInterface) {
-    await queryInterface.dropTable(TYPE_NOTIFICATION_TABLE);
-  }
 };
+
+export async function down (queryInterface) {
+    await queryInterface.dropTable(TYPE_NOTIFICATION_TABLE);
+};
+

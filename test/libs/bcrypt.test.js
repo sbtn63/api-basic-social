@@ -1,8 +1,8 @@
-const { expect } = require("chai");
-const sinon = require("sinon");
-const bcrypt = require("bcrypt");
+import { expect } from 'chai';
+import sinon from 'sinon';
+import bcrypt from 'bcrypt';
 
-const { genHashSaltPassword, checkPassword } = require("../../src/libs/bcrypt");
+import { genHashSaltPassword, checkPassword } from '../../src/libs/bcrypt.js';
 
 describe('Bcrypt Tests', () => {
   it('Validation success genHashSaltPassword and CheckPassword', async () => {

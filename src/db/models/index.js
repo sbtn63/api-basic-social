@@ -1,12 +1,12 @@
-const { User, UserSchema } = require('./user.models');
-const { UserFollow, UserFollowSchema } = require('./userFollows.model');
-const { Post, PostSchema } = require("./post.models");
-const { Comment, CommentSchema } = require("./comment.models");
-const { Reaction, ReactionSchema } = require("./reaction.models");
-const { PostReaction, PostReactionSchema } = require("./postReactions.models");
-const { TypeNotification, TypeNotificationSchema } = require("./typeNotifications.models");
-const { UserNotification, UserNotificationSchema } = require("./userNotifications.models");
-const { AuditLog, AuditLogSchema } = require('./auditLogs.models');
+import { User, UserSchema } from './user.models.js';
+import { UserFollow, UserFollowSchema } from './userFollows.model.js';
+import { Post, PostSchema } from './post.models.js';
+import { Comment, CommentSchema } from './comment.models.js';
+import { Reaction, ReactionSchema } from './reaction.models.js';
+import { PostReaction, PostReactionSchema } from './postReactions.models.js';
+import { TypeNotification, TypeNotificationSchema } from './typeNotifications.models.js';
+import { UserNotification, UserNotificationSchema } from './userNotifications.models.js';
+import { AuditLog, AuditLogSchema } from './auditLogs.models.js';
 
 
 function setupModels(sequelize){
@@ -29,4 +29,4 @@ function setupModels(sequelize){
   UserNotification.associate(sequelize.models);
 }
 
-module.exports = setupModels;
+export default setupModels;

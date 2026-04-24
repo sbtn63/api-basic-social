@@ -1,10 +1,10 @@
-const express = require("express");
+import express from 'express';
 
-const {AUTH_ROUTES} = require("./consts");
-const { registerUser, loginUser } = require("../services/auth.service");
-const validatorHandler = require("../middleware/validatorHandler.middleware");
-const { loginSchema, registerSchema } = require("../schemas/authSchema.schema");
-const { loginLimiter } = require("../middleware/rateLimiterHandler.middleware");
+import { AUTH_ROUTES } from './consts.js';
+import { registerUser, loginUser } from '../services/auth.service.js';
+import validatorHandler from '../middleware/validatorHandler.middleware.js';
+import { loginSchema, registerSchema } from '../schemas/authSchema.schema.js';
+import { loginLimiter } from '../middleware/rateLimiterHandler.middleware.js';
 
 const router = express.Router();
 
@@ -14,12 +14,8 @@ router.post(
   validatorHandler(loginSchema, 'body'),
   async (req, res, next) =>
 {
-  try {
-    const result = await loginUser(req.body);
-    return res.sendResponse(result.status, result.message, result.data);
-  } catch (error) {
-    next(error);
-  }
+  const result = await loginUser(req.body);
+  return res.sendResponse(result.status, result.message, result.data);
 });
 
 router.post(
@@ -27,12 +23,8 @@ router.post(
   validatorHandler(registerSchema, 'body'),
   async (req, res, next) =>
 {
-  try {
-    const result = await registerUser(req.body);
-    return res.sendResponse(result.status, result.message, result.data);
-  } catch (error) {
-    next(error);
-  }
+  const result = await registerUser(req.body);
+  return res.sendResponse(result.status, result.message, result.data);
 });
 
-module.exports = router;
+export default router;

@@ -1,4 +1,4 @@
-const { Model, DataTypes, Sequelize } = require("sequelize");
+import { Model, DataTypes, Sequelize } from 'sequelize';
 
 const TYPE_NOTIFICATION_TABLE = 'type_notifications';
 
@@ -44,7 +44,7 @@ class TypeNotification extends Model {
   }
 }
 
-module.exports = {
+export {
   TYPE_NOTIFICATION_TABLE,
   TypeNotificationSchema,
   TypeNotification

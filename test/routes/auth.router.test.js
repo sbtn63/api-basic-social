@@ -1,10 +1,10 @@
-const request = require('supertest');
-const app = require('../../src/app');
-const { expect } = require("chai");
-const { deleteData } = require('../utils');
-const { models } = require('../../src/libs/sequelize');
-const { createUser } = require("../../src/services/user.service");
-const { SERVICE_MESSAGES } = require('../../src/services/consts');
+import request from 'supertest';
+import app from '../../src/app.js';
+import { expect } from 'chai';
+import { deleteData } from '../utils.js';
+import { models } from '../../src/libs/sequelize.js';
+import { createUser } from '../../src/services/user.service.js';
+import { SERVICE_MESSAGES } from '../../src/services/consts.js';
 
 describe('POST Register', () => {
   beforeEach(async () => {

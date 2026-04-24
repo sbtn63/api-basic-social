@@ -1,6 +1,6 @@
-const { models } = require("../libs/sequelize");
-const { Sequelize, Op } = require('sequelize');
-const { USER_PUBLIC_PROFILE_COLUMNS } = require("./consts");
+import { models } from '../libs/sequelize.js';
+import { Sequelize, Op } from 'sequelize';
+import { USER_PUBLIC_PROFILE_COLUMNS } from './consts.js';
 
 const FOLLOWERS_AGGREGATE_INCLUDE = () => ({
   model: models.User,
@@ -44,6 +44,6 @@ const getFollowersCountLiteral = () => [
 ];
 
 
-module.exports = {
+export {
   findUsersByFullNameByInfluence
 };

@@ -1,15 +1,14 @@
 'use strict';
 
-const {USER_NOTIFICATION_TABLE, UserNotificationSchema} = require("../models/userNotifications.models");
+import { USER_NOTIFICATION_TABLE, UserNotificationSchema } from '../models/userNotifications.models.js';
 
 /** @type {import('sequelize-cli').Migration} */
-module.exports = {
-  async up (queryInterface) {
+export async function up (queryInterface) {
     await queryInterface.createTable(USER_NOTIFICATION_TABLE, UserNotificationSchema);
     await queryInterface.addIndex(USER_NOTIFICATION_TABLE, ['to_user_id', 'is_read']);
-  },
-
-  async down (queryInterface) {
-    await queryInterface.dropTable(USER_NOTIFICATION_TABLE);
-  }
 };
+
+export async function down (queryInterface) {
+    await queryInterface.dropTable(USER_NOTIFICATION_TABLE);
+};
+

@@ -1,6 +1,6 @@
-const { Model, DataTypes, Sequelize } = require("sequelize");
-const { USER_TABLE } = require("./user.models");
-const { POST_TABLE } = require("./post.models");
+import { Model, DataTypes, Sequelize } from 'sequelize';
+import { USER_TABLE } from './user.models.js';
+import { POST_TABLE } from './post.models.js';
 
 const COMMENT_TABLE = 'comments';
 
@@ -108,7 +108,7 @@ class Comment extends Model {
   }
 }
 
-module.exports = {
+export {
   COMMENT_TABLE,
   CommentSchema,
   Comment

@@ -1,14 +1,14 @@
-const express = require("express");
+import express from 'express';
 
-const {POST_ROUTES} = require("./consts");
-const isAuth = require("../middleware/isAuth.middleware");
-const { createPost, updatePost, deletePost, getPostReactions } = require("../services/post.service");
-const { createComment, updateComment, deleteComment, getParentCommentsByPost } = require("../services/postComment.service");
-const validatorHandler = require("../middleware/validatorHandler.middleware");
-const { savePostSchema, reactionPostSchema, commentPostSchema } = require("../schemas/post.schema");
-const { saveCommentSchema, updateCommentSchema } = require("../schemas/comment.schema");
-const { paginationSchema, itemIdSchema } = require("../schemas/common.schema");
-const { toggleReaction } = require("../services/postReactions.service");
+import { POST_ROUTES } from './consts.js';
+import isAuth from '../middleware/isAuth.middleware.js';
+import { createPost, updatePost, deletePost, getPostReactions } from '../services/post.service.js';
+import { createComment, updateComment, deleteComment, getParentCommentsByPost } from '../services/postComment.service.js';
+import validatorHandler from '../middleware/validatorHandler.middleware.js';
+import { savePostSchema, reactionPostSchema, commentPostSchema } from '../schemas/post.schema.js';
+import { saveCommentSchema, updateCommentSchema } from '../schemas/comment.schema.js';
+import { paginationSchema, itemIdSchema } from '../schemas/common.schema.js';
+import { toggleReaction } from '../services/postReactions.service.js';
 
 
 const router = express.Router();
@@ -19,13 +19,9 @@ router.post(
   validatorHandler(savePostSchema, 'body'),
   async (req, res, next) =>
 {
-  try {
-    const userId = req.auth.sub;
-    const result = await createPost(req.body, userId);
-    return res.sendResponse(result.status, result.message, result.data);
-  } catch (error) {
-    next(error);
-  }
+  const userId = req.auth.sub;
+  const result = await createPost(req.body, userId);
+  return res.sendResponse(result.status, result.message, result.data);
 });
 
 router.put(
@@ -35,14 +31,10 @@ router.put(
   validatorHandler(itemIdSchema, 'params'),
   async (req, res, next) =>
 {
-  try {
-    const userId = req.auth.sub;
-    const id = req.params.id;
-    const result = await updatePost(req.body, userId, id);
-    return res.sendResponse(result.status, result.message, result.data);
-  } catch (error) {
-    next(error);
-  }
+  const userId = req.auth.sub;
+  const id = req.params.id;
+  const result = await updatePost(req.body, userId, id);
+  return res.sendResponse(result.status, result.message, result.data);
 });
 
 router.delete(
@@ -51,14 +43,10 @@ router.delete(
   validatorHandler(itemIdSchema, 'params'),
   async (req, res, next) =>
 {
-  try{
-    const id = req.params.id;
-    const userId = req.auth.sub;
-    const result = await deletePost(id, userId);
-    return res.sendResponse(result.status, result.message, result.data);
-  } catch (error) {
-    next(error);
-  }
+  const id = req.params.id;
+  const userId = req.auth.sub;
+  const result = await deletePost(id, userId);
+  return res.sendResponse(result.status, result.message, result.data);
 });
 
 router.post(
@@ -68,14 +56,10 @@ router.post(
   validatorHandler(itemIdSchema, 'params'),
   async (req, res, next) =>
 {
-  try{
-    const id = req.params.id;
-    const userId = req.auth.sub;
-    const result = await toggleReaction(id, userId, req.body);
-    return res.sendResponse(result.status, result.message, result.data);
-  } catch (error) {
-    next(error);
-  }
+  const id = req.params.id;
+  const userId = req.auth.sub;
+  const result = await toggleReaction(id, userId, req.body);
+  return res.sendResponse(result.status, result.message, result.data);
 });
 
 router.get(
@@ -85,14 +69,10 @@ router.get(
   validatorHandler(paginationSchema, 'query'),
   async (req, res, next) =>
 {
-  try{
-    const id = req.params.id;
-    const { limit, offset } = req.query;
-    const result = await getPostReactions(id, {limit, offset});
-    return res.sendResponse(result.status, result.message, result.data);
-  } catch (error) {
-    next(error);
-  }
+  const id = req.params.id;
+  const { limit, offset } = req.query;
+  const result = await getPostReactions(id, {limit, offset});
+  return res.sendResponse(result.status, result.message, result.data);
 });
 
 router.post(
@@ -102,14 +82,10 @@ router.post(
   validatorHandler(saveCommentSchema, 'body'),
   async (req, res, next) =>
 {
-  try {
-    const userId = req.auth.sub;
-    const id = req.params.id;
-    const result = await createComment(req.body, userId, id);
-    return res.sendResponse(result.status, result.message, result.data);
-  } catch (error) {
-    next(error);
-  }
+  const userId = req.auth.sub;
+  const id = req.params.id;
+  const result = await createComment(req.body, userId, id);
+  return res.sendResponse(result.status, result.message, result.data);
 });
 
 router.put(
@@ -119,14 +95,10 @@ router.put(
   validatorHandler(commentPostSchema, 'params'),
   async (req, res, next) =>
 {
-  try {
-    const userId = req.auth.sub;
-    const { id, commentId} = req.params;
-    const result = await updateComment(req.body, userId, {id, commentId});
-    return res.sendResponse(result.status, result.message, result.data);
-  } catch (error) {
-    next(error);
-  }
+  const userId = req.auth.sub;
+  const { id, commentId} = req.params;
+  const result = await updateComment(req.body, userId, {id, commentId});
+  return res.sendResponse(result.status, result.message, result.data);
 });
 
 router.delete(
@@ -135,14 +107,10 @@ router.delete(
   validatorHandler(commentPostSchema, 'params'),
   async (req, res, next) =>
 {
-  try{
-    const {id, commentId } = req.params;
-    const userId = req.auth.sub;
-    const result = await deleteComment({id, commentId}, userId);
-    return res.sendResponse(result.status, result.message, result.data);
-  } catch (error) {
-    next(error);
-  }
+  const {id, commentId } = req.params;
+  const userId = req.auth.sub;
+  const result = await deleteComment({id, commentId}, userId);
+  return res.sendResponse(result.status, result.message, result.data);
 });
 
 router.get(
@@ -152,14 +120,10 @@ router.get(
   validatorHandler(paginationSchema, 'query'),
   async (req, res, next) =>
 {
-  try{
-    const id = req.params.id;
-    const { limit, offset } = req.query;
-    const result = await getParentCommentsByPost(id, {limit, offset});
-    return res.sendResponse(result.status, result.message, result.data);
-  } catch (error) {
-    next(error);
-  }
+  const id = req.params.id;
+  const { limit, offset } = req.query;
+  const result = await getParentCommentsByPost(id, {limit, offset});
+  return res.sendResponse(result.status, result.message, result.data);
 });
 
-module.exports = router;
+export default router;

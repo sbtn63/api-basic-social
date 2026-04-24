@@ -1,6 +1,6 @@
-const config = require("../config/index");
-const { Sequelize } = require("sequelize");
-const setupModels = require("../db/models/index");
+import config from '../config/index.cjs';
+import { Sequelize } from 'sequelize';
+import setupModels from '../db/models/index.js';
 
 const URI = `${config.dbDialect}://${config.dbUser}:${config.dbPassword}@${config.dbHost}:${config.dbPort}/${config.dbName}`;
 
@@ -11,4 +11,5 @@ const sequelize = new Sequelize(URI, {
 
 setupModels(sequelize);
 
-module.exports = sequelize;
+export const models = sequelize.models;
+export default sequelize;

@@ -1,10 +1,10 @@
-const { models } = require("../libs/sequelize");
-const { insertAuditLog } = require("./audit.service");
-const { insertUserNotification } = require("./userNotifications.service");
-const { ACTIONS_AUDIT, TABLE_NAMES, SERVICE_MESSAGES, TYPE_NOTIFICATION } = require("./consts");
-const ResponseSuccess = require("../schemas/responseSuccess.schema");
-const ResponseError = require("../schemas/responseError.schema");
-const { findAllRecentReactionsPost } = require("./postReactionQuery.service");
+import { models } from '../libs/sequelize.js';
+import { insertAuditLog } from './audit.service.js';
+import { insertUserNotification } from './userNotifications.service.js';
+import { ACTIONS_AUDIT, TABLE_NAMES, SERVICE_MESSAGES, TYPE_NOTIFICATION } from './consts.js';
+import ResponseSuccess from '../schemas/responseSuccess.schema.js';
+import ResponseError from '../schemas/responseError.schema.js';
+import { findAllRecentReactionsPost } from './postReactionQuery.service.js';
 
 const createPost = async (data, userId) => {
   const newPost = await savePost(data, userId);
@@ -103,7 +103,7 @@ const validatePost = (post) => {
   }
 };
 
-module.exports = {
+export {
   createPost,
   updatePost,
   deletePost,

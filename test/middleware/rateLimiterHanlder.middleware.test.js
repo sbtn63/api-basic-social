@@ -1,9 +1,9 @@
-const request = require('supertest');
-const app = require('../../src/app');
-const { expect } = require('chai');
-const { models } = require('../../src/libs/sequelize');
-const { createUser } = require("../../src/services/user.service");
-const { deleteData } = require('../utils');
+import request from 'supertest';
+import app from '../../src/app.js';
+import { expect } from 'chai';
+import { models } from '../../src/libs/sequelize.js';
+import { createUser } from '../../src/services/user.service.js';
+import { deleteData } from '../utils.js';
 
 describe('Integration Test: Rate Limiting', () => {
   beforeEach(async () => {

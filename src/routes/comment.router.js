@@ -1,10 +1,10 @@
-const express = require("express");
+import express from 'express';
 
-const {COMMENT_ROUTES} = require("./consts");
-const isAuth = require("../middleware/isAuth.middleware");
-const validatorHandler = require("../middleware/validatorHandler.middleware");
-const { getCommentReplies } = require("../services/comment.service");
-const { paginationSchema, itemIdSchema } = require("../schemas/common.schema");
+import { COMMENT_ROUTES } from './consts.js';
+import isAuth from '../middleware/isAuth.middleware.js';
+import validatorHandler from '../middleware/validatorHandler.middleware.js';
+import { getCommentReplies } from '../services/comment.service.js';
+import { paginationSchema, itemIdSchema } from '../schemas/common.schema.js';
 
 
 const router = express.Router();
@@ -16,14 +16,10 @@ router.get(
   validatorHandler(paginationSchema, 'query'),
   async (req, res, next) =>
 {
-  try{
-    const id = req.params.id;
-    const { limit, offset } = req.query;
-    const result = await getCommentReplies(id, {limit, offset});
-    return res.sendResponse(result.status, result.message, result.data);
-  } catch (error) {
-    next(error);
-  }
+  const id = req.params.id;
+  const { limit, offset } = req.query;
+  const result = await getCommentReplies(id, {limit, offset});
+  return res.sendResponse(result.status, result.message, result.data);
 });
 
-module.exports = router;
+export default router;

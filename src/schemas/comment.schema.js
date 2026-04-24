@@ -1,4 +1,4 @@
-const Joi = require("joi");
+import Joi from 'joi';
 
 const content = Joi.string().min(1).max(1000).required();
 const parentCommentId = Joi.number().integer().positive();
@@ -12,7 +12,7 @@ const updateCommentSchema = Joi.object({
   content
 });
 
-module.exports = {
+export {
   saveCommentSchema,
   updateCommentSchema
 };

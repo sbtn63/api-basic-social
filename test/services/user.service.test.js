@@ -1,10 +1,10 @@
-const { expect } = require("chai");
+import { expect } from 'chai';
 
-const { models } = require("../../src/libs/sequelize");
-const { deleteData } = require("../utils");
-const { createUser, getUserByEmail, getUserProfile, getUserById } = require("../../src/services/user.service");
-const ResponseError = require("../../src/schemas/responseError.schema");
-const { SERVICE_MESSAGES } = require("../../src/services/consts");
+import { models } from '../../src/libs/sequelize.js';
+import { deleteData } from '../utils.js';
+import { createUser, getUserByEmail, getUserProfile, getUserById } from '../../src/services/user.service.js';
+import ResponseError from '../../src/schemas/responseError.schema.js';
+import { SERVICE_MESSAGES } from '../../src/services/consts.js';
 
 describe('User Service Test', () => {
   let newUser;

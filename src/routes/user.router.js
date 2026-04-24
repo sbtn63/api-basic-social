@@ -1,12 +1,12 @@
-const express = require("express");
+import express from 'express';
 
-const {USER_ROUTES} = require("./consts");
-const isAuth = require("../middleware/isAuth.middleware");
-const { getUserProfile} = require("../services/user.service");
-const { getUserByFullName } = require("../services/userProfile.service");
-const { addFollowing, removeFollowing } = require("../services/userFollow.service");
-const validatorHandler = require("../middleware/validatorHandler.middleware");
-const { schemaGetUser, schemaGetUserFullName } = require("../schemas/user.schema");
+import { USER_ROUTES } from './consts.js';
+import isAuth from '../middleware/isAuth.middleware.js';
+import { getUserProfile } from '../services/user.service.js';
+import { getUserByFullName } from '../services/userProfile.service.js';
+import { addFollowing, removeFollowing } from '../services/userFollow.service.js';
+import validatorHandler from '../middleware/validatorHandler.middleware.js';
+import { schemaGetUser, schemaGetUserFullName } from '../schemas/user.schema.js';
 
 
 const router = express.Router();
@@ -17,13 +17,9 @@ router.get(
   isAuth,
   async (req, res, next) =>
 {
-  try {
-    const id = req.auth.sub;
-    const result = await getUserProfile(id);
-    return res.sendResponse(result.status, result.message, result.data);
-  } catch (error) {
-    next(error);
-  }
+  const id = req.auth.sub;
+  const result = await getUserProfile(id);
+  return res.sendResponse(result.status, result.message, result.data);
 });
 
 router.get(
@@ -32,13 +28,9 @@ router.get(
   validatorHandler(schemaGetUserFullName, 'query'),
   async (req, res, next) =>
 {
-  try {
-    const { fullname, limit, offset }= req.query;
-    const result = await getUserByFullName(fullname, {limit, offset});
-    return res.sendResponse(result.status, result.message, result.data);
-  } catch (error) {
-    next(error);
-  }
+  const { fullname, limit, offset }= req.query;
+  const result = await getUserByFullName(fullname, {limit, offset});
+  return res.sendResponse(result.status, result.message, result.data);
 });
 
 router.post(
@@ -47,14 +39,10 @@ router.post(
   validatorHandler(schemaGetUser, 'params'),
   async (req, res, next) =>
 {
-  try{
-    const followedId = req.params.id;
-    const followerId = req.auth.sub;
-    const result = await addFollowing(followerId, followedId);
-    return res.sendResponse(result.status, result.message, result.data);
-  } catch (error) {
-    next(error);
-  }
+  const followedId = req.params.id;
+  const followerId = req.auth.sub;
+  const result = await addFollowing(followerId, followedId);
+  return res.sendResponse(result.status, result.message, result.data);
 });
 
 router.delete(
@@ -63,14 +51,10 @@ router.delete(
   validatorHandler(schemaGetUser, 'params'),
   async (req, res, next) =>
 {
-  try{
-    const followedId = req.params.id;
-    const followerId = req.auth.sub;
-    const result = await removeFollowing(followerId, followedId);
-    return res.sendResponse(result.status, result.message, result.data);
-  } catch (error) {
-    next(error);
-  }
+  const followedId = req.params.id;
+  const followerId = req.auth.sub;
+  const result = await removeFollowing(followerId, followedId);
+  return res.sendResponse(result.status, result.message, result.data);
 });
 
-module.exports = router;
+export default router;

@@ -1,5 +1,5 @@
-const { Model, DataTypes, Sequelize } = require("sequelize");
-const { USER_TABLE } = require("./user.models");
+import { Model, DataTypes, Sequelize } from 'sequelize';
+import { USER_TABLE } from './user.models.js';
 
 const USER_FOLLOW_TABLE = 'user_follows';
 
@@ -63,7 +63,7 @@ class UserFollow extends Model {
   }
 }
 
-module.exports = {
+export {
   USER_FOLLOW_TABLE,
   UserFollowSchema,
   UserFollow

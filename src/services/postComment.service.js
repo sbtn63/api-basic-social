@@ -1,10 +1,10 @@
-const { insertAuditLog } = require("./audit.service");
-const { insertUserNotification } = require("./userNotifications.service");
-const { saveComment, getCommentUser, getParentComment } = require("./comment.service");
-const { ACTIONS_AUDIT, TABLE_NAMES, SERVICE_MESSAGES, TYPE_NOTIFICATION } = require("./consts");
-const ResponseSuccess = require("../schemas/responseSuccess.schema");
-const { getPost } = require("./post.service");
-const { findAllRecentComments } = require("./postCommentQuery.service");
+import { insertAuditLog } from './audit.service.js';
+import { insertUserNotification } from './userNotifications.service.js';
+import { saveComment, getCommentUser, getParentComment } from './comment.service.js';
+import { ACTIONS_AUDIT, TABLE_NAMES, SERVICE_MESSAGES, TYPE_NOTIFICATION } from './consts.js';
+import ResponseSuccess from '../schemas/responseSuccess.schema.js';
+import { getPost } from './post.service.js';
+import { findAllRecentComments } from './postCommentQuery.service.js';
 
 const createComment = async (data, userId, postId) => {
   const targetEntity = data.parentCommentId
@@ -99,7 +99,7 @@ const getNotificationMetadata = (isResponse) => {
   };
 };
 
-module.exports = {
+export {
   createComment,
   updateComment,
   deleteComment,

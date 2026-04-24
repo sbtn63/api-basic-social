@@ -1,10 +1,10 @@
-const generateJwt = require("../libs/jwt");
-const { insertAuditLog } = require("./audit.service");
-const { ACTIONS_AUDIT, TABLE_NAMES, SERVICE_MESSAGES } = require("./consts");
-const { checkPassword } = require("../libs/bcrypt");
-const ResponseSuccess = require("../schemas/responseSuccess.schema");
-const ResponseError = require("../schemas/responseError.schema");
-const { getUserByEmail, createUser } = require("../services/user.service");
+import generateJwt from '../libs/jwt.js';
+import { insertAuditLog } from './audit.service.js';
+import { ACTIONS_AUDIT, TABLE_NAMES, SERVICE_MESSAGES } from './consts.js';
+import { checkPassword } from '../libs/bcrypt.js';
+import ResponseSuccess from '../schemas/responseSuccess.schema.js';
+import ResponseError from '../schemas/responseError.schema.js';
+import { getUserByEmail, createUser } from '../services/user.service.js';
 
 const registerUser = async (body) => {
   const user = await getUserByEmail(body.email);
@@ -44,7 +44,7 @@ const loginUser = async (body) => {
   return ResponseSuccess.success(SERVICE_MESSAGES.LOGIN_USER, {token}, 200);
 };
 
-module.exports = {
+export {
   loginUser,
   registerUser,
 };

@@ -1,8 +1,8 @@
-const { Model, DataTypes, Sequelize } = require("sequelize");
+import { Model, DataTypes, Sequelize } from 'sequelize';
 
-const { USER_TABLE } = require("./user.models");
-const { POST_TABLE } = require("./post.models");
-const { REACTION_TABLE } = require("./reaction.models");
+import { USER_TABLE } from './user.models.js';
+import { POST_TABLE } from './post.models.js';
+import { REACTION_TABLE } from './reaction.models.js';
 
 const POST_REACTION_TABLE = 'post_reactions';
 
@@ -88,7 +88,7 @@ class PostReaction extends Model {
   }
 }
 
-module.exports = {
+export {
   POST_REACTION_TABLE,
   PostReactionSchema,
   PostReaction

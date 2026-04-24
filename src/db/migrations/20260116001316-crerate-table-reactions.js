@@ -1,14 +1,13 @@
 'use strict';
 
-const { REACTION_TABLE, ReactionSchema } = require("../models/reaction.models");
+import { REACTION_TABLE, ReactionSchema } from '../models/reaction.models.js';
 
 /** @type {import('sequelize-cli').Migration} */
-module.exports = {
-  async up (queryInterface) {
+export async function up (queryInterface) {
     await queryInterface.createTable(REACTION_TABLE, ReactionSchema);
-  },
-
-  async down (queryInterface) {
-    await queryInterface.dropTable(REACTION_TABLE);
-  }
 };
+
+export async function down (queryInterface) {
+    await queryInterface.dropTable(REACTION_TABLE);
+};
+

@@ -1,4 +1,4 @@
-const Joi = require("joi");
+import Joi from 'joi';
 
 const id = Joi.number().integer().positive();
 
@@ -12,7 +12,7 @@ const schemaGetUserFullName = Joi.object({
   offset: Joi.number().integer().min(0).default(0)
 });
 
-module.exports = {
+export {
   schemaGetUser,
   schemaGetUserFullName,
 };

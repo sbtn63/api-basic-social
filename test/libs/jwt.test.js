@@ -1,7 +1,7 @@
-const { expect } = require("chai");
+import { expect } from 'chai';
 
-const config = require("../../src/config/index");
-const generateJwt = require("../../src/libs/jwt");
+import config from '../../src/config/index.cjs';
+import generateJwt from '../../src/libs/jwt.js';
 
 describe('JWT Tests', () => {
   it('Validation success generateJwt', async () => {
