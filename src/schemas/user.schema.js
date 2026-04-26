@@ -1,6 +1,13 @@
 import Joi from 'joi';
 
 const id = Joi.number().integer().positive();
+const firstName = Joi.string().min(3);
+const lastName = Joi.string().min(3);
+const avatarUrl = Joi.string().uri();
+const newEmail = Joi.string().email();
+const oldPassword = Joi.string().min(8);
+const newPassword = Joi.string().min(8);
+const confirmPassword = Joi.string();
 
 const schemaGetUser = Joi.object({
   id: id.required()
@@ -12,7 +19,35 @@ const schemaGetUserFullName = Joi.object({
   offset: Joi.number().integer().min(0).default(0)
 });
 
+const schemaUpdateProfile = Joi.object({
+  firstName,
+  lastName
+}).or('description', 'imageUrl');
+
+const schemaChangeAvatar = Joi.object({
+  avatarUrl : avatarUrl.required()
+});
+
+const schemaChangeEmail = Joi.object({
+  newEmail: newEmail.required()
+});
+
+const schemaChangePassword = Joi.object({
+  oldPassword: oldPassword.required(),
+  newPassword: newPassword.required(),
+  confirmPassword: confirmPassword
+      .required()
+      .valid(Joi.ref('newPassword'))
+      .messages({
+        'any.only': 'Password not match'
+      })
+});
+
 export {
   schemaGetUser,
   schemaGetUserFullName,
+  schemaUpdateProfile,
+  schemaChangeAvatar,
+  schemaChangeEmail,
+  schemaChangePassword
 };
