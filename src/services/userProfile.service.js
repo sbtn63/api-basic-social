@@ -27,8 +27,6 @@ const updateUserAvatar = async(data, userId) => {
 
 const changeEmailUser = async(data, userId) => {
   const user = await getUserById(userId);
-  const userByEmail = await getUserByEmail(data.newEmail);
-
   if(await existsEmail(data.newEmail, user.email)) {
     throw new ResponseError(SERVICE_MESSAGES.EMAIL_EXISTS, 209);
   }
