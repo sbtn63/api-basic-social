@@ -5,7 +5,7 @@ const firstName = Joi.string().min(3);
 const lastName = Joi.string().min(3);
 const avatarUrl = Joi.string().uri();
 const newEmail = Joi.string().email();
-const oldPassword = Joi.string().min(8);
+const currentPassword = Joi.string().min(8);
 const newPassword = Joi.string().min(8);
 const confirmPassword = Joi.string();
 
@@ -33,7 +33,7 @@ const schemaChangeEmail = Joi.object({
 });
 
 const schemaChangePassword = Joi.object({
-  oldPassword: oldPassword.required(),
+  currentPassword: oldPassword.required(),
   newPassword: newPassword.required(),
   confirmPassword: confirmPassword
       .required()
