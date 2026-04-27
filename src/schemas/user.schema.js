@@ -22,7 +22,7 @@ const schemaGetUserFullName = Joi.object({
 const schemaUpdateProfile = Joi.object({
   firstName,
   lastName
-}).or('description', 'imageUrl');
+}).or('firstName', 'lastName');
 
 const schemaChangeAvatar = Joi.object({
   avatarUrl : avatarUrl.required()
@@ -33,7 +33,7 @@ const schemaChangeEmail = Joi.object({
 });
 
 const schemaChangePassword = Joi.object({
-  currentPassword: oldPassword.required(),
+  currentPassword: currentPassword.required(),
   newPassword: newPassword.required(),
   confirmPassword: confirmPassword
       .required()
