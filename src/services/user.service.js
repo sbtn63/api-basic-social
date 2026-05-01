@@ -23,11 +23,11 @@ const createUser = async (data) => {
 };
 
 const getUserProfile = async (id) => {
-  const user = await getUserById(id, SERVICE_MESSAGES.USER_NOT_FOUND);
+  const user = await getUserById(id);
   return ResponseSuccess.success(SERVICE_MESSAGES.USER_PROFILE, user, 200);
 };
 
-const getUserById = async (id, message) => {
+const getUserById = async (id, message = SERVICE_MESSAGES.USER_NOT_FOUND) => {
   const user = await models.User.findByPk(id);
   if(!user) {
     throw new ResponseError(message, 404);

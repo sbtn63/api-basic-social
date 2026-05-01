@@ -9,9 +9,12 @@ import generateJwt from '../../src/libs/jwt.js';
 import { MIDDLEWARE_MESSAGES } from '../../src/middleware/const.js';
 import { SERVICE_MESSAGES } from '../../src/services/consts.js';
 
-describe('GET Profile', () => {
+describe('Profile Actions', () => {
+  let newUser;
   beforeEach(async () => {
     await deleteData(models);
+    newUser = await createUser({ firstName: 'A', lastName: 'B', email: 'a@test.com', password: '12345678'});
+    await models.User.create({ firstName: 'B', lastName: 'C', email: 'b@test.com', passwordHash: '123'});
   });
 
   it('Should return user profile when authenticated', async () => {
@@ -38,6 +41,166 @@ describe('GET Profile', () => {
       .expect(401);
 
     expect(res.body.message).to.equal(MIDDLEWARE_MESSAGES.UNAUTHORIZED_TOKEN);
+  });
+
+  it('Should update user profile when authenticated', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .patch('/api/v1/users/profile')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        'firstName': "Test Profile Update",
+        "lastName" : "Test Profile Update"
+      })
+      .expect(200);
+
+    expect(res.body.data.firstName).to.equal("Test Profile Update");
+    expect(res.body.data.lastName).to.equal("Test Profile Update");
+  });
+
+  it('Should invalid body update profile', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .patch(`/api/v1/users/profile`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({})
+    .expect(400);
+
+    expect(res.body.data).to.be.an('object');
+  });
+
+  it('Should update user avatar when authenticated', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .patch('/api/v1/users/avatar')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        "avatarUrl": "https://avatar.url.com"
+      })
+      .expect(200);
+
+    expect(res.body.data.avatarUrl).to.equal("https://avatar.url.com");
+  });
+
+  it('Should invalid body update avatar', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .patch(`/api/v1/users/profile`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        "avatarUrl": "invalid"
+      })
+    .expect(400);
+
+    expect(res.body.data).to.be.an('object');
+  });
+
+  it('Should update user email when authenticated', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .patch('/api/v1/users/email')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        "newEmail": "newEmail@test.com"
+      })
+      .expect(200);
+
+    expect(res.body.data.email).to.equal("newEmail@test.com");
+  });
+
+  it('Should invalid body update email', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .patch(`/api/v1/users/email`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        "newEmail": "invalid"
+      })
+    .expect(400);
+
+    expect(res.body.data).to.be.an('object');
+  });
+
+  it('Should exists update email', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .patch(`/api/v1/users/email`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        "newEmail": "b@test.com"
+      })
+    .expect(209);
+
+    expect(res.body.message).to.be.equal(SERVICE_MESSAGES.EMAIL_EXISTS);
+  });
+
+  it('Should update user password when authenticated', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .patch('/api/v1/users/password')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        "currentPassword": "12345678",
+        "newPassword": "123456789",
+        "confirmPassword": "123456789"
+      })
+      .expect(200);
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.PASSWORD_CHANGE_SUCCESS);
+  });
+
+  it('Should invald body update password', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .patch(`/api/v1/users/password`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        "currentPassword": "12345678",
+        "newPassword": "12345678"
+      })
+    .expect(400);
+
+    expect(res.body.data).to.be.an('object');
+  });
+
+  it('Should invald newPassword and confirmPassword not match', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .patch(`/api/v1/users/password`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        "currentPassword": "123456789",
+        "newPassword": "12345678",
+        "confirmPassword": "123456789"
+      })
+    .expect(400);
+
+    expect(res.body.data).to.be.an('object');
+  });
+
+  it('Should incorrect password', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .patch(`/api/v1/users/password`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        "currentPassword": "testpassword",
+	      "newPassword": "testpassword",
+	      "confirmPassword": "testpassword"
+      })
+    .expect(400);
+
+    expect(res.body.message).to.be.equal(SERVICE_MESSAGES.CREDENTIALS_INVALID);
   });
 });
 
