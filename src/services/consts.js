@@ -83,7 +83,7 @@ const SERVICE_MESSAGES = Object.freeze({
   USER_AVATAR_UPDATE_SUCCESS: "User avatar updated successfully!!",
   EMAIL_EXISTS: "Email exists!!",
   EMAIL_UPDATE_SUCCESS: "Email update successfully",
-  PASSWORD_CHANGE_SUCCES: "Password change successfully!!"
+  PASSWORD_CHANGE_SUCCESS: "Password change successfully!!"
 });
 
 const USER_PUBLIC_PROFILE_COLUMNS = [
