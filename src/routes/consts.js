@@ -8,7 +8,11 @@ const USER_ROUTES = Object.freeze({
   ME: "/me",
   FOLLOW: "/:id/follow",
   UNFOLLOW: "/:id/unfollow",
-  USERS_FILTER: "/search"
+  USERS_FILTER: "/search",
+  CHANGE_PROFILE: "/profile",
+  CHANGE_AVATAR: "/avatar",
+  CHANGE_EMAIL: "/email",
+  CHANGE_PASSWORD: "/password"
 });
 
 const POST_ROUTES = Object.freeze({
