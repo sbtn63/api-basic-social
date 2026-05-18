@@ -14,7 +14,7 @@ export async function up (queryInterface, Sequelize) {
     });
 };
 
-export async function down (queryInterface, Sequelize) {
+export async function down (queryInterface) {
     await queryInterface.removeColumn(USER_TABLE, 'is_verified');
     await queryInterface.removeColumn(USER_TABLE, 'email_verified_at');
 };
