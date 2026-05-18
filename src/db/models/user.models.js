@@ -45,6 +45,18 @@ const UserSchema = {
     field: 'last_connection'
   },
 
+  isVerified: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    field: 'is_verified',
+    default: false
+  },
+
+  emailVerifiedAt: {
+    type: DataTypes.DATE,
+    field: 'email_verified_at'
+  },
+
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
@@ -106,7 +118,7 @@ class User extends Model {
       underscored: true,
       defaultScope: {
         attributes: { exclude: [
-          'passwordHash', 'createdAt', 'updatedAt'
+          'passwordHash', 'createdAt', 'updatedAt', 'emailVerifiedAt'
         ] }
       }
     };
