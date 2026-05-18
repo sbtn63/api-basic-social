@@ -49,7 +49,7 @@ const UserSchema = {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     field: 'is_verified',
-    default: false
+    defaultValue: false
   },
 
   emailVerifiedAt: {
