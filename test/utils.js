@@ -1,4 +1,5 @@
 const deleteData = async (models) => {
+  await models.EmailVerification.destroy({where: {}});
   await models.AuditLog.destroy({where: {}});
   await models.UserNotification.destroy({where: {}});
   await models.PostReaction.destroy({where: {}});
