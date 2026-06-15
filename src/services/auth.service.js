@@ -55,7 +55,6 @@ const requestVerifiedEmail = async (userId) => {
 
   const verificationInstance = await getActiveEmailVerification(user.email);
   if (verificationInstance) {
-    const oldData = verificationInstance.toJSON();
     const expireEmailVerification = await invalidateEmailVerification(verificationInstance);
     await insertAuditLog({
       userId: userId,
