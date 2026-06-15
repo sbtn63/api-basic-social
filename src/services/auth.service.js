@@ -109,7 +109,7 @@ const verifyEmail = async (code, userId) => {
 
   const oldDataUser = user.toJSON();
   user.isVerified = true;
-  user.emailVerifiedAt = new Date()
+  user.emailVerifiedAt = new Date();
   await user.save();
 
   await insertAuditLog({
