@@ -1,6 +1,6 @@
 'use strict';
 
-import { EmailVerificationSchema, EMAIL_VEREFICATION_TABLE} from '../models/emailVerification.js';
+import { EmailVerificationSchema, EMAIL_VEREFICATION_TABLE} from '../models/emailVerification.models.js';
 
 /** @type {import('sequelize-cli').Migration} */
 export async function up (queryInterface) {

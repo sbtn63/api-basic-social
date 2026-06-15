@@ -7,7 +7,7 @@ import { PostReaction, PostReactionSchema } from './postReactions.models.js';
 import { TypeNotification, TypeNotificationSchema } from './typeNotifications.models.js';
 import { UserNotification, UserNotificationSchema } from './userNotifications.models.js';
 import { AuditLog, AuditLogSchema } from './auditLogs.models.js';
-import { EmailVerification, EmailVerificationSchema } from './emailVerification.js';
+import { EmailVerification, EmailVerificationSchema } from './emailVerification.models.js';
 
 
 function setupModels(sequelize){
