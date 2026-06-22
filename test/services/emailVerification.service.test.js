@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import { models } from '../../src/libs/sequelize.js';
 import { deleteData } from '../utils.js';
 import { addEmailVerification, getEmailVerification, changeIsUsed, invalidateEmailVerification, getActiveEmailVerification } from '../../src/services/emailVerification.service.js';
-import config from '../../src/config/index.cjs';
 
 describe('EmailVerification Service Test', () => {
   let user;
