@@ -121,8 +121,6 @@ describe('Auth Service Test', () => {
   it('Should invalidate existing verification and create a new one', async () => {
     const oldVerification = await addEmailVerification(user.email);
 
-    const invalidateSpy = sinon.spy();
-
     const sendStub = sinon
       .stub(BrevoClient.prototype.transactionalEmails, 'sendTransacEmail')
       .resolves({ messageId: 'test' });
