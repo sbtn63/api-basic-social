@@ -18,7 +18,7 @@ describe('EmailVerification Service Test', () => {
   });
 
   it('Get Active EmailVerification', async () => {
-    const verificationEmail = await addEmailVerification(user.email);
+    await addEmailVerification(user.email);
     const instanceEmailVerification = await getActiveEmailVerification(user.email);
     expect(instanceEmailVerification.isUsed).to.be.equal(false);
   });
