@@ -2,6 +2,8 @@
 const AUTH_ROUTES = Object.freeze({
   REGISTER: "/register",
   LOGIN: "/login",
+  VERIFY_EMAIL_REQUEST: "/verify-email/request",
+  VERIFY_EMAIL_CONFIRM: "/verify-email/confirm"
 });
 
 const USER_ROUTES = Object.freeze({

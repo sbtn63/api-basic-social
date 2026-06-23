@@ -7,6 +7,7 @@ import { PostReaction, PostReactionSchema } from './postReactions.models.js';
 import { TypeNotification, TypeNotificationSchema } from './typeNotifications.models.js';
 import { UserNotification, UserNotificationSchema } from './userNotifications.models.js';
 import { AuditLog, AuditLogSchema } from './auditLogs.models.js';
+import { EmailVerification, EmailVerificationSchema } from './emailVerification.models.js';
 
 
 function setupModels(sequelize){
@@ -20,6 +21,7 @@ function setupModels(sequelize){
   TypeNotification.init(TypeNotificationSchema, TypeNotification.config(sequelize));
   UserNotification.init(UserNotificationSchema, UserNotification.config(sequelize));
   AuditLog.init(AuditLogSchema, AuditLog.config(sequelize));
+  EmailVerification.init(EmailVerificationSchema, EmailVerification.config(sequelize));
 
   //Asociaciones de modelos
   User.associate(sequelize.models);

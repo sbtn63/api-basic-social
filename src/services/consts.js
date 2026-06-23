@@ -6,6 +6,7 @@ import { TYPE_NOTIFICATION_TABLE } from '../db/models/typeNotifications.models.j
 import { USER_TABLE } from '../db/models/user.models.js';
 import { USER_FOLLOW_TABLE } from '../db/models/userFollows.model.js';
 import { USER_NOTIFICATION_TABLE } from '../db/models/userNotifications.models.js';
+import { EMAIL_VEREFICATION_TABLE } from '../db/models/emailVerification.models.js'
 
 const ACTIONS_AUDIT = Object.freeze({
   INSERT: "INSERT",
@@ -33,7 +34,8 @@ const TABLE_NAMES = Object.freeze({
   TYPE_NOTIFICATION_TABLE,
   USER_FOLLOW_TABLE,
   USER_NOTIFICATION_TABLE,
-  REACTION_TABLE
+  REACTION_TABLE,
+  EMAIL_VEREFICATION_TABLE
 });
 
 const SERVICE_MESSAGES = Object.freeze({
@@ -83,7 +85,11 @@ const SERVICE_MESSAGES = Object.freeze({
   USER_AVATAR_UPDATE_SUCCESS: "User avatar updated successfully!!",
   EMAIL_EXISTS: "Email exists!!",
   EMAIL_UPDATE_SUCCESS: "Email update successfully",
-  PASSWORD_CHANGE_SUCCESS: "Password change successfully!!"
+  PASSWORD_CHANGE_SUCCESS: "Password change successfully!!",
+  USER_EMAIL_VERIFIED: "Email already verified!!",
+  SEND_EMAIL_SUCCESS: 'Send email verification success!!',
+  INVALID_CODE_EMAIL_VERIFICATION: 'Invalid code verification',
+  EMAIL_VERIFY_SUCCESS: 'Email Verified success!!',
 });
 
 const USER_PUBLIC_PROFILE_COLUMNS = [

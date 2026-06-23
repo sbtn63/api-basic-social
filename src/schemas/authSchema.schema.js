@@ -5,6 +5,7 @@ const lastName = Joi.string().min(3);
 const email = Joi.string().email();
 const password = Joi.string().min(8);
 const confirmPassword = Joi.string();
+const code = Joi.string().pattern(/^\d{6}$/).length(6).required();
 
 const loginSchema = Joi.object({
   email: email.required(),
@@ -24,7 +25,12 @@ const registerSchema = Joi.object({
     })
 });
 
+const verifyCodeSchema = Joi.object({
+  code
+});
+
 export {
   loginSchema,
   registerSchema,
+  verifyCodeSchema
 };
