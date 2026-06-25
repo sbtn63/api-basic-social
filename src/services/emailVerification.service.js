@@ -13,13 +13,13 @@ const addEmailVerification = async(email) => {
 };
 
 const getEmailVerification = async(email, code) => {
-  const interval = new Date(Date.now() - config.expiresCodeOTPMinutes * 60 * 1000);
+  const now = new Date();
   return models.EmailVerification.findOne({
     where: {
       email,
       code,
       isUsed: false,
-      expiresAt: {[Op.gt] : interval},
+      expiresAt: {[Op.gt] : now},
     }
   });
 };
