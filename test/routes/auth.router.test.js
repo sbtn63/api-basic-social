@@ -16,9 +16,13 @@ describe('Auth E2E Tests', () => {
   beforeEach(async () => {
     await deleteData(models);
 
-    sendEmailStub = sinon
-      .stub(BrevoClient.prototype.transactionalEmails, 'sendTransacEmail')
-      .resolves({ messageId: 'test-id' });
+    sendEmailStub = sinon.stub().resolves({ messageId: 'test-id' });
+
+    sinon.stub(BrevoClient.prototype, 'transactionalEmails').get(() => {
+      return {
+        sendTransacEmail: sendEmailStub
+      };
+    });
   });
 
   afterEach(() => {
