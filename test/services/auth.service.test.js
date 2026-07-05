@@ -14,6 +14,7 @@ import { addEmailVerification, getActiveEmailVerification } from '../../src/serv
 describe('Auth Service Test', () => {
   let body;
   let user;
+  let sendEmailStub;
   beforeEach(async() => {
     await deleteData(models);
     body = {
@@ -23,6 +24,18 @@ describe('Auth Service Test', () => {
       password: "testpassword1"
     };
     user = await createUser(body);
+
+    sendEmailStub = sinon.stub().resolves({ messageId: 'test' });
+
+    sinon.stub(BrevoClient.prototype, 'transactionalEmails').get(() => {
+      return {
+        sendTransacEmail: sendEmailStub
+      };
+    });
+  });
+
+  afterEach(() => {
+    sinon.restore();
   });
 
   it('Should register a user success', async () => {
@@ -91,14 +104,10 @@ describe('Auth Service Test', () => {
   });
 
   it('Should request verified email success', async () => {
-    const sendStub = sinon
-      .stub(BrevoClient.prototype.transactionalEmails, 'sendTransacEmail')
-      .resolves({ messageId: 'test' });
-
     const response = await requestVerifiedEmail(user.id);
 
     expect(response.status).to.be.equal(200);
-    expect(sendStub.calledOnce).to.be.true;
+    expect(sendEmailStub.calledOnce).to.be.true;
 
     sinon.restore();
   });
@@ -121,14 +130,10 @@ describe('Auth Service Test', () => {
   it('Should invalidate existing verification and create a new one', async () => {
     const oldVerification = await addEmailVerification(user.email);
 
-    const sendStub = sinon
-      .stub(BrevoClient.prototype.transactionalEmails, 'sendTransacEmail')
-      .resolves({ messageId: 'test' });
-
     const response = await requestVerifiedEmail(user.id);
 
     expect(response.status).to.be.equal(200);
-    expect(sendStub.calledOnce).to.be.true;
+    expect(sendEmailStub.calledOnce).to.be.true;
 
     const newVerification = await getActiveEmailVerification(user.email);
 
