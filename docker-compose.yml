@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   mysql:
-    image: mysql:9
+    image: mysql:26
     environment:
       - MYSQL_DATABASE=${DB_NAME}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
