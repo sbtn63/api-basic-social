@@ -14,7 +14,7 @@ jobs:
 
     services:
       mysql:
-        image: mysql:9
+        image: mysql:26
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: cibbdd
