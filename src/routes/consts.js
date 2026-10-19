@@ -25,7 +25,8 @@ const POST_ROUTES = Object.freeze({
   GET_COMMENTS: "/:id/comments",
   CREATE_COMMENT: "/:id/comments",
   UPDATE_COMMENT: "/:id/comments/:commentId",
-  DELETE_COMMENT: "/:id/comments/:commentId"
+  DELETE_COMMENT: "/:id/comments/:commentId",
+  FEED: "/feed",
 });
 
 const COMMENT_ROUTES = Object.freeze({
