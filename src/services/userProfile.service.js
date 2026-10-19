@@ -56,7 +56,7 @@ const updateUser = async(data, user, message) => {
 
   const {passwordHash, ...userData} = user.toJSON();
 
-  insertAuditLog({
+  await insertAuditLog({
     userId: user.id,
     action: ACTIONS_AUDIT.UPDATE,
     tableName: TABLE_NAMES.USER_TABLE,
