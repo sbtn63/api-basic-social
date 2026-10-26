@@ -83,7 +83,7 @@ const feed = async (userId, pagination) => {
     const followers = await getFollowersUser(userId);
     let posts = await findAllPosts(pagination);
     if (followers && followers.length !== 0) {
-      const followedIds = followers.map(followed => followed.followedId);
+      const followedIds = followers.map(followed => followed.id);
       posts = await findPostFollowersUser(followedIds, pagination);
     }
     return ResponseSuccess.success(SERVICE_MESSAGES.POST_LIST, posts);
