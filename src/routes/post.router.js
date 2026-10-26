@@ -139,6 +139,6 @@ router.get(
   const result = await feed(userId, {limit, offset});
   return res.sendResponse(result.status, result.message, result.data);
 }
-)
+);
 
 export default router;
