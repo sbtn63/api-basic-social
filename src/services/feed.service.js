@@ -90,5 +90,7 @@ const feed = async (userId, pagination) => {
 };
 
 export {
-    feed,
+  findAllPosts,
+  findPostFollowersUser,
+  feed,
 };

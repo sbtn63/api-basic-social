@@ -127,7 +127,6 @@ router.get(
   return res.sendResponse(result.status, result.message, result.data);
 });
 
-// TODO
 router.get(
   POST_ROUTES.FEED,
   isAuth,
