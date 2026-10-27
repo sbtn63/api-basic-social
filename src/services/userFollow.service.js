@@ -88,6 +88,11 @@ const getActors = async (followerId, followedId, conflictMessage) => {
   return { follower, followed };
 };
 
+const getFollowersUser = async(userId) => {
+  const user = await getUserById(userId);
+  return await user.getFollowing();
+};
+
 export {
   addFollowing,
   removeFollowing,
@@ -95,4 +100,5 @@ export {
   ensureNotSelfFollowing,
   getFollow,
   getActors,
+  getFollowersUser,
 };

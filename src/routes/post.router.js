@@ -9,6 +9,7 @@ import { savePostSchema, reactionPostSchema, commentPostSchema } from '../schema
 import { saveCommentSchema, updateCommentSchema } from '../schemas/comment.schema.js';
 import { paginationSchema, itemIdSchema } from '../schemas/common.schema.js';
 import { toggleReaction } from '../services/postReactions.service.js';
+import { feed } from '../services/feed.service.js';
 
 
 const router = express.Router();
@@ -125,5 +126,18 @@ router.get(
   const result = await getParentCommentsByPost(id, {limit, offset});
   return res.sendResponse(result.status, result.message, result.data);
 });
+
+router.get(
+  POST_ROUTES.FEED,
+  isAuth,
+  validatorHandler(paginationSchema, 'query'),
+  async (req, res, next) =>
+{
+  const userId = req.auth.sub;
+  const { limit, offset } = req.query;
+  const result = await feed(userId, {limit, offset});
+  return res.sendResponse(result.status, result.message, result.data);
+}
+);
 
 export default router;

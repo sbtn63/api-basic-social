@@ -90,6 +90,7 @@ const SERVICE_MESSAGES = Object.freeze({
   SEND_EMAIL_SUCCESS: 'Send email verification success!!',
   INVALID_CODE_EMAIL_VERIFICATION: 'Invalid code verification',
   EMAIL_VERIFY_SUCCESS: 'Email Verified success!!',
+  POST_LIST : "Feed get successfully!!",
 });
 
 const USER_PUBLIC_PROFILE_COLUMNS = [
@@ -114,6 +115,13 @@ const COMMENT_PUBLIC_COLUMNS = [
   'createdAt'
 ];
 
+const POST_PUBLIC_COLUMNS = [
+  'id',
+  'description',
+  'imageUrl',
+  'createdAt',
+];
+
 export {
   ACTIONS_AUDIT,
   TYPE_NOTIFICATION,
@@ -121,5 +129,6 @@ export {
   SERVICE_MESSAGES,
   USER_PUBLIC_PROFILE_COLUMNS,
   REACTION_PUBLIC_COLUMNS,
-  COMMENT_PUBLIC_COLUMNS
+  COMMENT_PUBLIC_COLUMNS,
+  POST_PUBLIC_COLUMNS,
 };
