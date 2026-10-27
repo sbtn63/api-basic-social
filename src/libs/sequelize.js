@@ -6,7 +6,7 @@ const URI = `${config.dbDialect}://${config.dbUser}:${config.dbPassword}@${confi
 
 const sequelize = new Sequelize(URI, {
   dialect: config.dbDialect,
-  logging: true
+  logging: false
 });
 
 setupModels(sequelize);

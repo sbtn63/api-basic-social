@@ -381,4 +381,16 @@ describe('Actions posts', () => {
 
     expect(res.body.message).to.equal(SERVICE_MESSAGES.POST_NOT_FOUND);
   });
+
+  it('Should get feed', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .get(`/api/v1/posts/feed?offset=0&limit=10`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200);
+
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.POST_LIST);
+    expect(res.body.data.length).to.equal(1);
+  });
 });
