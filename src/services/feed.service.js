@@ -30,7 +30,10 @@ const findAllPosts = async(pagination = {}) => {
     ],
     group: ['Post.id', 'user.id'],
     order: [
-      [Sequelize.literal('reactionsCount'), 'DESC'],
+      [
+        Sequelize.fn('COUNT', Sequelize.fn('DISTINCT', Sequelize.col('postReactions.user_id'))), 
+        'DESC'
+      ],
       ['createdAt', 'DESC']
     ],
     limit: limit,
