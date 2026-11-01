@@ -88,10 +88,21 @@ const getActors = async (followerId, followedId, conflictMessage) => {
   return { follower, followed };
 };
 
-const getFollowersUser = async(userId) => {
-  const user = await getUserById(userId);
+const getFollowersUser = async(userId, pagination) => {
+  const user = await getUserById(userId, {
+    limit: Number(pagination.limit) || 10,
+    offset: Number(pagination.offset) || 0,
+  });
   return await user.getFollowing();
 };
+
+const getFollowingUser = async(userId, pagination) => {
+  const user = await getUserById(userId, {
+    limit: Number(pagination.limit) || 10,
+    offset: Number(pagination.offset) || 0,
+  });
+  return await user.getFollowing();
+}
 
 export {
   addFollowing,
@@ -101,4 +112,5 @@ export {
   getFollow,
   getActors,
   getFollowersUser,
+  getFollowingUser,
 };

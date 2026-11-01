@@ -91,6 +91,8 @@ const SERVICE_MESSAGES = Object.freeze({
   INVALID_CODE_EMAIL_VERIFICATION: 'Invalid code verification',
   EMAIL_VERIFY_SUCCESS: 'Email Verified success!!',
   POST_LIST : "Feed get successfully!!",
+  FOLLOWERS_LIST: "List Followers!!",
+  FOLLOWING_LIST: "List Following!!",
 });
 
 const USER_PUBLIC_PROFILE_COLUMNS = [
