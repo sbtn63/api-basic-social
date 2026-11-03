@@ -5,7 +5,7 @@ import { ACTIONS_AUDIT, SERVICE_MESSAGES, TABLE_NAMES } from './consts.js';
 import { getUserByEmail, getUserById } from './user.service.js';
 import { insertAuditLog } from './audit.service.js';
 import { checkPassword, genHashSaltPassword } from '../libs/bcrypt.js';
-import { getFollowersUser, getFollowingUser } from './userFollow.service.js';
+import { getFollowersUserPagination, getFollowingUserPagination } from './userFollow.service.js';
 
 const getUserByFullName = async(fullname, pagination) => {
   const users = await findUsersByFullNameByInfluence(fullname, pagination);
@@ -70,12 +70,12 @@ const updateUser = async(data, user, message) => {
 };
 
 const getFollowers = async (userId, pagination) => {
-  const followers = await getFollowersUser(userId, pagination);
+  const followers = await getFollowersUserPagination(userId, pagination);
   return ResponseSuccess.success(SERVICE_MESSAGES.FOLLOWERS_LIST, followers, 200);
 };
 
 const getFollowing = async (userId, pagination) => {
-  const following = await getFollowingUser(userId, pagination);
+  const following = await getFollowingUserPagination(userId, pagination);
   return ResponseSuccess.success(SERVICE_MESSAGES.FOLLOWING_LIST, following, 200);
 };
 
