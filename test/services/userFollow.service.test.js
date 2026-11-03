@@ -2,7 +2,7 @@ import { expect } from 'chai';
 
 import { models } from '../../src/libs/sequelize.js';
 import { deleteData } from '../utils.js';
-import { addFollowing, removeFollowing, createFollow, getActors, getFollow, ensureNotSelfFollowing, getFollowersUser } from '../../src/services/userFollow.service.js';
+import { addFollowing, removeFollowing, createFollow, getActors, getFollow, ensureNotSelfFollowing, getFollowingUser } from '../../src/services/userFollow.service.js';
 import ResponseError from '../../src/schemas/responseError.schema.js';
 import { SERVICE_MESSAGES } from '../../src/services/consts.js';
 
@@ -102,7 +102,7 @@ describe('User Follow Test', () => {
   });
 
   it('Should get user followers', async () => {
-    const followers = await getFollowersUser(newFollower.id);
+    const followers = await getFollowingUser(newFollower.id);
     expect(followers.length).equal(1);
   });
 });

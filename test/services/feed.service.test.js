@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { models } from '../../src/libs/sequelize.js';
 import { deleteData } from '../utils.js';
 import { createFollow} from '../../src/services/userFollow.service.js';
-import { feed, findAllPosts, findPostFollowersUser } from '../../src/services/feed.service.js';
+import { feed, findAllPosts, findPostFollowingUser } from '../../src/services/feed.service.js';
 import ResponseSuccess from '../../src/schemas/responseSuccess.schema.js';
 import { SERVICE_MESSAGES } from '../../src/services/consts.js';
 
@@ -46,7 +46,7 @@ describe('FEED Test', () => {
   });
 
   it('Should Validate Feed Followers', async () => {
-    const posts = await findPostFollowersUser([newFollowed.id]);
+    const posts = await findPostFollowingUser([newFollowed.id]);
     expect(posts).to.be.an('array');
     expect(posts.length).equal(1);
   });
