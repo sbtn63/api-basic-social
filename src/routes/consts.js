@@ -14,7 +14,9 @@ const USER_ROUTES = Object.freeze({
   CHANGE_PROFILE: "/profile",
   CHANGE_AVATAR: "/avatar",
   CHANGE_EMAIL: "/email",
-  CHANGE_PASSWORD: "/password"
+  CHANGE_PASSWORD: "/password",
+  FOLLOWERS: "/:id/followers",
+  FOLLOWING: "/:id/following"
 });
 
 const POST_ROUTES = Object.freeze({
