@@ -250,6 +250,28 @@ describe('GET Search Users', () => {
       .expect(400);
     expect(res.body.data).to.be.an('object');
   });
+
+  it('Should return folllowers users', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .get(`/api/v1/users/${newUser.id}/followers`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200);
+
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.FOLLOWERS_LIST);
+  });
+
+  it('Should return folllowing users', async () => {
+    const token = generateJwt(newUser.id);
+
+    const res = await request(app)
+      .get(`/api/v1/users/${newUser.id}/following`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(200);
+
+    expect(res.body.message).to.equal(SERVICE_MESSAGES.FOLLOWING_LIST);
+  });
 });
 
 describe('Actions Follow', () => {

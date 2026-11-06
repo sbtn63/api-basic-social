@@ -1,5 +1,5 @@
 import { models } from '../libs/sequelize.js';
-import { SERVICE_MESSAGES, TYPE_NOTIFICATION, ACTIONS_AUDIT, TABLE_NAMES } from './consts.js';
+import { SERVICE_MESSAGES, TYPE_NOTIFICATION, ACTIONS_AUDIT, TABLE_NAMES, USER_PUBLIC_PROFILE_COLUMNS } from './consts.js';
 import { getUserById } from './user.service.js';
 import { insertAuditLog } from './audit.service.js';
 import { insertUserNotification } from './userNotifications.service.js';
@@ -88,9 +88,29 @@ const getActors = async (followerId, followedId, conflictMessage) => {
   return { follower, followed };
 };
 
-const getFollowersUser = async(userId) => {
+const getFollowingUser = async(userId) => {
   const user = await getUserById(userId);
   return await user.getFollowing();
+};
+
+const getFollowersUserPagination = async(userId, pagination) => {
+  const user = await getUserById(userId);
+  return await user.getFollowers({
+    limit: Number(pagination.limit) || 10,
+    offset: Number(pagination.offset) || 0,
+    attributes: USER_PUBLIC_PROFILE_COLUMNS,
+    joinTableAttributes: [],
+  });
+};
+
+const getFollowingUserPagination = async(userId, pagination) => {
+  const user = await getUserById(userId);
+  return await user.getFollowing({
+    limit: Number(pagination.limit) || 10,
+    offset: Number(pagination.offset) || 0,
+    attributes: USER_PUBLIC_PROFILE_COLUMNS,
+    joinTableAttributes: [],
+  });
 };
 
 export {
@@ -100,5 +120,7 @@ export {
   ensureNotSelfFollowing,
   getFollow,
   getActors,
-  getFollowersUser,
+  getFollowingUser,
+  getFollowingUserPagination,
+  getFollowersUserPagination,
 };

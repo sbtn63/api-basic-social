@@ -3,7 +3,7 @@ import { Sequelize } from 'sequelize';
 import { POST_PUBLIC_COLUMNS, SERVICE_MESSAGES } from './consts.js';
 import ResponseSuccess from '../schemas/responseSuccess.schema.js';
 import { userInclude } from './user.service.js';
-import { getFollowersUser } from './userFollow.service.js';
+import { getFollowingUser } from './userFollow.service.js';
 
 const COMMENT_AGGREGATE_INCLUDE = () => ({
   model: models.Comment,
@@ -42,7 +42,7 @@ const findAllPosts = async(pagination = {}) => {
   });
 };
 
-const findPostFollowersUser = async (followedIds, pagination = {}) => {
+const findPostFollowingUser = async (followedIds, pagination = {}) => {
   const limit = Number(pagination.limit) || 10;
   const offset = Number(pagination.offset) || 0;
 
@@ -83,17 +83,17 @@ const getReactionsCountLiteral = () => [
 ];
 
 const feed = async (userId, pagination) => {
-    const followers = await getFollowersUser(userId);
+    const followers = await getFollowingUser(userId);
     let posts = await findAllPosts(pagination);
     if (followers && followers.length !== 0) {
       const followedIds = followers.map(followed => followed.id);
-      posts = await findPostFollowersUser(followedIds, pagination);
+      posts = await findPostFollowingUser(followedIds, pagination);
     }
     return ResponseSuccess.success(SERVICE_MESSAGES.POST_LIST, posts);
 };
 
 export {
   findAllPosts,
-  findPostFollowersUser,
+  findPostFollowingUser,
   feed,
 };

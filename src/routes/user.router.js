@@ -3,10 +3,11 @@ import express from 'express';
 import { USER_ROUTES } from './consts.js';
 import isAuth from '../middleware/isAuth.middleware.js';
 import { getUserProfile } from '../services/user.service.js';
-import { getUserByFullName, updateUserAvatar, updateUserProfile, changeEmailUser, changePasswordUser } from '../services/userProfile.service.js';
+import { getUserByFullName, updateUserAvatar, updateUserProfile, changeEmailUser, changePasswordUser, getFollowers, getFollowing } from '../services/userProfile.service.js';
 import { addFollowing, removeFollowing } from '../services/userFollow.service.js';
 import validatorHandler from '../middleware/validatorHandler.middleware.js';
 import { schemaChangeAvatar, schemaChangeEmail, schemaChangePassword, schemaGetUser, schemaGetUserFullName, schemaUpdateProfile } from '../schemas/user.schema.js';
+import { itemIdSchema, paginationSchema } from '../schemas/common.schema.js';
 
 
 const router = express.Router();
@@ -98,6 +99,32 @@ router.patch(
 {
   const userId = req.auth.sub;
   const result = await changePasswordUser(req.body, userId);
+  return res.sendResponse(result.status, result.message, result.data);
+});
+
+router.get(
+  USER_ROUTES.FOLLOWERS,
+  isAuth,
+  validatorHandler(itemIdSchema, 'params'),
+  validatorHandler(paginationSchema, 'query'),
+  async (req, res, next) => 
+{
+  const { limit, offset }= req.query;
+  const userId = req.params.id;
+  const result = await getFollowers(userId, {limit, offset});
+  return res.sendResponse(result.status, result.message, result.data);
+});
+
+router.get(
+  USER_ROUTES.FOLLOWING,
+  isAuth,
+  validatorHandler(itemIdSchema, 'params'),
+  validatorHandler(paginationSchema, 'query'),
+  async (req, res, next) => 
+{
+  const { limit, offset }= req.query;
+  const userId = req.params.id;
+  const result = await getFollowing(userId, {limit, offset});
   return res.sendResponse(result.status, result.message, result.data);
 });
 

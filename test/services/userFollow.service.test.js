@@ -2,7 +2,18 @@ import { expect } from 'chai';
 
 import { models } from '../../src/libs/sequelize.js';
 import { deleteData } from '../utils.js';
-import { addFollowing, removeFollowing, createFollow, getActors, getFollow, ensureNotSelfFollowing, getFollowersUser } from '../../src/services/userFollow.service.js';
+import { 
+          addFollowing, 
+          removeFollowing, 
+          createFollow, 
+          getActors, 
+          getFollow, 
+          ensureNotSelfFollowing, 
+          getFollowingUser,
+          getFollowersUserPagination,
+          getFollowingUserPagination
+} from '../../src/services/userFollow.service.js';
+
 import ResponseError from '../../src/schemas/responseError.schema.js';
 import { SERVICE_MESSAGES } from '../../src/services/consts.js';
 
@@ -11,6 +22,7 @@ describe('User Follow Test', () => {
   let newFollowed;
   let testFollower;
   let testFollowed;
+  const pagination = {limit: 10, offset: 0};
 
   beforeEach(async() => {
     await deleteData(models);
@@ -19,6 +31,7 @@ describe('User Follow Test', () => {
     testFollower = await models.User.create({ firstName: 'C', email: 'c@test.com', passwordHash: '123'});
     testFollowed = await models.User.create({ firstName: 'D', email: 'd@test.com', passwordHash: '123'});
     await createFollow(newFollower, newFollowed);
+    await createFollow(newFollowed, newFollower);
   });
 
   it('Should ensured Not self following failed', async () => {
@@ -101,8 +114,18 @@ describe('User Follow Test', () => {
     expect(response.data.followed).to.be.equal(false);
   });
 
-  it('Should get user followers', async () => {
-    const followers = await getFollowersUser(newFollower.id);
+  it('Should get user followings', async () => {
+    const followings = await getFollowingUser(newFollower.id);
+    expect(followings.length).equal(1);
+  });
+
+  it('Should get user followers paginations', async () => {
+    const followings = await getFollowingUserPagination(newFollower.id, pagination);
+    expect(followings.length).equal(1);
+  });
+
+  it('Should get user followers paginations', async () => {
+    const followers = await getFollowersUserPagination(newFollower.id, pagination);
     expect(followers.length).equal(1);
   });
 });
