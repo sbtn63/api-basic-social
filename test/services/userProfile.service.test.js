@@ -2,7 +2,17 @@ import { expect } from 'chai';
 
 import { models } from '../../src/libs/sequelize.js';
 import { deleteData } from '../utils.js';
-import { getUserByFullName, updateUserAvatar, updateUserProfile, changeEmailUser, changePasswordUser } from '../../src/services/userProfile.service.js';
+import { 
+          getUserByFullName, 
+          updateUserAvatar, 
+          updateUserProfile, 
+          changeEmailUser, 
+          changePasswordUser,
+          getFollowers,
+          getFollowing
+} from '../../src/services/userProfile.service.js';
+
+import { createFollow } from '../../src/services/userFollow.service.js';
 import { createUser } from '../../src/services/user.service.js';
 import ResponseError from '../../src/schemas/responseError.schema.js';
 import { SERVICE_MESSAGES } from '../../src/services/consts.js';
@@ -12,7 +22,9 @@ describe('User Profile Test', () => {
   beforeEach(async() => {
     await deleteData(models);
     user = await createUser({ firstName: 'A', lastName: 'B', email: 'a@test.com', password: '123'});
-     await models.User.create({ firstName: 'B', lastName: 'C', email: 'b@test.com', passwordHash: '123'});
+    const user2 = await models.User.create({ firstName: 'B', lastName: 'C', email: 'b@test.com', passwordHash: '123'});
+    await createFollow(user, user2);
+    await createFollow(user2, user);
   });
 
   it('Should get users for fullname', async () => {
@@ -130,5 +142,17 @@ describe('User Profile Test', () => {
       expect(error.status).to.be.equal(404);
       expect(error.message).to.be.equal(SERVICE_MESSAGES.USER_NOT_FOUND);
     }
+  });
+
+  it('Should get folllowers user', async () => {
+    const response = await getFollowers(user.id, {limit: 10, offset: 0});
+    expect(response.data).to.be.an('array');
+    expect(response.message).to.be.equal(SERVICE_MESSAGES.FOLLOWERS_LIST);
+  });
+
+  it('Should get folllowing user', async () => {
+    const response = await getFollowing(user.id, {limit: 10, offset: 0});
+    expect(response.data).to.be.an('array');
+    expect(response.message).to.be.equal(SERVICE_MESSAGES.FOLLOWING_LIST);
   });
 });
