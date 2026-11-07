@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [24.x]
+        node-version: [26.x]
 
     services:
       mysql:
@@ -59,7 +59,7 @@ jobs:
           DB_HOST: 127.0.0.1
           DB_PORT: 3306
           DB_DIALECT: mysql
-        run: npx sequelize-cli db:migrate --env example
+        run: npx sequelize-cli db:migrate --config src/db/config/index.cjs --migrations-path src/db/migrations --models-path src/db/models --env example
 
       - name: Run seeders
         env:
@@ -70,7 +70,7 @@ jobs:
           DB_HOST: 127.0.0.1
           DB_PORT: 3306
           DB_DIALECT: mysql
-        run: npx sequelize-cli db:seed:all --env example
+        run: npx sequelize-cli db:seed --config src/db/config/index.cjs --seeders-path src/db/seeders --env example
 
       - name: Run tests
         env:

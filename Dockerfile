@@ -9,7 +9,7 @@ RUN npm install --only=production
 
 COPY src ./src
 
-COPY .sequelizerc ./
+COPY .sequelizerc.cjs ./
 COPY entrypoint.sh ./
 RUN chmod +x /app/entrypoint.sh
 
