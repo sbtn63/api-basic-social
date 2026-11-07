@@ -70,7 +70,7 @@ jobs:
           DB_HOST: 127.0.0.1
           DB_PORT: 3306
           DB_DIALECT: mysql
-        run: npx sequelize-cli db:seed --config src/db/config/index.cjs --seeders-path src/db/seeders --env example --seed
+        run: npx sequelize-cli db:seed:all --config src/db/config/index.cjs --seeders-path src/db/seeders --env example
 
       - name: Run tests
         env:
