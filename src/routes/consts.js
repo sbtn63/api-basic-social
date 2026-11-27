@@ -29,6 +29,7 @@ const POST_ROUTES = Object.freeze({
   UPDATE_COMMENT: "/:id/comments/:commentId",
   DELETE_COMMENT: "/:id/comments/:commentId",
   FEED: "/feed",
+  USER_AUTH_POSTS: "/me",
 });
 
 const COMMENT_ROUTES = Object.freeze({

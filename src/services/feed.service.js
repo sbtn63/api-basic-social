@@ -66,6 +66,28 @@ const findPostFollowingUser = async (followedIds, pagination = {}) => {
   });
 };
 
+const findAllPostByUser = async (userId, pagination = {}) => {
+  const limit = Number(pagination.limit) || 10;
+  const offset = Number(pagination.offset) || 0;
+
+  return await models.Post.findAll({
+    attributes: [...POST_PUBLIC_COLUMNS, getComentsCountLiteral(), getReactionsCountLiteral()],
+    include: [
+      userInclude(),
+      COMMENT_AGGREGATE_INCLUDE(),
+      REACTION_AGGREGATE_INCLUDE(),
+    ],
+    where: {
+      user_id: userId
+    },
+    group: ['Post.id', 'user.id'],
+    order: [['createdAt', 'DESC']],
+    limit: limit,
+    offset: offset,
+    subQuery: false,
+  });
+};
+
 const getComentsCountLiteral = () => [
   Sequelize.fn('COUNT', 
     Sequelize.fn('DISTINCT',
@@ -83,17 +105,24 @@ const getReactionsCountLiteral = () => [
 ];
 
 const feed = async (userId, pagination) => {
-    const followers = await getFollowingUser(userId);
-    let posts = await findAllPosts(pagination);
-    if (followers && followers.length !== 0) {
-      const followedIds = followers.map(followed => followed.id);
-      posts = await findPostFollowingUser(followedIds, pagination);
-    }
-    return ResponseSuccess.success(SERVICE_MESSAGES.POST_LIST, posts);
+  const followers = await getFollowingUser(userId);
+  let posts = await findAllPosts(pagination);
+  if (followers && followers.length !== 0) {
+    const followedIds = followers.map(followed => followed.id);
+    posts = await findPostFollowingUser(followedIds, pagination);
+  }
+  return ResponseSuccess.success(SERVICE_MESSAGES.POST_LIST, posts);
+};
+
+const postsByUser = async(userId, pagination) => {
+  const posts = await findAllPostByUser(userId, pagination);
+  return ResponseSuccess.success(SERVICE_MESSAGES.POST_LIST, posts);
 };
 
 export {
   findAllPosts,
   findPostFollowingUser,
+  findAllPostByUser,
+  postsByUser,
   feed,
 };
